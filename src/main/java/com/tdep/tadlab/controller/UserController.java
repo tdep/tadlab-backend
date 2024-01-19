@@ -29,7 +29,7 @@ public class UserController {
     return userDao.getAll();
   }
 
-  @GetMapping
+  @GetMapping("{/id}")
   public ResponseEntity<User> getUserById(@PathVariable int id) {
     Optional<User> user = userDao.getUserById(id);
     return user.map(ResponseEntity::ok)
