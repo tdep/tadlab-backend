@@ -44,7 +44,7 @@ public class UserController {
     return ResponseEntity.created(URI.create("/users/" + savedUser.getId())).body(savedUser);
   }
 
-  @PutMapping("/{id")
+  @PutMapping("/{id}")
   public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
     Optional<User> existingUser = userDao.getUserById(id);
     if (existingUser.isPresent()) {
