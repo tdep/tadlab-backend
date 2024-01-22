@@ -10,3 +10,5 @@ public class TadlabApplication {
     SpringApplication.run(TadlabApplication.class, args);
   }
 }
+
+//TODO: Create API key string for environment variable in BFF and here
