@@ -1,16 +1,13 @@
 package com.tdep.tadlab.config;
 
-import com.tdep.tadlab.component.ApiKeyAuthFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tdep.tadlab.component.AuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -18,38 +15,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-  @Autowired
-  private ApiKeyAuthFilter apiKeyAuthFilter;
-
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http
-        .csrf().disable()
-        .addFilterBefore(apiKeyAuthFilter, UsernamePasswordAuthenticationFilter.class) // Adds the custom filter
-        .authorizeHttpRequests()
-        .anyRequest().authenticated();
-  }
-
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .authorizeHttpRequests((authorize) -> authorize
-            .anyRequest().authenticated()
-        )
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.csrf(AbstractHttpConfigurer::disable)
+        .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
+            authorizationManagerRequestMatcherRegistry.requestMatchers("/**").authenticated())
         .httpBasic(Customizer.withDefaults())
-        .formLogin(Customizer.withDefaults());
-
+        .sessionManagement(httpSecuritySessionManagementConfigurer ->
+            httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     return http.build();
-  }
-
-  @Bean
-  public UserDetailsService userDetailsService() {
-    UserDetails userDetails = User.withDefaultPasswordEncoder() // see stack overflow bookmark about plain text password handling
-        .username("user")
-        .password("password")
-        .roles("USER")
-        .build();
-
-    return new InMemoryUserDetailsManager(userDetails);
   }
 }
