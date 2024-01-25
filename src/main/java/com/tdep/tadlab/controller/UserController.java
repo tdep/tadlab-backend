@@ -23,7 +23,7 @@ public class UserController {
   @Autowired
   private UserDao userDao;
 
-  @GetMapping
+  @GetMapping("/")
   public List<User> getAllUsers() {
     return userDao.getAll();
   }
