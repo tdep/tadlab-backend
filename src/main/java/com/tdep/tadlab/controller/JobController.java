@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +24,12 @@ public class JobController {
   @Autowired
   private JobDao jobDao;
 
+  @CrossOrigin(origins = "http://localhost:8080")
   @GetMapping("/jobs")
   public List<Job> getAllJobs() {
-    System.out.println("o0g8ehrogiengkle");
     return jobDao.getAllJobs(); }
 
+  @CrossOrigin(origins = "http://localhost:8080")
   @GetMapping("/jobs/{id}")
   public ResponseEntity<Job> getJobById(@PathVariable int id) {
     Optional<Job> job = jobDao.getJobById(id);
