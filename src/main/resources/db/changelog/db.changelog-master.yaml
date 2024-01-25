@@ -24,19 +24,19 @@ databaseChangeLog:
 #                  constraints:
 #                    nullable: false
 
-#  - changeSet:
-#      id: 2
-#      author: tdep
-#      changes:
-#        - insert:
-#            tableName: users
-#            columns:
-#              - column:
-#                  name: username
-#                  value: dev
-#              - column:
-#                  name: email
-#                  value: blorp@jorb.com
+  - changeSet:
+      id: 2
+      author: tdep
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: dev
+              - column:
+                  name: email
+                  value: blorp@jorb.com
 
 #  - changeSet:
 #      id: 3
