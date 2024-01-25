@@ -24,12 +24,12 @@ public class JobController {
   @Autowired
   private JobDao jobDao;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://localhost:3000")
   @GetMapping("/jobs")
   public List<Job> getAllJobs() {
     return jobDao.getAllJobs(); }
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://localhost:3000")
   @GetMapping("/jobs/{id}")
   public ResponseEntity<Job> getJobById(@PathVariable int id) {
     Optional<Job> job = jobDao.getJobById(id);
@@ -39,12 +39,14 @@ public class JobController {
                 .build());
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @PostMapping("/jobs/new")
   public ResponseEntity<Job> createJob(@RequestBody Job job) {
     Job savedJob = jobDao.save(job);
     return ResponseEntity.created(URI.create("/jobs/" + savedJob.getId())).body(savedJob);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @PutMapping("/jobs/{id}")
   public ResponseEntity<Job> updateJob(@PathVariable int id, @RequestBody Job job) {
     Optional<Job> existingJob = jobDao.getJobById(id);
@@ -57,6 +59,7 @@ public class JobController {
     }
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @DeleteMapping("/jobs/{id}")
   public ResponseEntity<Void> deleteJob(@PathVariable int id) {
     Optional<Job> job = jobDao.getJobById(id);
