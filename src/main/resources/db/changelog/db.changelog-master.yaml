@@ -1,46 +1,114 @@
 databaseChangeLog:
+#  - changeSet:
+#      id: 1
+#      author: tdep
+#      changes:
+#        - createTable:
+#            tableName: users
+#            columns:
+#              - column:
+#                  name: id
+#                  type: int
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                    nullable: false
+#              - column:
+#                  name: username
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: email
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: false
+#
+#  - changeSet:
+#      id: 2
+#      author: tdep
+#      changes:
+#        - insert:
+#            tableName: users
+#            columns:
+#              - column:
+#                  name: username
+#                  value: dev
+#              - column:
+#                  name: email
+#                  value: blorp@jorb.com
+#
+#  - changeSet:
+#      id: 3
+#      author: tdep
+#      changes:
+#        - createTable:
+#            tableName: jobs
+#            columns:
+#              - column:
+#                  name: id
+#                  type: int
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                    nullable: false
+#              - column:
+#                  name: name
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: title
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: true
+#              - column:
+#                  name: start_date
+#                  type: date
+#                  constraints:
+#                    nullable: true
+#              - column:
+#                  name: end_date
+#                  type: date
+#                  constraints:
+#                    nullable: true
+#              - column:
+#                  name: description
+#                  type: varchar(1024)
+#                  constraints:
+#                    nullable: false
 
+#  - changeSet:
+#      id: 4
+#      author: tdep
+#      changes:
+#        - insert:
+#            tableName: jobs
+#            columns:
+#              - column:
+#                  name: name
+#                  value: job 5
+#              - column:
+#                  name: title
+#                  value: title 5
+#              - column:
+#                  name: start_date
+#                  value: 2024-02-24
+#              - column:
+#                  name: end_date
+#                  value: 2024-02-24
+#              - column:
+#                  name: description
+#                  value: This is a demo description to check database connection.
   - changeSet:
-      id: 1
-      author: tdep
-      changes:
-        - dropTable:
-            tableName: users
-
-  - changeSet:
-      id: 2
-      author: tdep
-      changes:
-        - createTable:
-            tableName: users
-            columns:
-              - column:
-                  name: id
-                  type: int
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: username
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-
-  - changeSet:
-      id: 3
+      id: 5
       author: tdep
       changes:
         - dropTable:
             tableName: jobs
 
   - changeSet:
-      id: 4
+      id: 6
       author: tdep
       changes:
         - createTable:
@@ -80,7 +148,7 @@ databaseChangeLog:
                     nullable: false
 
   - changeSet:
-      id: 5
+      id: 7
       author: tdep
       changes:
         - insert:
@@ -191,3 +259,10 @@ databaseChangeLog:
               - column:
                   name: description
                   value: Performed a variety of tasks during building renovations including demolition, framing, paint removal and application while maintaining safe working practices and environments.\n\nOperated and worked around large machinery to perform a variety of farm tasks such as plowing, tilling, hole drilling, digging, towing, and mowing.\n\nCarried out a multitude of regular farm tasks such as planting, pruning, harvesting, weed control, fertilizing, and irrigation building while making sure to use the latest and most effective processes yielding the best crops.
+
+  - changeSet:
+      id: 8
+      author: tdep
+      changes:
+        - dropTable:
+            tableName: users
