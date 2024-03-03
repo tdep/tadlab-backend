@@ -315,8 +315,55 @@ databaseChangeLog:
             where: id=1
 
 
+#  - changeSet:
+#      id: 10
+#      author: tdep
+#      changes:
+#        - createTable:
+#            tableName: projects
+#            columns:
+#              - column:
+#                  name: id
+#                  type: int
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                    nullable: false
+#              - column:
+#                  name: title
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: description
+#                  type: varchar(1024)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: image_url
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: true
+#              - column:
+#                  name: tools
+#                  type: text[]
+#                  constraints:
+#                    nullable: true
+#              - column:
+#                  name: links
+#                  type: text[]
+#                  constraints:
+#                    nullable: false
+
   - changeSet:
-      id: 10
+      id: 11
+      author: tdep
+      changes:
+        - dropTable:
+            tableName: projects
+
+  - changeSet:
+      id: 12
       author: tdep
       changes:
         - createTable:
@@ -354,4 +401,27 @@ databaseChangeLog:
                   type: text[]
                   constraints:
                     nullable: false
+
+  - changeSet:
+      id: 13
+      author: tdep
+      changes:
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: title
+                  value: Portfolio Website V2
+              - column:
+                  name: description
+                  value: The second iteration of my portfolio website which introduces an expanded project structure to include the use of a Java backend API, PostgreSQL, and a NEXT.js backend-for-frontend API.
+              - column:
+                  name: image_url
+                  value: app/portfolio/public/images/portfolio-site-temp.png
+              - column:
+                  name: tools
+                  value: '{"Java", "PostgreSQL", "Heroku", "TypeScript", "Next.js", "React", "Tailwind"}'
+              - column:
+                  name: links
+                  value: '{"https://github.com/tdep/tdep-tadlab-client", "https://github.com/tdep/tdep-tadlab-api", "https://trevordepew.com/"}'
 
