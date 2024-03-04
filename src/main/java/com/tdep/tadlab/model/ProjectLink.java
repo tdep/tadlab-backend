@@ -14,19 +14,28 @@ public class ProjectLink {
     private String name;
     private String url;
 
-    public int getId() { return id; }
+    public ProjectLink() {
+    }
 
+    public ProjectLink(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
+
+    public int getId() { return id; }
     public void setId() { this.id = id; }
 
     public Project getProject() { return project; }
-
     public void setProject(Project project) { this.project = project; }
 
     public String getName() { return name; }
-
     public void setName(String name) { this.name = name; }
 
     public String getUrl() { return url; }
-
     public void setUrl(String url) { this.url = url; }
+
+    @Override
+    public String toString() {
+        return "ProjectLink [name=" + name + ", id=" + id + ", url=" + url + "]";
+    }
 }
