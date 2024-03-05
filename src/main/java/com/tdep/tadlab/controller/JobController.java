@@ -24,6 +24,7 @@ public class JobController {
   @Autowired
   private JobDao jobDao;
 
+//  TODO: Change cross origins
   @CrossOrigin(origins = "http://localhost:3000")
   @GetMapping("/jobs")
   public List<Job> getAllJobs() {
