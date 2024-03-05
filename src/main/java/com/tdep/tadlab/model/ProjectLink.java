@@ -8,10 +8,13 @@ public class ProjectLink {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
     @ManyToOne
     private Project project;
+    @Column(name = "name")
     private String name;
+    @Column(name = "url")
     private String url;
 
     public ProjectLink() {

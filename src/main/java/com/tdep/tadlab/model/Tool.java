@@ -24,13 +24,18 @@ public class Tool {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "tool_id"))
     private Set<Project> projects;
+
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "image_url")
+    private String imageUrl;
     public Tool() {
     }
 
-    public Tool(String name) {
+    public Tool(String name, String imageUrl) {
         this.name = name;
+        this.imageUrl = imageUrl;
     }
 
     public int getId() { return id; }
@@ -41,6 +46,9 @@ public class Tool {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
     @Override
     public String toString() {
