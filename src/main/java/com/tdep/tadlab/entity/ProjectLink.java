@@ -2,8 +2,6 @@ package com.tdep.tadlab.entity;
 
 import jakarta.persistence.*;
 
-//TODO: Create project_links table
-
 @Entity
 @Table(name="project_links")
 public class ProjectLink {
@@ -12,8 +10,8 @@ public class ProjectLink {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @ManyToOne
-    private Project project;
+//    @ManyToOne
+//    private Project project;
     @Column(name = "name")
     private String name;
     @Column(name = "url")
@@ -30,8 +28,8 @@ public class ProjectLink {
     public int getId() { return id; }
     public void setId() { this.id = id; }
 
-    public Project getProject() { return project; }
-    public void setProject(Project project) { this.project = project; }
+//    public Project getProject() { return project; }
+//    public void setProject(Project project) { this.project = project; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

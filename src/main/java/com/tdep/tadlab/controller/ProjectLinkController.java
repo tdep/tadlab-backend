@@ -13,31 +13,30 @@ import java.util.List;
 public class ProjectLinkController {
 
     @Autowired private ProjectLinkService projectLinkService;
-
-    private final String crossOrigin = "http://localhost:3000";
+    private final String crossOrigin = "PostmanRuntime/7.36.3";
 
     @CrossOrigin(value = crossOrigin)
-    @PostMapping("/projectLinks")
+    @PostMapping("/projectlinks")
     public ProjectLink saveProjectLink(
             @Validated @RequestBody ProjectLink projectLink) {
         return projectLinkService.saveProjectLink(projectLink);
     }
 
     @CrossOrigin(value = crossOrigin)
-    @GetMapping("/projectLinks")
+    @GetMapping("/projectlinks")
     public List<ProjectLink> fetchProjectLinkList() {
         return projectLinkService.fetchProjectLinkList();
     }
 
     @CrossOrigin(value = crossOrigin)
-    @PutMapping("/projectLinks/{id}")
+    @PutMapping("/projectlinks/{id}")
     public ProjectLink updateProjectLink(@RequestBody ProjectLink projectLink,
                                          @PathVariable("id") int projectLinkId) {
         return projectLinkService.updateProjectLink(projectLink, projectLinkId);
     }
 
     @CrossOrigin(value = crossOrigin)
-    @DeleteMapping("/projectLinks/{id}")
+    @DeleteMapping("/projectlinks/{id}")
     public String deleteProjectLinkById(@PathVariable("id") int projectLinkId) {
         projectLinkService.deleteProjectLinkById(projectLinkId);
 
