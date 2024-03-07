@@ -1,4 +1,4 @@
-package com.tdep.tadlab.model;
+package com.tdep.tadlab.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="jobs")
+@Table(name = "jobs")
 public class Job {
 
   @Id

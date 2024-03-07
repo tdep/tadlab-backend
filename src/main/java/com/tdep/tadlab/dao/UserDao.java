@@ -1,6 +1,6 @@
 package com.tdep.tadlab.dao;
 
-import com.tdep.tadlab.model.User;
+import com.tdep.tadlab.entity.User;
 import java.util.List;
 import java.util.Optional;
 

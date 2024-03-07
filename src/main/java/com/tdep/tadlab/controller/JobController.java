@@ -1,7 +1,7 @@
 package com.tdep.tadlab.controller;
 
 import com.tdep.tadlab.dao.JobDao;
-import com.tdep.tadlab.model.Job;
+import com.tdep.tadlab.entity.Job;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +24,7 @@ public class JobController {
   @Autowired
   private JobDao jobDao;
 
+//  TODO: Change cross origins
   @CrossOrigin(origins = "http://localhost:3000")
   @GetMapping("/jobs")
   public List<Job> getAllJobs() {
