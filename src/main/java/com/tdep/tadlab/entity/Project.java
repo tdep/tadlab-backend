@@ -28,20 +28,20 @@ public class Project {
 
     @Column(name = "image_url")
     private String imageUrl;
-    @OneToMany
-    private List<ProjectLink> projectLinks;
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.DETACH,
-                    CascadeType.REFRESH })
-    @JoinTable(
-            name = "project_tools",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "tool_id"))
-    private Set<Tool> tools;
+//    @OneToMany
+//    private List<ProjectLink> projectLinks;
+//    @ManyToMany(
+//            fetch = FetchType.LAZY,
+//            cascade = {
+//                    CascadeType.PERSIST,
+//                    CascadeType.MERGE,
+//                    CascadeType.DETACH,
+//                    CascadeType.REFRESH })
+//    @JoinTable(
+//            name = "project_tools",
+//            joinColumns = @JoinColumn(name = "project_id"),
+//            inverseJoinColumns = @JoinColumn(name = "tool_id"))
+//    private Set<Tool> tools;
 
     public Project() {
     }
@@ -64,11 +64,11 @@ public class Project {
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
-    public List<ProjectLink> getProjectLinks() { return projectLinks; }
-    public void setProjectLinks(List<ProjectLink> projectLinks) { this.projectLinks = projectLinks; }
-
-    public Set<Tool> getProjectTools() { return tools; }
-    public void setProjectTools(Set<Tool> tools) { this.tools = tools; }
+//    public List<ProjectLink> getProjectLinks() { return projectLinks; }
+//    public void setProjectLinks(List<ProjectLink> projectLinks) { this.projectLinks = projectLinks; }
+//
+//    public Set<Tool> getProjectTools() { return tools; }
+//    public void setProjectTools(Set<Tool> tools) { this.tools = tools; }
 
     @Override
     public String toString() {

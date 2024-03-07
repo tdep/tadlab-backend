@@ -13,18 +13,18 @@ public class Tool {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.DETACH,
-                    CascadeType.REFRESH })
-    @JoinTable(
-            name = "project_tools",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "tool_id"))
-    private Set<Project> projects;
+//    @ManyToMany(
+//            fetch = FetchType.LAZY,
+//            cascade = {
+//                    CascadeType.PERSIST,
+//                    CascadeType.MERGE,
+//                    CascadeType.DETACH,
+//                    CascadeType.REFRESH })
+//    @JoinTable(
+//            name = "project_tools",
+//            joinColumns = @JoinColumn(name = "project_id"),
+//            inverseJoinColumns = @JoinColumn(name = "tool_id"))
+//    private Set<Project> projects;
 
     @Column(name = "name")
     private String name;
@@ -42,8 +42,8 @@ public class Tool {
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public Set<Project> getProject() { return projects; }
-    public void setProject(Set<Project> projects) { this.projects = projects; }
+//    public Set<Project> getProject() { return projects; }
+//    public void setProject(Set<Project> projects) { this.projects = projects; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
