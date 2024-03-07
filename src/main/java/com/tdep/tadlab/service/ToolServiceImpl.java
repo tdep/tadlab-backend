@@ -45,10 +45,10 @@ public class ToolServiceImpl implements ToolService {
                         tool.getImageUrl());
             }
 
-            if (Objects.nonNull(tool.getProject())) {
-                toolDB.setProject(
-                        tool.getProject());
-            }
+//            if (Objects.nonNull(tool.getProject())) {
+//                toolDB.setProject(
+//                        tool.getProject());
+//            }
         }
 
         assert toolDB != null;
