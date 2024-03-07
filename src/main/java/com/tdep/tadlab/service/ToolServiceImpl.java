@@ -44,7 +44,7 @@ public class ToolServiceImpl implements ToolService {
                 toolDB.setImageUrl(
                         tool.getImageUrl());
             }
-
+// TODO: Figure out
 //            if (Objects.nonNull(tool.getProject())) {
 //                toolDB.setProject(
 //                        tool.getProject());
