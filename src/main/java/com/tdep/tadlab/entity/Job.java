@@ -1,4 +1,4 @@
-package com.tdep.tadlab.model;
+package com.tdep.tadlab.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

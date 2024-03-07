@@ -1,7 +1,7 @@
 package com.tdep.tadlab.controller;
 
 import com.tdep.tadlab.dao.JobDao;
-import com.tdep.tadlab.model.Job;
+import com.tdep.tadlab.entity.Job;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;

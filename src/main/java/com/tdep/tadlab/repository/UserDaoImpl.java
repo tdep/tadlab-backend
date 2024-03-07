@@ -1,7 +1,7 @@
 package com.tdep.tadlab.repository;
 
 import com.tdep.tadlab.dao.UserDao;
-import com.tdep.tadlab.model.User;
+import com.tdep.tadlab.entity.User;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;

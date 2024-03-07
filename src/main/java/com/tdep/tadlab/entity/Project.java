@@ -1,12 +1,18 @@
-package com.tdep.tadlab.model;
+package com.tdep.tadlab.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Data
 @Table(name = "projects")
+@AllArgsConstructor
+@Builder
 public class Project {
 
     @Id
@@ -72,3 +78,4 @@ public class Project {
                 ", imageUrl=" + imageUrl + "]";
     }
 }
+

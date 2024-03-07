@@ -1,6 +1,6 @@
 package com.tdep.tadlab.dao;
 
-import com.tdep.tadlab.model.Job;
+import com.tdep.tadlab.entity.Job;
 import java.util.List;
 import java.util.Optional;
 

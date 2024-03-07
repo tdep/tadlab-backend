@@ -1,9 +1,10 @@
-package com.tdep.tadlab.model;
+package com.tdep.tadlab.entity;
 
 import jakarta.persistence.*;
 
 import java.util.Set;
-
+//TODO: Create tools Table
+//TODO: Create tool_links Table
 @Entity
 @Table(name="tools")
 public class Tool {

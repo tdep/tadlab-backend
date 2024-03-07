@@ -1,6 +1,8 @@
-package com.tdep.tadlab.model;
+package com.tdep.tadlab.entity;
 
 import jakarta.persistence.*;
+
+//TODO: Create project_links table
 
 @Entity
 @Table(name="project_links")
