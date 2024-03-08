@@ -13,7 +13,7 @@ import java.util.List;
 public class ToolController {
 
     @Autowired private ToolService toolService;
-    private final String crossOrigin = "PostmanRuntime/7.36.3";
+    private final String crossOrigin = "http://localhost:3000";
 
     @CrossOrigin(value = crossOrigin)
     @PostMapping("/tools")

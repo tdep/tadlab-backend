@@ -15,7 +15,7 @@ public class ProjectController {
     @Autowired private ProjectService projectService;
 
     //    TODO: Change cross origins
-    private final String crossOrigin = "PostmanRuntime/7.36.3";
+    private final String crossOrigin = "http://localhost:3000";
 
     @CrossOrigin(value = crossOrigin)
     @PostMapping("/projects")
