@@ -13,7 +13,7 @@ import java.util.List;
 public class ProjectLinkController {
 
     @Autowired private ProjectLinkService projectLinkService;
-    private final String crossOrigin = "http://localhost:3000";
+    private final String crossOrigin = "PostmanRuntime/7.36.3";
 
     @CrossOrigin(value = crossOrigin)
     @PostMapping("/projectlinks")
