@@ -50,6 +50,11 @@ public class ProjectServiceImpl implements ProjectService {
                 projectDB.setImageUrl(
                         project.getImageUrl());
             }
+
+            if (Objects.nonNull(project.getProjectLinks())) {
+                projectDB.setProjectLinks(
+                        project.getProjectLinks());
+            }
         }
         assert projectDB != null;
         return projectRepository.save(projectDB);

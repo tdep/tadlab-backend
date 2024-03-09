@@ -28,6 +28,11 @@ public class Project {
 
     @Column(name = "image_url")
     private String imageUrl;
+
+    @OneToMany (fetch = FetchType.LAZY)
+    @JoinColumn (name = "project_id", referencedColumnName = "id")
+    private Set<ProjectLink> projectLinks;
+
 //    @OneToMany
 //    private List<ProjectLink> projectLinks;
 //    @ManyToMany(
@@ -63,6 +68,10 @@ public class Project {
 
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
+    public Set<ProjectLink> getProjectLinks() {
+        return projectLinks;
+    }
 
 //    public List<ProjectLink> getProjectLinks() { return projectLinks; }
 //    public void setProjectLinks(List<ProjectLink> projectLinks) { this.projectLinks = projectLinks; }

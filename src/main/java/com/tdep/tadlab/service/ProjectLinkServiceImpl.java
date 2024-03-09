@@ -45,10 +45,10 @@ public class ProjectLinkServiceImpl implements ProjectLinkService {
                         projectLink.getUrl());
             }
 
-//            if (Objects.nonNull(projectLink.getProject())) {
-//                projectLinkDB.setProject(
-//                        projectLink.getProject());
-//            }
+            if (Objects.nonNull(projectLink.getProjectId())) {
+                projectLinkDB.setProjectId(
+                        projectLink.getProjectId());
+            }
         }
 
         assert projectLinkDB != null;
