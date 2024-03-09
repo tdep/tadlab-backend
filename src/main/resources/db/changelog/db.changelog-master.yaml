@@ -511,3 +511,51 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
+
+  - changeSet:
+      id: 18
+      author: tdep
+      changes:
+        - dropTable:
+            tableName: project_links
+
+  - changeSet:
+      id: 19
+      author: tdep
+      changes:
+        - createTable:
+            tableName: project_links
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: project_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: url
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: link_type
+                  type: varchar(255)
+        - addForeignKeyConstraint:
+            baseColumnNames: project_id
+            baseTableName: project_links
+            constraintName: fk_project_link
+            referencedColumnNames: id
+            referencedTableName: projects
+            onDelete: CASCADE
+            onUpdate: CASCADE
