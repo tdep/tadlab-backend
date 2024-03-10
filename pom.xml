@@ -71,12 +71,6 @@
       <scope>test</scope>
     </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>org.liquibase</groupId>-->
-<!--      <artifactId>liquibase-core</artifactId>-->
-<!--      <version>4.23.0</version>-->
-<!--    </dependency>-->
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -143,12 +137,17 @@
             <goals><goal>copy</goal></goals>
             <configuration>
               <artifactItems>
-                <artifactItem>
-                  <groupId>org.liquibase</groupId>
-                  <artifactId>liquibase-core</artifactId>
-                  <version>3.4.1</version>
-                  <destFileName>liquibase.jar</destFileName>
-                </artifactItem>
+<!--                <artifactItem>-->
+<!--                  <groupId>org.liquibase</groupId>-->
+<!--                  <artifactId>liquibase-core</artifactId>-->
+<!--                  <version>3.4.1</version>-->
+<!--                  <configutation>-->
+<!--                    <propertyFile>-->
+<!--                      src/main/resources/liquibase.properties-->
+<!--                    </propertyFile>-->
+<!--                  </configutation>-->
+<!--                  <destFileName>liquibase.jar</destFileName>-->
+<!--                </artifactItem>-->
                 <artifactItem>
                   <groupId>org.yaml</groupId>
                   <artifactId>snakeyaml</artifactId>
