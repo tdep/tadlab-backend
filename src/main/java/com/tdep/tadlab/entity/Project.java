@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.List;
 import java.util.Set;
@@ -33,28 +34,19 @@ public class Project {
     @JoinColumn (name = "project_id", referencedColumnName = "id")
     private Set<ProjectLink> projectLinks;
 
-//    @OneToMany
-//    private List<ProjectLink> projectLinks;
-//    @ManyToMany(
-//            fetch = FetchType.LAZY,
-//            cascade = {
-//                    CascadeType.PERSIST,
-//                    CascadeType.MERGE,
-//                    CascadeType.DETACH,
-//                    CascadeType.REFRESH })
-//    @JoinTable(
-//            name = "project_tools",
-//            joinColumns = @JoinColumn(name = "project_id"),
-//            inverseJoinColumns = @JoinColumn(name = "tool_id"))
-//    private Set<Tool> tools;
+    @ManyToMany
+    @JoinColumn (name = "project_id", referencedColumnName = "id")
+    private Set<Tool> tools;
 
     public Project() {
     }
 
-    public Project(String title, String description, String imageUrl) {
+    public Project(String title, String description, String imageUrl, Set<ProjectLink> projectLinks, Set<Tool> tools) {
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
+        this.projectLinks = projectLinks;
+        this. tools = tools;
     }
 
     public int getId() { return id;}
@@ -69,15 +61,12 @@ public class Project {
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
-    public Set<ProjectLink> getProjectLinks() {
-        return projectLinks;
-    }
+    public Set<ProjectLink> getProjectLinks() { return projectLinks; }
+    public void setProjectLinks(Set<ProjectLink> projectLinks) { this.projectLinks = projectLinks; }
 
-//    public List<ProjectLink> getProjectLinks() { return projectLinks; }
-//    public void setProjectLinks(List<ProjectLink> projectLinks) { this.projectLinks = projectLinks; }
-//
-//    public Set<Tool> getProjectTools() { return tools; }
-//    public void setProjectTools(Set<Tool> tools) { this.tools = tools; }
+    public Set<Tool> getTools() { return tools;}
+    public void setTools(Set<Tool> tools) { this.tools = tools; }
+
 
     @Override
     public String toString() {
