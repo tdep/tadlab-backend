@@ -1,79 +1,70 @@
 package com.tdep.tadlab.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import org.antlr.v4.runtime.misc.NotNull;
-
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
-@Table(name = "projects")
-@AllArgsConstructor
-@Builder
-public class Project {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
-    @Column(name = "title")
-    private String title;
+public class Project extends PortfolioEntry {
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(
+            name = "project_tools",
+            joinColumns = { @JoinColumn(name = "project_id") },
+            inverseJoinColumns = { @JoinColumn(name = "tool_id") },
+            uniqueConstraints = {
+                    @UniqueConstraint(
+                            columnNames = { "project_id", "student_id" }
+                    )
+            }
+    )
+    private Set<Tool> tools = new HashSet<>();
 
-    @OneToMany (fetch = FetchType.LAZY)
-    @JoinColumn (name = "project_id", referencedColumnName = "id")
-    private Set<ProjectLink> projectLinks;
-
-    @ManyToMany
-    @JoinColumn (name = "project_id", referencedColumnName = "id")
-    private Set<Tool> tools;
-
+    public Project(String name, EntryType entryType) {
+        super(name, entryType);
+    }
     public Project() {
     }
 
-    public Project(String title, String description, String imageUrl, Set<ProjectLink> projectLinks, Set<Tool> tools) {
-        this.title = title;
+    public Project(String description) {
         this.description = description;
-        this.imageUrl = imageUrl;
-        this.projectLinks = projectLinks;
-        this. tools = tools;
     }
 
-    public int getId() { return id;}
-    public void setId(int id) { this.id = id; }
-
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
-
-    public Set<ProjectLink> getProjectLinks() { return projectLinks; }
-    public void setProjectLinks(Set<ProjectLink> projectLinks) { this.projectLinks = projectLinks; }
-
-    public Set<Tool> getTools() { return tools;}
-    public void setTools(Set<Tool> tools) { this.tools = tools; }
-
-
-    @Override
-    public String toString() {
-        return "Project [" +
-                "title=" + title + ", id=" + id +
-                ", description=" + description +
-                ", imageUrl=" + imageUrl + "]";
+    public String getDescription() {
+        return description;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void addTool(Tool tool) {
+        boolean added = tools.add(tool);
+        if(added) {
+            tool.getProjects().add(this);
+        }
+    }
+
+    public void removeTool(Tool tool) {
+        boolean removed = tools.remove(tool);
+        if(removed) {
+            tool.getProjects().remove(this);
+        }
+    }
+
+    public Set<Tool> getTools() {
+        return tools;
+    }
+
+    public void setTools(Set<Tool> tools) {
+        this.tools = tools;
+    }
+
 }
 

@@ -30,11 +30,11 @@ public class ProjectServiceImpl implements ProjectService {
         if (projectRepository.findById(projectId).isPresent()) {
             projectDB = projectRepository.findById(projectId).get();
 
-            if (Objects.nonNull(project.getTitle())
+            if (Objects.nonNull(project.getName())
             && !"".equalsIgnoreCase(
-                    project.getTitle())) {
-                projectDB.setTitle(
-                        project.getTitle());
+                    project.getName())) {
+                projectDB.setName(
+                        project.getName());
             }
 
             if (Objects.nonNull(project.getDescription())
@@ -44,16 +44,19 @@ public class ProjectServiceImpl implements ProjectService {
                         project.getDescription());
             }
 
-            if (Objects.nonNull(project.getImageUrl())
-            && !"".equalsIgnoreCase(
-                    project.getImageUrl())) {
-                projectDB.setImageUrl(
-                        project.getImageUrl());
+            if (Objects.nonNull(project.getEntryType())) {
+                projectDB.setEntryType(
+                        project.getEntryType());
             }
 
-            if (Objects.nonNull(project.getProjectLinks())) {
-                projectDB.setProjectLinks(
-                        project.getProjectLinks());
+            if (Objects.nonNull(project.getUrls())) {
+                projectDB.setUrls(
+                        project.getUrls());
+            }
+
+            if (Objects.nonNull(project.getTools())) {
+                projectDB.setTools(
+                        project.getTools());
             }
         }
         assert projectDB != null;

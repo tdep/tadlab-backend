@@ -38,17 +38,20 @@ public class ToolServiceImpl implements ToolService {
                         tool.getName());
             }
 
-            if (Objects.nonNull(tool.getImageUrl())
-                    && !"".equalsIgnoreCase(
-                    tool.getImageUrl())) {
-                toolDB.setImageUrl(
-                        tool.getImageUrl());
+            if (Objects.nonNull(tool.getEntryType())) {
+                toolDB.setEntryType(
+                        tool.getEntryType());
             }
-// TODO: Figure out
-//            if (Objects.nonNull(tool.getProject())) {
-//                toolDB.setProject(
-//                        tool.getProject());
-//            }
+
+            if (Objects.nonNull(tool.getUrls())) {
+                toolDB.setUrls(
+                        tool.getUrls());
+            }
+
+            if (Objects.nonNull(tool.getProjects())) {
+                toolDB.setProjects(
+                        tool.getProjects());
+            }
         }
 
         assert toolDB != null;
