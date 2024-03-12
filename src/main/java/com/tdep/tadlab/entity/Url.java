@@ -1,18 +1,27 @@
 package com.tdep.tadlab.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "urls")
 public class Url {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
+
+    @Column(name = "url", nullable = false, length = 1024)
     private String url;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "url_type", nullable = false, length = 255)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private UrlType urlType;
 
     @ManyToMany(mappedBy = "portfolio_entries")

@@ -6,11 +6,11 @@ https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
 http://www.liquibase.org/xml/ns/dbchangelog
 https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="/db/changelog/scripts/create_projects_table.sql"/>
-    <include file="/db/changelog/scripts/insert_into_projects.sql"/>
-    <include file="/db/changelog/scripts/create_tools_table.sql"/>
-    <include file="/db/changelog/scripts/insert_into_tools.sql"/>
-    <include file="/db/changelog/scripts/create_project_links_table.sql"/>
-    <include file="/db/changelog/scripts/insert_into_project_links.sql"/>
+    <include file="/db/changelog/scripts/drop_portfolio_tables.sql"/>
+    <include file="/db/changelog/scripts/create_portfolio_tables.sql"/>
+<!--    <include file="/db/changelog/scripts/insert_into_projects.sql"/>-->
+<!--    <include file="/db/changelog/scripts/create_tools_table.sql"/>-->
+<!--    <include file="/db/changelog/scripts/insert_into_tools.sql"/>-->
+<!--    <include file="/db/changelog/scripts/drop_project_links_table.sql"/>-->
 
 </databaseChangeLog>

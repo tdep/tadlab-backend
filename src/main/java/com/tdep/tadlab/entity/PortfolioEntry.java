@@ -3,13 +3,16 @@ package com.tdep.tadlab.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.Type;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Entity
-@Table
+@Table(name = "portfolio_entries")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class PortfolioEntry {
 
@@ -22,7 +25,9 @@ public class PortfolioEntry {
     private String name;
 
     @Setter
-    @Column(name = "entry_type", nullable = false, length = 255)
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "entry_type", name = "entry_type", nullable = false, length = 255)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private EntryType entryType;
 
     @ManyToMany(cascade = {
