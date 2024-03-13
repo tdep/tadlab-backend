@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "projects")
 public class Project extends PortfolioEntry {
 
     @Column(name = "description")
@@ -20,7 +21,7 @@ public class Project extends PortfolioEntry {
             inverseJoinColumns = { @JoinColumn(name = "tool_id") },
             uniqueConstraints = {
                     @UniqueConstraint(
-                            columnNames = { "project_id", "student_id" }
+                            columnNames = { "project_id", "tool_id" }
                     )
             }
     )
