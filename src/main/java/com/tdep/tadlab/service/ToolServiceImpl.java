@@ -43,11 +43,6 @@ public class ToolServiceImpl implements ToolService {
                         tool.getEntryType());
             }
 
-            if (Objects.nonNull(tool.getUrls())) {
-                toolDB.setUrls(
-                        tool.getUrls());
-            }
-
             if (Objects.nonNull(tool.getProjects())) {
                 toolDB.setProjects(
                         tool.getProjects());

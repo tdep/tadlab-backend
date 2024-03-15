@@ -4,11 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcType;
-import org.hibernate.annotations.Type;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Entity
@@ -21,30 +17,14 @@ public class PortfolioEntry {
     private Long id;
 
     @Setter
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
     @Setter
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "entry_type", name = "entry_type", nullable = false, length = 255)
+    @Column(columnDefinition = "entry_type", name = "entry_type", nullable = false, length = 50)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private EntryType entryType;
-
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(
-            name = "portfolio_entry_urls",
-            joinColumns = { @JoinColumn(name = "portfolio_entry_id") },
-            inverseJoinColumns = { @JoinColumn(name = "url_id") },
-            uniqueConstraints = {
-                    @UniqueConstraint(
-                            columnNames = { "portfolio_entry_id", "url_id"}
-                    )
-            }
-    )
-    private Set<Url> urls = new HashSet<>();
 
     public PortfolioEntry(String name, EntryType entryType) {
         this.name = name;
@@ -52,28 +32,6 @@ public class PortfolioEntry {
     }
 
     public PortfolioEntry() {
-    }
-
-    public void addUrl(Url url) {
-        boolean added = urls.add(url);
-        if(added) {
-            url.getPortfolioEntries().add(this);
-        }
-    }
-
-    public void removeUrl(Url url) {
-        boolean removed = urls.remove(url);
-        if(removed) {
-            url.getPortfolioEntries().remove(this);
-        }
-    }
-
-    public Set<Url> getUrls() {
-        return urls;
-    }
-
-    public void setUrls(Set<Url> urls) {
-        this.urls = urls;
     }
 
     @Override

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+<!--        Database connection properties -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://ec2-52-206-14-156.compute-1.amazonaws.com:5432/d78hta03ul50g4</property>
+        <property name="hibernate.connection.username">aobjyqqlcpxoka</property>
+        <property name="hibernate.connection.password">86c54c8513b87391ea01a785a0426cf07a80c742d81fb93da08115f29f782d62</property>
+
+<!--        Other Hibernate properties -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+<!--        First time it is create and then onwards update -->
+        <property name="hbm2ddl.auto">update</property>
+
+<!--        Mapping files or annotated classes -->
+<!--        Add entity classes or mapping files here -->
+        <mapping class="com.tdep.tadlab.entity.PortfolioEntry"/>
+
+    </session-factory>
+</hibernate-configuration>

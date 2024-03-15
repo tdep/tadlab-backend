@@ -48,16 +48,6 @@ public class ProjectServiceImpl implements ProjectService {
                 projectDB.setEntryType(
                         project.getEntryType());
             }
-
-            if (Objects.nonNull(project.getUrls())) {
-                projectDB.setUrls(
-                        project.getUrls());
-            }
-
-            if (Objects.nonNull(project.getTools())) {
-                projectDB.setTools(
-                        project.getTools());
-            }
         }
         assert projectDB != null;
         return projectRepository.save(projectDB);

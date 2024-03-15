@@ -1,11 +1,6 @@
 package com.tdep.tadlab.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.JdbcType;
-import org.hibernate.dialect.PostgreSQLEnumJdbcType;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "urls")
@@ -14,24 +9,21 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
     @Column(name = "url", nullable = false, length = 1024)
     private String url;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "url_type", nullable = false, length = 255)
-    @JdbcType(PostgreSQLEnumJdbcType.class)
-    private UrlType urlType;
+    @Column(name = "entry_id", nullable = false)
+    private Long entryId;
 
-    @ManyToMany(mappedBy = "portfolio_entries")
-    private Set<PortfolioEntry> portfolioEntries = new HashSet<>();
 
-    public Url(String name, String url, UrlType urlType) {
+
+    public Url(String name, String url, Long entryId) {
         this.name = name;
         this.url = url;
-        this.urlType = urlType;
+        this.entryId = entryId;
     }
 
     public Url() {
@@ -58,41 +50,14 @@ public class Url {
         this.url = url;
     }
 
-    public void addPortfolioEntry(PortfolioEntry portfolioEntry) {
-        boolean added = portfolioEntries.add(portfolioEntry);
-        if (added) {
-            portfolioEntry.getUrls().add(this);
-        }
-    }
-
-    public void removePortfolioEntry(PortfolioEntry portfolioEntry) {
-        boolean removed = portfolioEntries.remove(portfolioEntry);
-        if (removed) {
-            portfolioEntry.getUrls().remove(this);
-        }
-    }
-
-    public UrlType getUrlType() {
-        return urlType;
-    }
-    public void setUrlType(UrlType urlType) {
-        this.urlType = urlType;
-    }
+    public Long getEntryId() { return entryId; }
+    public void setEntryId(Long entryId) { this.entryId = entryId; }
 
     @Override
     public String toString() {
         return  "Url{" +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
-                ", url_type='" + urlType + '\'' +
                 '}';
-    }
-
-    public Set<PortfolioEntry> getPortfolioEntries() {
-        return portfolioEntries;
-    }
-
-    public void setPortfolioEntries(Set<PortfolioEntry> portfolioEntries) {
-        this.portfolioEntries = portfolioEntries;
     }
 }

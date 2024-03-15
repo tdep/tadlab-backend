@@ -11,22 +11,6 @@ public class Project extends PortfolioEntry {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(
-            name = "project_tools",
-            joinColumns = { @JoinColumn(name = "project_id") },
-            inverseJoinColumns = { @JoinColumn(name = "tool_id") },
-            uniqueConstraints = {
-                    @UniqueConstraint(
-                            columnNames = { "project_id", "tool_id" }
-                    )
-            }
-    )
-    private Set<Tool> tools = new HashSet<>();
-
     public Project(String name, EntryType entryType) {
         super(name, entryType);
     }
@@ -45,27 +29,13 @@ public class Project extends PortfolioEntry {
         this.description = description;
     }
 
-    public void addTool(Tool tool) {
-        boolean added = tools.add(tool);
-        if(added) {
-            tool.getProjects().add(this);
-        }
+    @Override
+    public String toString() {
+        return  "Url{" +
+                ", name='" + super.getName() + '\'' +
+                ", entry type='" + super.getEntryType() + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
-
-    public void removeTool(Tool tool) {
-        boolean removed = tools.remove(tool);
-        if(removed) {
-            tool.getProjects().remove(this);
-        }
-    }
-
-    public Set<Tool> getTools() {
-        return tools;
-    }
-
-    public void setTools(Set<Tool> tools) {
-        this.tools = tools;
-    }
-
 }
 

@@ -17,20 +17,6 @@ public class Tool extends PortfolioEntry {
     public Tool() {
     }
 
-    public void addProject(Project project) {
-        boolean added = projects.add(project);
-        if (added) {
-            project.getTools().add(this);
-        }
-    }
-
-    public void removeProject(Project project) {
-        boolean removed = projects.remove(project);
-        if (removed) {
-            project.getTools().remove(this);
-        }
-    }
-
     public Set<Project> getProjects() {
         return projects;
     }
