@@ -14,11 +14,3 @@ VALUES
 ('project-demo-link-2', 'thisIsATest.tadlab', 'DEMO'),
 ('project-image-link-2', 'thisIsATest.tadlab', 'IMAGE');
 
-INSERT INTO portfolio_entry_urls (portfolio_entry_id, url_id)
-VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(2, 4),
-(2, 5);
-
