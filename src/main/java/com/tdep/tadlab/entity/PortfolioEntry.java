@@ -6,19 +6,21 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
+import java.io.Serializable;
+
 @Getter
 @Entity
 @Table(name = "portfolio_entries")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class PortfolioEntry {
+@Inheritance( strategy = InheritanceType.JOINED )
+public class PortfolioEntry  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Setter
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
+    @Column(name = "entry_name")
+    private String entryName;
 
     @Setter
     @Enumerated(EnumType.STRING)
@@ -26,19 +28,28 @@ public class PortfolioEntry {
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private EntryType entryType;
 
-    public PortfolioEntry(String name, EntryType entryType) {
-        this.name = name;
+    public PortfolioEntry(String entryName, EntryType entryType) {
+        super();
+        this.entryName = entryName;
         this.entryType = entryType;
     }
 
+    public PortfolioEntry(EntryType entryType) {
+    }
+
     public PortfolioEntry() {
+        super();
+    }
+
+    public String getName() {
+        return entryName;
     }
 
     @Override
     public String toString() {
         return  "{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + entryName + '\'' +
                 ", entry_type='" + entryType + '\'' +
                 '}';
     }

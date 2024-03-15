@@ -19,42 +19,27 @@ import java.util.List;
 public class ProjectController {
 
     @Autowired private ProjectService projectService;
-    @Autowired private ProjectRepository projectRepository;
 
     @GetMapping("/projects")
-    public ResponseEntity<List<Project>> getAllProjects(@RequestParam(required = false) String name) {
-        try {
-            List<Project> projects = new ArrayList<Project>();
-
-            if (name == null) {
-                projects.addAll(projectRepository.findAll());
-            } else {
-                projects.addAll(projectRepository.findProjectByName(name));
-            }
-            if (projects.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(projects, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
-    @PostMapping("/projects")
-    public Project saveProject(@Validated @RequestBody Project project) {
-        return projectService.saveProject(project);
+    public ResponseEntity<List<Project>> getAllProjects(@RequestParam(required = false) String projectName) {
+        return projectService.getAllProjects(projectName);
     }
 
-    @GetMapping("/projects")
-    public List<Project> fetchProjectsList() {
-        return projectService.fetchProjectList();
+    @GetMapping("/projects/{id}")
+    public ResponseEntity<Project> getProjectById(@PathVariable("id") long projectId) {
+        return projectService.getProjectById(projectId);
     }
 
     @PutMapping("/projects/{id}")
-    public Project updateProject(@RequestBody Project project, @PathVariable("id") int projectId) {
-        return projectService.updateProject(project, projectId);
+    public ResponseEntity<Project> updateProject(@PathVariable("id") long projectId) {
+        return projectService.
     }
+
+    @PostMapping("/projects")
+    public ResponseEntity<Project> createProject(@RequestBody Project project) {
+
+    }
+
 
     @DeleteMapping("/projects/{id}")
     public String deleteProjectById(@PathVariable("id") int projectId) {

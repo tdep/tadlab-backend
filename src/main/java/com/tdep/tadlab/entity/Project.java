@@ -1,39 +1,46 @@
 package com.tdep.tadlab.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
 @Entity
 @Table(name = "projects")
+@PrimaryKeyJoinColumn(referencedColumnName = "entry_id")
+
 public class Project extends PortfolioEntry {
 
-    @Column(name = "description")
+    @Setter
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long projectId;
+
+    @Setter
+    private String projectName;
+
+    @Setter
     private String description;
 
-    public Project(String name, EntryType entryType) {
-        super(name, entryType);
+    public Project(Long projectId, String projectName, String description, EntryType entryType) {
+        super(entryType);
+        this.projectId = projectId;
+        this.projectName = projectName;
+        this.description = description;
     }
     public Project() {
-    }
-
-    public Project(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        super();
     }
 
     @Override
     public String toString() {
         return  "Url{" +
                 ", name='" + super.getName() + '\'' +
-                ", entry type='" + super.getEntryType() + '\'' +
+                ", entry type='" +  + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

@@ -1,17 +1,18 @@
 package com.tdep.tadlab.service;
 
 import com.tdep.tadlab.entity.Project;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Set;
 
 public interface ProjectService {
 
-    Project saveProject(Project project);
+    ResponseEntity<List<Project>> getAllProjects(String projectName);
 
-    List<Project> fetchProjectList();
+    ResponseEntity<Project> getProjectById(long projectId);
 
-    Project updateProject(Project project, int projectId);
+    ResponseEntity<Project> updateProject(long projectId, Project project);
 
     void deleteProjectById(int projectId);
 }

@@ -3,10 +3,16 @@ package com.tdep.tadlab.service;
 import com.tdep.tadlab.entity.Project;
 import com.tdep.tadlab.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -14,47 +20,49 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @Override
-    public Project saveProject(Project project) {
-        return projectRepository.save(project);
-    }
+    public ResponseEntity<List<Project>> getAllProjects(String projectName) {
+        try {
+            List<Project> projects = new ArrayList<Project>();
 
-    @Override
-    public List<Project> fetchProjectList() {
-        return (List<Project>) projectRepository.findAll();
-    }
-
-    @Override
-    public Project updateProject(Project project, int projectId) {
-        Project projectDB = null;
-        if (projectRepository.findById(projectId).isPresent()) {
-            projectDB = projectRepository.findById(projectId).get();
-
-            if (Objects.nonNull(project.getName())
-            && !"".equalsIgnoreCase(
-                    project.getName())) {
-                projectDB.setName(
-                        project.getName());
+            if (projectName == null) {
+                projects.addAll(projectRepository.findAll());
+            } else {
+                projects.addAll(projectRepository.findProjectByName(projectName));
+            }
+            if (projects.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            if (Objects.nonNull(project.getDescription())
-            && !"".equalsIgnoreCase(
-                    project.getDescription())) {
-                projectDB.setDescription(
-                        project.getDescription());
-            }
-
-            if (Objects.nonNull(project.getEntryType())) {
-                projectDB.setEntryType(
-                        project.getEntryType());
-            }
+            return new ResponseEntity<>(projects, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        assert projectDB != null;
-        return projectRepository.save(projectDB);
+
     }
 
-    @Override
-    public void deleteProjectById(int projectId) {
-        projectRepository.deleteById(projectId);
+    public ResponseEntity<Project> getProjectById(long projectId) {
+        Optional<Project> projectData = projectRepository.findById(projectId);
+
+        return projectData.map(
+                project -> new ResponseEntity<>(
+                        project, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(
+                        HttpStatus.NOT_FOUND));
     }
+
+    public ResponseEntity<Project> updateProject(long projectId, Project project) {
+        Optional<Project> projectData = projectRepository.findById(projectId);
+
+        if (projectData.isPresent()) {
+            Project _project = projectData.get();
+            _project.setProjectName(project.getProjectName());
+            _project.setDescription(project.getDescription());
+            _project.setEntryType(project.getEntryType());
+            return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+
 }

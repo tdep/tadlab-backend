@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProjectRepository extends JpaRepository<Project, Integer> {
+public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findProjectByName(String name);
 
 }
