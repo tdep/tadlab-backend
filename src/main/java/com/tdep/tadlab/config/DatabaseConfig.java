@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 //@Configuration(proxyBeanMethods = false)
 @Configuration
 public class DatabaseConfig {
-//  @Value("${spring.datasource.url}")
-//  private String dbUrl;
 
   @Bean
   public BasicDataSource dataSource() throws URISyntaxException {
