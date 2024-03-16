@@ -27,7 +27,7 @@ public class ProjectServiceImpl implements ProjectService {
             if (projectName == null) {
                 projects.addAll(projectRepository.findAll());
             } else {
-                projects.addAll(projectRepository.findProjectByName(projectName));
+                projects.addAll(projectRepository.findProjectsByName(projectName));
             }
             if (projects.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -50,6 +50,26 @@ public class ProjectServiceImpl implements ProjectService {
                         HttpStatus.NOT_FOUND));
     }
 
+    public ResponseEntity<Project> getProjectByName(String projectName) {
+        Optional<Project> projectData = projectRepository.findByName(projectName);
+
+        return projectData.map(
+                project -> new ResponseEntity<>(
+                        project, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(
+                        HttpStatus.NOT_FOUND));
+    }
+
+    public ResponseEntity<Project> createProject(Project project) {
+        try {
+            Project _project = projectRepository
+                    .save(new Project(project.getProjectName(), project.getDescription(), project.getEntryType()));
+            return new ResponseEntity<>(_project, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public ResponseEntity<Project> updateProject(long projectId, Project project) {
         Optional<Project> projectData = projectRepository.findById(projectId);
 
@@ -64,5 +84,21 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
+    public ResponseEntity<HttpStatus> deleteProject(long projectId) {
+        try {
+            projectRepository.deleteById(projectId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
+    public ResponseEntity<HttpStatus> deleteAllProjects() {
+        try {
+            projectRepository.deleteAll();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

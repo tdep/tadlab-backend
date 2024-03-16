@@ -1,16 +1,24 @@
 package com.tdep.tadlab.service;
 
 import com.tdep.tadlab.entity.Tool;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface ToolService {
 
-    Tool saveTool(Tool tool);
+    ResponseEntity<List<Tool>> getAllTools(String toolName);
 
-    List<Tool> fetchToolList();
+    ResponseEntity<Tool> getToolById(long toolId);
 
-    Tool updateTool(Tool tool, int toolId);
+    ResponseEntity<Tool> getToolByName(String toolName);
 
-    void deleteToolById(int toolId);
+    ResponseEntity<Tool> createTool(Tool tool);
+
+    ResponseEntity<Tool> updateTool(long toolId, Tool tool);
+
+    ResponseEntity<HttpStatus> deleteTool(long toolId);
+
+    ResponseEntity<HttpStatus> deleteAllTools();
 }

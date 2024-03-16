@@ -15,20 +15,21 @@ import java.util.Set;
 
 public class Project extends PortfolioEntry {
 
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "project_id")
     private long projectId;
 
     @Setter
+    @Column(name = "project_name")
     private String projectName;
 
     @Setter
+    @Column(name = "project_description")
     private String description;
 
-    public Project(Long projectId, String projectName, String description, EntryType entryType) {
+    public Project(String projectName, String description, EntryType entryType) {
         super(entryType);
-        this.projectId = projectId;
         this.projectName = projectName;
         this.description = description;
     }
@@ -38,10 +39,10 @@ public class Project extends PortfolioEntry {
 
     @Override
     public String toString() {
-        return  "Url{" +
-                ", name='" + super.getName() + '\'' +
-                ", entry type='" +  + '\'' +
+        return  "Tool{" +
+                ", name='" + projectName + '\'' +
                 ", description='" + description + '\'' +
+                ", entry type='" +  super.getEntryType() + '\'' +
                 '}';
     }
 }

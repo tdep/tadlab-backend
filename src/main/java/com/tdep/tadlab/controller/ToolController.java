@@ -3,42 +3,53 @@ package com.tdep.tadlab.controller;
 import com.tdep.tadlab.entity.Tool;
 import com.tdep.tadlab.service.ToolService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//TODO: Change cross origins
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1")
 public class ToolController {
 
     @Autowired private ToolService toolService;
-    private final String crossOrigin = "http://localhost:3000";
 
-    @CrossOrigin(value = crossOrigin)
-    @PostMapping("/tools")
-    public Tool saveTool(
-            @Validated @RequestBody Tool tool) {
-        return toolService.saveTool(tool);
-    }
-
-    @CrossOrigin(value = crossOrigin)
     @GetMapping("/tools")
-    public List<Tool> fetchToolList() {
-        return toolService.fetchToolList();
+    public ResponseEntity<List<Tool>> getAllTools(@RequestParam(required = false) String toolName) {
+        return toolService.getAllTools(toolName);
     }
 
-    @CrossOrigin(value = crossOrigin)
+    @GetMapping("/tools/{id}")
+    public ResponseEntity<Tool> getToolById(@PathVariable("id") long toolId) {
+        return toolService.getToolById(toolId);
+    }
+
+    @GetMapping("/tools/{name}")
+    public ResponseEntity<Tool> getToolByName(@PathVariable("name") String toolName) {
+        return toolService.getToolByName(toolName);
+    }
+
+    @PostMapping("/tools")
+    public ResponseEntity<Tool> createTool(@RequestBody Tool tool) {
+        return toolService.createTool(tool);
+    }
+
     @PutMapping("/tools/{id}")
-    public Tool updateTool(@RequestBody Tool tool, @PathVariable("id") int toolId) {
-        return toolService.updateTool(tool, toolId);
+    public ResponseEntity<Tool> updateTool(@PathVariable("id") long toolId, @RequestBody Tool tool) {
+        return toolService.updateTool(toolId, tool);
     }
 
-    @CrossOrigin(value = crossOrigin)
     @DeleteMapping("/tools/{id}")
-    public String deleteToolById(@PathVariable("id") int toolId) {
-        toolService.deleteToolById(
-                toolId);
-        return "Deleted Tool Successfully";
+    public ResponseEntity<HttpStatus> deleteTool(@PathVariable("id") long toolId) {
+        return toolService.deleteTool(toolId);
+    }
+
+    @DeleteMapping("/tools")
+    public ResponseEntity<HttpStatus> deleteAllTools() {
+        return toolService.deleteAllTools();
     }
 }

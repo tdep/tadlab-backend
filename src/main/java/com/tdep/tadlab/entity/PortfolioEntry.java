@@ -16,6 +16,7 @@ public class PortfolioEntry  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "entry_id")
     private long id;
 
     @Setter

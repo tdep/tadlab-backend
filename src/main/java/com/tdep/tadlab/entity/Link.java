@@ -12,7 +12,7 @@ import java.util.Optional;
 public class Link extends PortfolioEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Setter
     @Column(name = "name", nullable = false, length = 50)
@@ -20,11 +20,11 @@ public class Link extends PortfolioEntry {
 
     @Setter
     @Column(name = "url_id", nullable = false)
-    private Long urlId;
+    private long urlId;
 
     @Setter
     @Column(name = "entry_id", nullable = false)
-    private Long entryId;
+    private long entryId;
 
     @Setter
     @Column(name = "link_type", nullable = false)
@@ -32,7 +32,7 @@ public class Link extends PortfolioEntry {
 
     @Setter
     @Column(name = "project_id", nullable = true)
-    private Long projectId;
+    private long projectId;
 
     public Link(String name, EntryType entryType) {
         super(name, entryType);
@@ -41,7 +41,7 @@ public class Link extends PortfolioEntry {
     public Link() {
     }
 
-    public Link(String name, Long urlId, Long entryId, LinkType linkType, Long projectId) {
+    public Link(String name, long urlId, long entryId, LinkType linkType, long projectId) {
         this.urlId = urlId;
         this.entryId = entryId;
         this.linkType = linkType;
