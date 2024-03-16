@@ -6,17 +6,25 @@ import lombok.Setter;
 
 import java.util.Optional;
 
-@Entity
 @Getter
+@Entity
 @Table(name = "links")
+@PrimaryKeyJoinColumn(referencedColumnName = "entry_id")
+
 public class Link extends PortfolioEntry {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "link_id")
     private long id;
 
     @Setter
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
+    @Column(name = "link_name", nullable = false, length = 50)
+    private String linkName;
+
+    @Setter
+    @Column(name = "link_type", nullable = false)
+    private LinkType linkType;
 
     @Setter
     @Column(name = "url_id", nullable = false)
@@ -27,36 +35,29 @@ public class Link extends PortfolioEntry {
     private long entryId;
 
     @Setter
-    @Column(name = "link_type", nullable = false)
-    private LinkType linkType;
-
-    @Setter
     @Column(name = "project_id", nullable = true)
     private long projectId;
 
-    public Link(String name, EntryType entryType) {
-        super(name, entryType);
-    }
-
-    public Link() {
-    }
-
-    public Link(String name, long urlId, long entryId, LinkType linkType, long projectId) {
+    public Link(String linkName, LinkType linkType, long urlId, long entryId, long projectId, EntryType entryType) {
+        super(entryType);
+        this.linkName = linkName;
+        this.linkType = linkType;
         this.urlId = urlId;
         this.entryId = entryId;
-        this.linkType = linkType;
         this.projectId = projectId;
     }
+
+    public Link() { super(); }
 
     @Override
     public String toString() {
         return  "Url{" +
-                ", name='" + super.getName() + '\'' +
-                ", entry type='" + super.getEntryType() + '\'' +
+                ", name='" + linkName + '\'' +
                 ", link type='" + linkType + '\'' +
-                ", entry id='" + entryId + '\'' +
                 ", url id='" + urlId + '\'' +
+                ", entry id='" + entryId + '\'' +
                 ", project id='" + projectId + '\'' +
+                ", entry type='" + super.getEntryType() + '\'' +
                 '}';
     }
 }
