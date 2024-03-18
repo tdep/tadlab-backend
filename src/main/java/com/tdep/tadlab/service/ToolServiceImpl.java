@@ -18,15 +18,11 @@ public class ToolServiceImpl implements ToolService {
     @Autowired
     private ToolRepository toolRepository;
 
-    public ResponseEntity<List<Tool>> getAllTools(String toolName) {
+    public ResponseEntity<List<Tool>> getAllTools() {
         try {
-            List<Tool> tools = new ArrayList<>();
+            List<Tool> tools = new ArrayList<>(
+                    toolRepository.findAll());
 
-            if (toolName == null) {
-                tools.addAll(toolRepository.findAll());
-            } else {
-                tools.addAll(toolRepository.findToolsByName(toolName));
-            }
             if (tools.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -47,26 +43,13 @@ public class ToolServiceImpl implements ToolService {
                         HttpStatus.NOT_FOUND));
     }
 
-    public ResponseEntity<Tool> getToolByName(String toolName) {
-        Optional<Tool> toolData = toolRepository.findByName(toolName);
-
-        return toolData.map(
-                tool -> new ResponseEntity<>(
-                        tool, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(
-                        HttpStatus.NOT_FOUND));
-    }
-
     public ResponseEntity<Tool> createTool(Tool tool) {
         try {
             Tool _tool = toolRepository
                     .save(new Tool(
-                            tool.getName(),
-                            tool.getLinkId(),
-                            tool.getProjectId(),
-                            tool.getEntryId(),
-                            tool.getEntryName(),
-                            tool.getEntryType()));
+                            tool.getToolName(),
+                            tool.getProject(),
+                            tool.getLink()));
             return new ResponseEntity<>(_tool, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -79,11 +62,8 @@ public class ToolServiceImpl implements ToolService {
         if (toolData.isPresent()) {
             Tool _tool = toolData.get();
             _tool.setToolName(tool.getToolName());
-            _tool.setLinkId(tool.getLinkId());
-            _tool.setProjectId(tool.getProjectId());
-            _tool.setEntryId(tool.getEntryId());
-            _tool.setEntryName(tool.getEntryName());
-            _tool.setEntryType(tool.getEntryType());
+            _tool.setProject(tool.getProject());
+            _tool.setLink(tool.getLink());
             return new ResponseEntity<>(toolRepository.save(_tool), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

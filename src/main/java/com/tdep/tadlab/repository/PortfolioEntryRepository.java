@@ -10,7 +10,4 @@ import java.util.Optional;
 @Repository
 public interface PortfolioEntryRepository extends JpaRepository<PortfolioEntry, Long> {
 
-    List<PortfolioEntry> findPortfolioEntriesByName(String name);
-
-    Optional<PortfolioEntry> findByName(String name);
 }

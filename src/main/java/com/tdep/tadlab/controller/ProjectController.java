@@ -19,17 +19,12 @@ public class ProjectController {
 
     @GetMapping("/projects")
     public ResponseEntity<List<Project>> getAllProjects(@RequestParam(required = false) String projectName) {
-        return projectService.getAllProjects(projectName);
+        return projectService.getAllProjects();
     }
 
     @GetMapping("/projects/{id}")
     public ResponseEntity<Project> getProjectById(@PathVariable("id") long projectId) {
         return projectService.getProjectById(projectId);
-    }
-
-    @GetMapping("/projects/{name}")
-    public ResponseEntity<Project> getProjectByName(@PathVariable("name") String projectName) {
-        return projectService.getProjectByName(projectName);
     }
 
     @PostMapping("/projects")

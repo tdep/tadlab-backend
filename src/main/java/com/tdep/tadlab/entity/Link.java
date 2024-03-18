@@ -9,19 +9,11 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import java.util.Optional;
 
 @Getter
-@Entity
+@Entity(name = "Link")
 @Table(name = "links")
-@PrimaryKeyJoinColumn(referencedColumnName = "entry_id")
-
 public class Link extends PortfolioEntry {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "link_id")
-    private long id;
-
     @Setter
-    @Column(name = "link_name", nullable = false, length = 50)
     private String linkName;
 
     @Setter
@@ -30,38 +22,56 @@ public class Link extends PortfolioEntry {
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private LinkType linkType;
 
-    @Setter
-    @Column(name = "url_id", nullable = false)
-    private long urlId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Project project;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private Tool tool;
 
     @Setter
-    @Column(name = "entry_id", nullable = false)
-    private long entryId;
+    private String url;
 
-    @Setter
-    @Column(name = "project_id", nullable = true)
-    private long projectId;
-
-    public Link(String linkName, LinkType linkType, long urlId, long entryId, long projectId, String entryName, EntryType entryType) {
-        super(entryName, entryType);
+    public Link(String linkName, LinkType linkType, Project project, Tool tool, String url) {
         this.linkName = linkName;
         this.linkType = linkType;
-        this.urlId = urlId;
-        this.entryId = entryId;
-        this.projectId = projectId;
+        this.project = project;
+        this.tool = tool;
+        this.url = url;
     }
 
-    public Link() { super(); }
+    public Link() {
+
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+        project.addLink(this);
+    }
+
+    public void removeProject() {
+        this.project.removeLink(this);
+        this.project = null;
+    }
+
+    public void setTool(Tool tool) {
+        this.tool = tool;
+        tool.setLink(this);
+    }
+
+    public void removeTool() {
+        this.tool.removeLink();
+        this.tool = null;
+    }
 
     @Override
     public String toString() {
-        return  "Url{" +
-                ", name='" + linkName + '\'' +
-                ", link type='" + linkType + '\'' +
-                ", url id='" + urlId + '\'' +
-                ", entry id='" + entryId + '\'' +
-                ", project id='" + projectId + '\'' +
-                ", entry type='" + super.getEntryType() + '\'' +
+        return  "Link{" +
+                " id=" + this.getEntryId() +
+                " name=" + linkName +
+                ", project='" + project + '\'' +
+                ", tool='" + tool + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

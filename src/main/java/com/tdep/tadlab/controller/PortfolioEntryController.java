@@ -20,23 +20,13 @@ public class PortfolioEntryController {
     @Autowired private PortfolioEntryService portfolioEntryService;
 
     @GetMapping("/entries")
-    public ResponseEntity<List<PortfolioEntry>> getAllPortfolioEntries(@RequestParam(required = false) String entryName) {
-        return portfolioEntryService.getAllPortfolioEntries(entryName);
+    public ResponseEntity<List<PortfolioEntry>> getAllPortfolioEntries() {
+        return portfolioEntryService.getAllPortfolioEntries();
     }
 
     @GetMapping("/entries/{id}")
     public ResponseEntity<PortfolioEntry> getPortfolioEntryById(@PathVariable("id") long entryId) {
         return portfolioEntryService.getPortfolioEntryById(entryId);
-    }
-
-    @GetMapping("/entries/{name}")
-    public ResponseEntity<PortfolioEntry> getPortfolioEntryByName(@PathVariable("name") String entryName) {
-        return portfolioEntryService.getPortfolioEntryByName(entryName);
-    }
-
-    @PostMapping("/entries")
-    public ResponseEntity<PortfolioEntry> createPortfolioEntry(@RequestBody PortfolioEntry portfolioEntry) {
-        return portfolioEntryService.createPortfolioEntry(portfolioEntry);
     }
 
     @PutMapping("/entries/{id}")

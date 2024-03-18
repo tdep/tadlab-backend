@@ -20,17 +20,12 @@ public class ToolController {
 
     @GetMapping("/tools")
     public ResponseEntity<List<Tool>> getAllTools(@RequestParam(required = false) String toolName) {
-        return toolService.getAllTools(toolName);
+        return toolService.getAllTools();
     }
 
     @GetMapping("/tools/{id}")
     public ResponseEntity<Tool> getToolById(@PathVariable("id") long toolId) {
         return toolService.getToolById(toolId);
-    }
-
-    @GetMapping("/tools/{name}")
-    public ResponseEntity<Tool> getToolByName(@PathVariable("name") String toolName) {
-        return toolService.getToolByName(toolName);
     }
 
     @PostMapping("/tools")

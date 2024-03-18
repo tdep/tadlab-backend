@@ -8,13 +8,9 @@ import java.util.List;
 
 public interface PortfolioEntryService {
 
-    ResponseEntity<List<PortfolioEntry>> getAllPortfolioEntries(String entryName);
+    ResponseEntity<List<PortfolioEntry>> getAllPortfolioEntries();
 
     ResponseEntity<PortfolioEntry> getPortfolioEntryById(long entryId);
-
-    ResponseEntity<PortfolioEntry> getPortfolioEntryByName(String entryName);
-
-    ResponseEntity<PortfolioEntry> createPortfolioEntry(PortfolioEntry portfolioEntry);
 
     ResponseEntity<PortfolioEntry> updatePortfolioEntry(long entryId, PortfolioEntry portfolioEntry);
 

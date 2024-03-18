@@ -8,11 +8,9 @@ import java.util.List;
 
 public interface ToolService {
 
-    ResponseEntity<List<Tool>> getAllTools(String toolName);
+    ResponseEntity<List<Tool>> getAllTools();
 
     ResponseEntity<Tool> getToolById(long toolId);
-
-    ResponseEntity<Tool> getToolByName(String toolName);
 
     ResponseEntity<Tool> createTool(Tool tool);
 

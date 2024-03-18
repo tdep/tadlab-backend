@@ -20,8 +20,8 @@ public class LinkController {
     @Autowired private LinkService linkService;
 
     @GetMapping("/links")
-    public ResponseEntity<List<Link>> getAllLinks(@RequestParam(required = false) String linkName) {
-        return linkService.getAllLinks(linkName);
+    public ResponseEntity<List<Link>> getAllLinks() {
+        return linkService.getAllLinks();
     }
 
     @GetMapping("/links/{id}")
@@ -29,10 +29,6 @@ public class LinkController {
         return linkService.getLinkById(linkId);
     }
 
-    @GetMapping("/links/{name}")
-    public ResponseEntity<Link> getLinkByName(@PathVariable("name") String linkName) {
-        return linkService.getLinkByName(linkName);
-    }
 
     @PostMapping("/links")
     public ResponseEntity<Link> createLink(@RequestBody Link link) {

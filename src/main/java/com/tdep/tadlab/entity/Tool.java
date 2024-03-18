@@ -3,55 +3,65 @@ package com.tdep.tadlab.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.NaturalId;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
-@Entity
+@Entity(name = "Tool")
 @Table(name = "tools")
-@PrimaryKeyJoinColumn(referencedColumnName = "entry_id")
-
 public class Tool extends PortfolioEntry {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "tool_id")
-    private long toolId;
-
     @Setter
-    @Column(name = "tool_name")
+    @NaturalId
     private String toolName;
 
-    @Setter
-    @Column(name = "link_id")
-    private long linkId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Project project;
 
-    @Setter
-    @Column(name = "project_id")
-    private long projectId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private Link link;
 
-    @Setter
-    @Column(name = "entry_id")
-    private long entryId;
-
-    public Tool(String toolName, long linkId, long projectId, long entryId, String entryName, EntryType entryType) {
-        super(entryName, entryType);
+    public Tool(String toolName, Project project, Link link) {
         this.toolName = toolName;
-        this.linkId = linkId;
-        this.projectId = projectId;
-        this.entryId = entryId;
+        this.project = project;
+        this.link = link;
     }
 
-    public Tool() { super(); }
+    public Tool() {
+
+    }
+
+
+    public void setProject(Project project) {
+        this.project = project;
+        project.addTool(this);
+    }
+
+    public void removeProject() {
+        this.project.removeTool(this);
+        this.project = null;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
+        link.setTool(this);
+    }
+
+    public void removeLink() {
+        this.link.removeTool();
+        this.link = null;
+    }
 
     @Override
     public String toString() {
         return  "Tool{" +
-                ", name='" + toolName + '\'' +
-                ", name='" + linkId + '\'' +
-                ", name='" + projectId + '\'' +
-                ", name='" + super.getEntryType() + '\'' +
+                " id=" + this.getEntryId() +
+                " name=" + toolName +
+                ", project='" + project + '\'' +
+                ", link='" + link + '\'' +
                 '}';
     }
 }

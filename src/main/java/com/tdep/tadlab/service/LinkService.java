@@ -8,11 +8,9 @@ import java.util.List;
 
 public interface LinkService {
 
-    ResponseEntity<List<Link>> getAllLinks(String linkName);
+    ResponseEntity<List<Link>> getAllLinks();
 
     ResponseEntity<Link> getLinkById(long linkid);
-
-    ResponseEntity<Link> getLinkByName(String linkName);
 
     ResponseEntity<Link> createLink(Link link);
 

@@ -17,15 +17,11 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService{
     @Autowired
     private PortfolioEntryRepository portfolioEntryRepository;
 
-    public ResponseEntity<List<PortfolioEntry>> getAllPortfolioEntries(String entryName) {
+    public ResponseEntity<List<PortfolioEntry>> getAllPortfolioEntries() {
         try {
-            List<PortfolioEntry> portfolioEntries = new ArrayList<>();
+            List<PortfolioEntry> portfolioEntries = new ArrayList<>(
+                    portfolioEntryRepository.findAll());
 
-            if (entryName == null) {
-                portfolioEntries.addAll(portfolioEntryRepository.findAll());
-            } else {
-                portfolioEntries.addAll(portfolioEntryRepository.findPortfolioEntriesByName(entryName));
-            }
             if (portfolioEntries.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -46,34 +42,11 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService{
                         HttpStatus.NOT_FOUND));
     }
 
-    public ResponseEntity<PortfolioEntry> getPortfolioEntryByName(String entryName) {
-        Optional<PortfolioEntry> entryData = portfolioEntryRepository.findByName(entryName);
-
-        return entryData.map(
-                entry -> new ResponseEntity<>(
-                        entry, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(
-                        HttpStatus.NOT_FOUND));
-    }
-
-    public ResponseEntity<PortfolioEntry> createPortfolioEntry(PortfolioEntry portfolioEntry) {
-        try {
-            PortfolioEntry _portfolioEntry = portfolioEntryRepository
-                    .save(new PortfolioEntry(
-                            portfolioEntry.getEntryName(),
-                            portfolioEntry.getEntryType()));
-            return new ResponseEntity<>(_portfolioEntry, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     public ResponseEntity<PortfolioEntry> updatePortfolioEntry(long entryId, PortfolioEntry portfolioEntry) {
         Optional<PortfolioEntry> entryData = portfolioEntryRepository.findById(entryId);
 
         if (entryData.isPresent()) {
             PortfolioEntry _portfolioEntry = entryData.get();
-            _portfolioEntry.setEntryName(portfolioEntry.getEntryName());
             _portfolioEntry.setEntryType(portfolioEntry.getEntryType());
             return new ResponseEntity<>(portfolioEntryRepository.save(_portfolioEntry), HttpStatus.OK);
         } else {

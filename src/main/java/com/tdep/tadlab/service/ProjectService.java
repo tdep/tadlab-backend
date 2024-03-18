@@ -9,11 +9,9 @@ import java.util.Set;
 
 public interface ProjectService {
 
-    ResponseEntity<List<Project>> getAllProjects(String projectName);
+    ResponseEntity<List<Project>> getAllProjects();
 
     ResponseEntity<Project> getProjectById(long projectId);
-
-    ResponseEntity<Project> getProjectByName(String projectName);
 
     ResponseEntity<Project> createProject(Project project);
 

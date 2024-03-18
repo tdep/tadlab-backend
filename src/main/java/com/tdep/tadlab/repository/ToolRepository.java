@@ -10,8 +10,4 @@ import java.util.Optional;
 @Repository
 public interface ToolRepository extends JpaRepository<Tool, Long> {
 
-    List<Tool> findToolsByName(String name);
-
-    Optional<Tool> findByName(String name);
-
 }

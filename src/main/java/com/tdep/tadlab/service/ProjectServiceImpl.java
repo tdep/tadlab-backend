@@ -20,15 +20,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public ResponseEntity<List<Project>> getAllProjects(String projectName) {
+    public ResponseEntity<List<Project>> getAllProjects() {
         try {
-            List<Project> projects = new ArrayList<Project>();
+            List<Project> projects = new ArrayList<Project>(
+                    projectRepository.findAll());
 
-            if (projectName == null) {
-                projects.addAll(projectRepository.findAll());
-            } else {
-                projects.addAll(projectRepository.findProjectsByName(projectName));
-            }
             if (projects.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -49,25 +45,14 @@ public class ProjectServiceImpl implements ProjectService {
                         HttpStatus.NOT_FOUND));
     }
 
-    public ResponseEntity<Project> getProjectByName(String projectName) {
-        Optional<Project> projectData = projectRepository.findByName(projectName);
-
-        return projectData.map(
-                project -> new ResponseEntity<>(
-                        project, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(
-                        HttpStatus.NOT_FOUND));
-    }
-
     public ResponseEntity<Project> createProject(Project project) {
         try {
             Project _project = projectRepository
                     .save(new Project(
-                            project.getProjectName(),
-                            project.getDescription(),
-                            project.getEntryId(),
-                            project.getEntryName(),
-                            project.getEntryType()));
+                            project.getTitle(),
+                            project.getTools(),
+                            project.getProjectDetails(),
+                            project.getLinks()));
             return new ResponseEntity<>(_project, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -79,11 +64,10 @@ public class ProjectServiceImpl implements ProjectService {
 
         if (projectData.isPresent()) {
             Project _project = projectData.get();
-            _project.setProjectName(project.getProjectName());
-            _project.setDescription(project.getDescription());
-            _project.setEntryId(project.getEntryId());
-            _project.setEntryName(project.getEntryName());
-            _project.setEntryType(project.getEntryType());
+            _project.setTitle(project.getTitle());
+            _project.setTools(project.getTools());
+            _project.setProjectDetails(project.getProjectDetails());
+            _project.setLinks(project.getLinks());
             return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

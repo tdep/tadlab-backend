@@ -8,17 +8,14 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.io.Serializable;
 
+@Getter
 @MappedSuperclass
 public abstract class PortfolioEntry  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "entry_id")
-    private long id;
-
-    @Setter
-    @Column(name = "entry_name")
-    private String entryName;
+    private long entryId;
 
     @Setter
     @Enumerated(EnumType.STRING)
@@ -26,15 +23,10 @@ public abstract class PortfolioEntry  implements Serializable {
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private EntryType entryType;
 
-    public String getName() {
-        return entryName;
-    }
-
     @Override
     public String toString() {
         return  "{" +
-                "id=" + id +
-                ", name='" + entryName + '\'' +
+                "entry id=" + entryId +
                 ", entry_type='" + entryType + '\'' +
                 '}';
     }
