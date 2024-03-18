@@ -12,11 +12,10 @@ import java.util.Set;
 @Entity
 @Table(name = "projects")
 @PrimaryKeyJoinColumn(referencedColumnName = "entry_id")
-
 public class Project extends PortfolioEntry {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_id")
     private long projectId;
 
@@ -33,7 +32,6 @@ public class Project extends PortfolioEntry {
     private long entryId;
 
     public Project(String projectName, String description, long entryId, String entryName, EntryType entryType) {
-        super(entryName, entryType);
         this.projectName = projectName;
         this.description = description;
         this.entryId = entryId;
@@ -48,7 +46,6 @@ public class Project extends PortfolioEntry {
                 ", name='" + projectName + '\'' +
                 ", description='" + description + '\'' +
                 ", entry id='" + entryId + '\'' +
-                ", entry type='" +  super.getEntryType() + '\'' +
                 '}';
     }
 }
