@@ -9,17 +9,16 @@ import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
 @Entity(name = "ProjectDetails")
 @Table(name = "project_details")
 public class ProjectDetails extends PortfolioEntry {
 
     @Setter
-    @Getter
     @Column(name = "description")
     private String description;
 
     @Setter
-    @Getter
     @Column(name = "created")
     private Date created;
 
@@ -34,6 +33,16 @@ public class ProjectDetails extends PortfolioEntry {
     public void removeProject() {
         this.project.removeDetails();
         this.project = null;
+    }
+
+    public ProjectDetails(String description, Date created, Project project) {
+        this.description = description;
+        this.created = created;
+        this.project = project;
+    }
+
+    public ProjectDetails() {
+
     }
 
     @Override

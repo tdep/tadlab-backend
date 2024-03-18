@@ -19,7 +19,7 @@ public class ToolController {
     @Autowired private ToolService toolService;
 
     @GetMapping("/tools")
-    public ResponseEntity<List<Tool>> getAllTools(@RequestParam(required = false) String toolName) {
+    public ResponseEntity<List<Tool>> getAllTools() {
         return toolService.getAllTools();
     }
 
