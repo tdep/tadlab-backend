@@ -65,6 +65,7 @@ public class LinkServiceImpl implements LinkService {
                             link.getUrlId(),
                             link.getEntryId(),
                             link.getProjectId(),
+                            link.getEntryName(),
                             link.getEntryType()));
             return new ResponseEntity<>(_link, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -82,6 +83,7 @@ public class LinkServiceImpl implements LinkService {
             _link.setUrlId(link.getUrlId());
             _link.setEntryId(link.getEntryId());
             _link.setProjectId(link.getProjectId());
+            _link.setEntryName(link.getEntryName());
             _link.setEntryType(link.getEntryType());
             return new ResponseEntity<>(linkRepository.save(_link), HttpStatus.OK);
         } else {

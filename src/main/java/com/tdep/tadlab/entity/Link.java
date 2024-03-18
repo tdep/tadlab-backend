@@ -3,6 +3,8 @@ package com.tdep.tadlab.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.util.Optional;
 
@@ -23,7 +25,9 @@ public class Link extends PortfolioEntry {
     private String linkName;
 
     @Setter
-    @Column(name = "link_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "link_type", name = "link_type", nullable = false, length = 50)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private LinkType linkType;
 
     @Setter
@@ -38,8 +42,8 @@ public class Link extends PortfolioEntry {
     @Column(name = "project_id", nullable = true)
     private long projectId;
 
-    public Link(String linkName, LinkType linkType, long urlId, long entryId, long projectId, EntryType entryType) {
-        super(entryType);
+    public Link(String linkName, LinkType linkType, long urlId, long entryId, long projectId, String entryName, EntryType entryType) {
+        super(entryName, entryType);
         this.linkName = linkName;
         this.linkType = linkType;
         this.urlId = urlId;

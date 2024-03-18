@@ -63,6 +63,7 @@ public class UrlServiceImpl implements UrlService {
                             url.getUrlName(),
                             url.getUrl(),
                             url.getEntryId(),
+                            url.getEntryName(),
                             url.getEntryType()));
             return new ResponseEntity<>(_url, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -78,6 +79,7 @@ public class UrlServiceImpl implements UrlService {
             _url.setUrlName(url.getUrlName());
             _url.setUrl(url.getUrl());
             _url.setEntryId(url.getEntryId());
+            _url.setEntryName(url.getEntryName());
             _url.setEntryType(url.getEntryType());
             return new ResponseEntity<>(urlRepository.save(_url), HttpStatus.OK);
         } else {

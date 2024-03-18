@@ -35,8 +35,8 @@ public class Tool extends PortfolioEntry {
     @Column(name = "entry_id")
     private long entryId;
 
-    public Tool(String toolName, long linkId, long projectId, long entryId, EntryType entryType) {
-        super(entryType);
+    public Tool(String toolName, long linkId, long projectId, long entryId, String entryName, EntryType entryType) {
+        super(entryName, entryType);
         this.toolName = toolName;
         this.linkId = linkId;
         this.projectId = projectId;

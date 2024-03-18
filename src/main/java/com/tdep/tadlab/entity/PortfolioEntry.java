@@ -35,9 +35,6 @@ public class PortfolioEntry  implements Serializable {
         this.entryType = entryType;
     }
 
-    public PortfolioEntry(EntryType entryType) {
-    }
-
     public PortfolioEntry() {
         super();
     }

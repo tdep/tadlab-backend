@@ -32,8 +32,8 @@ public class Project extends PortfolioEntry {
     @Column(name = "entry_id")
     private long entryId;
 
-    public Project(String projectName, String description, long entryId, EntryType entryType) {
-        super(entryType);
+    public Project(String projectName, String description, long entryId, String entryName, EntryType entryType) {
+        super(entryName, entryType);
         this.projectName = projectName;
         this.description = description;
         this.entryId = entryId;

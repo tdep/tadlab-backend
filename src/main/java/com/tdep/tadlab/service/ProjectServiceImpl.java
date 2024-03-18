@@ -66,6 +66,7 @@ public class ProjectServiceImpl implements ProjectService {
                             project.getProjectName(),
                             project.getDescription(),
                             project.getEntryId(),
+                            project.getEntryName(),
                             project.getEntryType()));
             return new ResponseEntity<>(_project, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -81,6 +82,7 @@ public class ProjectServiceImpl implements ProjectService {
             _project.setProjectName(project.getProjectName());
             _project.setDescription(project.getDescription());
             _project.setEntryId(project.getEntryId());
+            _project.setEntryName(project.getEntryName());
             _project.setEntryType(project.getEntryType());
             return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
         } else {

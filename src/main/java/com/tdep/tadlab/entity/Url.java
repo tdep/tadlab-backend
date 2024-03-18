@@ -27,8 +27,8 @@ public class Url extends PortfolioEntry {
     @Column(name = "entry_id")
     private long entryId;
 
-    public Url(String urlName, String url, long entryId, EntryType entryType) {
-        super(entryType);
+    public Url(String urlName, String url, long entryId, String entryName, EntryType entryType) {
+        super(entryName, entryType);
         this.urlName = urlName;
         this.url = url;
         this.entryId = entryId;

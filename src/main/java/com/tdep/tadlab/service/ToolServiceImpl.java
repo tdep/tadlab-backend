@@ -65,6 +65,7 @@ public class ToolServiceImpl implements ToolService {
                             tool.getLinkId(),
                             tool.getProjectId(),
                             tool.getEntryId(),
+                            tool.getEntryName(),
                             tool.getEntryType()));
             return new ResponseEntity<>(_tool, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -81,6 +82,7 @@ public class ToolServiceImpl implements ToolService {
             _tool.setLinkId(tool.getLinkId());
             _tool.setProjectId(tool.getProjectId());
             _tool.setEntryId(tool.getEntryId());
+            _tool.setEntryName(tool.getEntryName());
             _tool.setEntryType(tool.getEntryType());
             return new ResponseEntity<>(toolRepository.save(_tool), HttpStatus.OK);
         } else {
