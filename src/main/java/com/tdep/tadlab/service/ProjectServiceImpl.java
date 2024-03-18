@@ -37,7 +37,6 @@ public class ProjectServiceImpl implements ProjectService {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     public ResponseEntity<Project> getProjectById(long projectId) {
@@ -63,7 +62,11 @@ public class ProjectServiceImpl implements ProjectService {
     public ResponseEntity<Project> createProject(Project project) {
         try {
             Project _project = projectRepository
-                    .save(new Project(project.getProjectName(), project.getDescription(), project.getEntryType()));
+                    .save(new Project(
+                            project.getProjectName(),
+                            project.getDescription(),
+                            project.getEntryId(),
+                            project.getEntryType()));
             return new ResponseEntity<>(_project, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -77,6 +80,7 @@ public class ProjectServiceImpl implements ProjectService {
             Project _project = projectData.get();
             _project.setProjectName(project.getProjectName());
             _project.setDescription(project.getDescription());
+            _project.setEntryId(project.getEntryId());
             _project.setEntryType(project.getEntryType());
             return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
         } else {

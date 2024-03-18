@@ -28,10 +28,15 @@ public class Project extends PortfolioEntry {
     @Column(name = "project_description")
     private String description;
 
-    public Project(String projectName, String description, EntryType entryType) {
+    @Setter
+    @Column(name = "entry_id")
+    private long entryId;
+
+    public Project(String projectName, String description, long entryId, EntryType entryType) {
         super(entryType);
         this.projectName = projectName;
         this.description = description;
+        this.entryId = entryId;
     }
     public Project() {
         super();
@@ -42,6 +47,7 @@ public class Project extends PortfolioEntry {
         return  "Tool{" +
                 ", name='" + projectName + '\'' +
                 ", description='" + description + '\'' +
+                ", entry id='" + entryId + '\'' +
                 ", entry type='" +  super.getEntryType() + '\'' +
                 '}';
     }

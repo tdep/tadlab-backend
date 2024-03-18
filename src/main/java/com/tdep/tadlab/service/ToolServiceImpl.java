@@ -60,7 +60,12 @@ public class ToolServiceImpl implements ToolService {
     public ResponseEntity<Tool> createTool(Tool tool) {
         try {
             Tool _tool = toolRepository
-                    .save(new Tool(tool.getName(), tool.getLinkId(), tool.getProjectId(), tool.getEntryType()));
+                    .save(new Tool(
+                            tool.getName(),
+                            tool.getLinkId(),
+                            tool.getProjectId(),
+                            tool.getEntryId(),
+                            tool.getEntryType()));
             return new ResponseEntity<>(_tool, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -75,6 +80,7 @@ public class ToolServiceImpl implements ToolService {
             _tool.setToolName(tool.getToolName());
             _tool.setLinkId(tool.getLinkId());
             _tool.setProjectId(tool.getProjectId());
+            _tool.setEntryId(tool.getEntryId());
             _tool.setEntryType(tool.getEntryType());
             return new ResponseEntity<>(toolRepository.save(_tool), HttpStatus.OK);
         } else {
