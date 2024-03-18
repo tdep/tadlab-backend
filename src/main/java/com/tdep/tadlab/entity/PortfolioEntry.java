@@ -9,8 +9,9 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import java.io.Serializable;
 
 @Getter
-@MappedSuperclass
-public abstract class PortfolioEntry  implements Serializable {
+@Entity(name = "PortfolioEntry")
+@Table(name = "portfolio_entry")
+public class PortfolioEntry  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +20,7 @@ public abstract class PortfolioEntry  implements Serializable {
 
     @Setter
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "entry_type", name = "entry_type", nullable = false, length = 50)
+    @Column(columnDefinition = "entrytype", name = "entry_type", nullable = false, length = 50)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private EntryType entryType;
 

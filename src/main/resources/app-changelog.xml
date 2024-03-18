@@ -7,7 +7,5 @@ http://www.liquibase.org/xml/ns/dbchangelog
 https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="/db/changelog/scripts/drop_portfolio_tables.sql"/>
-    <include file="/db/changelog/scripts/create_portfolio_tables.sql"/>
-    <include file="/db/changelog/scripts/insert_into_portfolio_tables.sql"/>
 
 </databaseChangeLog>
