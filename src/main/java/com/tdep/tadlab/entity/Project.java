@@ -16,21 +16,15 @@ import java.util.Set;
 @Table(name = "projects")
 public class Project extends PortfolioEntry {
 
+    @Column(name = "title")
     private String title;
 
-    @OneToMany(
-            mappedBy = "projects",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "projects", cascade = CascadeType.ALL)
+    @Column(name = "tools")
     private List<Tool> tools = new ArrayList<>();
 
-    @OneToOne(
-            mappedBy = "projects",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
+    @OneToOne(mappedBy = "projects", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Column(name = "details")
     private ProjectDetails projectDetails;
 
     @ManyToMany
@@ -39,6 +33,7 @@ public class Project extends PortfolioEntry {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "link_id")
     )
+    @Column(name = "links")
     private Set<Link> links = new HashSet<>();
 
     public Project(String title, List<Tool> tools, ProjectDetails details, Set<Link> links) {

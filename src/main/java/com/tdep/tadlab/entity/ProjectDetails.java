@@ -1,9 +1,6 @@
 package com.tdep.tadlab.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +19,8 @@ public class ProjectDetails extends PortfolioEntry {
     @Column(name = "created")
     private Date created;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private Project project;
 
     public void setProject(Project project) {

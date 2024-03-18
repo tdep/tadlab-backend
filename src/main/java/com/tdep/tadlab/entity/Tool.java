@@ -14,14 +14,20 @@ import java.util.Set;
 public class Tool extends PortfolioEntry {
 
     @Setter
-    @NaturalId
+    @Column(name = "tool_name")
     private String toolName;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "project")
     private Project project;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(
+            mappedBy = "tools",
+            orphanRemoval = true,
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY)
     @MapsId
+    @Column(name = "link")
     private Link link;
 
     public Tool(String toolName, Project project, Link link) {
@@ -33,7 +39,6 @@ public class Tool extends PortfolioEntry {
     public Tool() {
 
     }
-
 
     public void setProject(Project project) {
         this.project = project;
@@ -53,6 +58,19 @@ public class Tool extends PortfolioEntry {
     public void removeLink() {
         this.link.removeTool();
         this.link = null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        long id = this.getEntryId();
+        if (this == o) return true;
+        if (!(o instanceof Tool)) return false;
+        return id != 0 && id == ((Tool) o).getEntryId();
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 
     @Override
