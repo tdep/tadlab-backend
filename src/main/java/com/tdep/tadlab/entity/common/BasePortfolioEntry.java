@@ -1,34 +1,35 @@
-package com.tdep.tadlab.entity;
+package com.tdep.tadlab.entity.common;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.io.Serializable;
+import java.util.UUID;
 
-@Entity(name = "PortfolioEntry")
-@Table(name = "portfolio_entry")
-public class PortfolioEntry  implements Serializable {
+
+@MappedSuperclass
+public class BasePortfolioEntry implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "entry_id")
-    private long entryId;
+    @Column(columnDefinition =" BINARY(16)", updatable = false, nullable = false)
+    private int id;
 
     @Column(name = "entry_name")
     private String entryName;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "entrytype", name = "entry_type", nullable = true, length = 50)
+    @Column(columnDefinition = "entrytype", name = "entry_type", nullable = false, length = 50)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private EntryType entryType;
 
-    public PortfolioEntry(String entryName, EntryType entryType) {
+    public BasePortfolioEntry(String entryName, EntryType entryType) {
         this.entryName = entryName;
         this.entryType = entryType;
     }
 
-    public PortfolioEntry() {
+    public BasePortfolioEntry() {
 
     }
 
@@ -40,12 +41,12 @@ public class PortfolioEntry  implements Serializable {
         this.entryName = entryName;
     }
 
-    public long getEntryId() {
-        return entryId;
+    public int getEntryId() {
+        return id;
     }
 
-    public void setEntryId(long entryId) {
-        this.entryId = entryId;
+    public void setEntryId(int id) {
+        this.id = id;
     }
 
     public EntryType getEntryType() {
@@ -57,11 +58,19 @@ public class PortfolioEntry  implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BasePortfolioEntry that)) return false;
+        return id == that.id;
+    }
+
+    @Override
     public String toString() {
         return  "{" +
-                "entry id='" + entryId + '\'' +
+                "entry id='" + id + '\'' +
                 ", entry name='" + entryName + '\'' +
                 ", entry type='" + entryType + '\'' +
-                '}';
+                '}' +
+                super.toString();
     }
 }
