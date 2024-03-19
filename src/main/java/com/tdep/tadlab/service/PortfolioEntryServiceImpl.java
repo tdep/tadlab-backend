@@ -46,10 +46,13 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService{
         try {
             PortfolioEntry _portfolioEntry = portfolioEntryRepository
                     .save(new PortfolioEntry(
+                            portfolioEntry.getEntryName(),
                             portfolioEntry.getEntryType()
                     ));
+            System.out.println(portfolioEntry);
             return new ResponseEntity<>(_portfolioEntry, HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -58,7 +61,9 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService{
         Optional<PortfolioEntry> entryData = portfolioEntryRepository.findById(entryId);
 
         if (entryData.isPresent()) {
+            System.out.println(entryData.get());
             PortfolioEntry _portfolioEntry = entryData.get();
+            _portfolioEntry.setEntryName(portfolioEntry.getEntryName());
             _portfolioEntry.setEntryType(portfolioEntry.getEntryType());
             return new ResponseEntity<>(portfolioEntryRepository.save(_portfolioEntry), HttpStatus.OK);
         } else {

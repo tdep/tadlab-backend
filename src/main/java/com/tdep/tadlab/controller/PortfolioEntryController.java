@@ -30,12 +30,13 @@ public class PortfolioEntryController {
     }
 
     @PostMapping("/entries")
-    public ResponseEntity<PortfolioEntry> createPortfolioEntry(PortfolioEntry portfolioEntry) {
+    public ResponseEntity<PortfolioEntry> createPortfolioEntry(@RequestBody PortfolioEntry portfolioEntry) {
+        System.out.println(portfolioEntry);
         return portfolioEntryService.createPortfolioEntry(portfolioEntry);
     }
 
     @PutMapping("/entries/{id}")
-    public ResponseEntity<PortfolioEntry> updatePortfolioEntry(@PathVariable("id") long entryId, PortfolioEntry portfolioEntry) {
+    public ResponseEntity<PortfolioEntry> updatePortfolioEntry(@PathVariable("id") long entryId, @RequestBody PortfolioEntry portfolioEntry) {
         return portfolioEntryService.updatePortfolioEntry(entryId, portfolioEntry);
     }
 

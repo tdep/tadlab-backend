@@ -15,12 +15,16 @@ public class PortfolioEntry  implements Serializable {
     @Column(name = "entry_id")
     private long entryId;
 
+    @Column(name = "entry_name")
+    private String entryName;
+
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "entrytype", name = "entry_type", nullable = false, length = 50)
+    @Column(columnDefinition = "entrytype", name = "entry_type", nullable = true, length = 50)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private EntryType entryType;
 
-    public PortfolioEntry(EntryType entryType) {
+    public PortfolioEntry(String entryName, EntryType entryType) {
+        this.entryName = entryName;
         this.entryType = entryType;
     }
 
@@ -28,8 +32,16 @@ public class PortfolioEntry  implements Serializable {
 
     }
 
+    public String getEntryName() {
+        return entryName;
+    }
+
+    public void setEntryName(String entryName) {
+        this.entryName = entryName;
+    }
+
     public long getEntryId() {
-        return this.entryId;
+        return entryId;
     }
 
     public void setEntryId(long entryId) {
@@ -37,7 +49,7 @@ public class PortfolioEntry  implements Serializable {
     }
 
     public EntryType getEntryType() {
-        return this.entryType;
+        return entryType;
     }
 
     public void setEntryType(EntryType entryType) {
@@ -47,8 +59,9 @@ public class PortfolioEntry  implements Serializable {
     @Override
     public String toString() {
         return  "{" +
-                "entry id=" + entryId +
-                ", entry_type='" + entryType + '\'' +
+                "entry id='" + entryId + '\'' +
+                ", entry name='" + entryName + '\'' +
+                ", entry type='" + entryType + '\'' +
                 '}';
     }
 }
