@@ -1,6 +1,6 @@
 package com.tdep.tadlab.service;
 
-import com.tdep.tadlab.entity.Link;
+import com.tdep.tadlab.entity.projectDb.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -10,13 +10,13 @@ public interface LinkService {
 
     ResponseEntity<List<Link>> getAllLinks();
 
-    ResponseEntity<Link> getLinkById(long linkid);
+    ResponseEntity<Link> getLinkById(int id);
 
     ResponseEntity<Link> createLink(Link link);
 
-    ResponseEntity<Link> updateLink(long linkId, Link link);
+    ResponseEntity<Link> updateLink(int id, Link link);
 
-    ResponseEntity<HttpStatus> deleteLink(long linkId);
+    ResponseEntity<HttpStatus> deleteLink(int id);
 
     ResponseEntity<HttpStatus> deleteAllLinks();
 }
