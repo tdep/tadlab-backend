@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class LinkServiceImpl implements LinkService {
@@ -50,7 +49,8 @@ public class LinkServiceImpl implements LinkService {
                             link.getEntryName(),
                             link.getEntryType(),
                             link.getLinkType(),
-                            link.getUrl()
+                            link.getUrl(),
+                            link.getTool()
                     ));
             System.out.println(link);
             return new ResponseEntity<>(_link, HttpStatus.CREATED);
@@ -70,6 +70,7 @@ public class LinkServiceImpl implements LinkService {
             _link.setEntryType(link.getEntryType());
             _link.setLinkType(link.getLinkType());
             _link.setUrl(link.getUrl());
+            _link.setTool(link.getTool());
             return new ResponseEntity<>(linkRepository.save(_link), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
