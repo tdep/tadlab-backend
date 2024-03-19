@@ -42,6 +42,18 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService{
                         HttpStatus.NOT_FOUND));
     }
 
+    public ResponseEntity<PortfolioEntry> createPortfolioEntry(PortfolioEntry portfolioEntry) {
+        try {
+            PortfolioEntry _portfolioEntry = portfolioEntryRepository
+                    .save(new PortfolioEntry(
+                            portfolioEntry.getEntryType()
+                    ));
+            return new ResponseEntity<>(_portfolioEntry, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public ResponseEntity<PortfolioEntry> updatePortfolioEntry(long entryId, PortfolioEntry portfolioEntry) {
         Optional<PortfolioEntry> entryData = portfolioEntryRepository.findById(entryId);
 

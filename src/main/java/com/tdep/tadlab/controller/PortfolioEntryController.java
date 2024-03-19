@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "PostmanRuntime/7.37.0")
 @RestController
 @RequestMapping("/api/v1")
 public class PortfolioEntryController {
@@ -27,6 +27,11 @@ public class PortfolioEntryController {
     @GetMapping("/entries/{id}")
     public ResponseEntity<PortfolioEntry> getPortfolioEntryById(@PathVariable("id") long entryId) {
         return portfolioEntryService.getPortfolioEntryById(entryId);
+    }
+
+    @PostMapping("/entries")
+    public ResponseEntity<PortfolioEntry> createPortfolioEntry(PortfolioEntry portfolioEntry) {
+        return portfolioEntryService.createPortfolioEntry(portfolioEntry);
     }
 
     @PutMapping("/entries/{id}")

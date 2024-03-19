@@ -12,6 +12,8 @@ public interface PortfolioEntryService {
 
     ResponseEntity<PortfolioEntry> getPortfolioEntryById(long entryId);
 
+    ResponseEntity<PortfolioEntry> createPortfolioEntry(PortfolioEntry portfolioEntry);
+
     ResponseEntity<PortfolioEntry> updatePortfolioEntry(long entryId, PortfolioEntry portfolioEntry);
 
     ResponseEntity<HttpStatus> deletePortfolioEntry(long entryId);
