@@ -13,7 +13,7 @@ public class BasePortfolioEntry implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition =" BINARY(16)", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private int id;
 
     @Column(name = "entry_name")

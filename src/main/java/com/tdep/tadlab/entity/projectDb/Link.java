@@ -18,17 +18,11 @@ public class Link extends BasePortfolioEntryAudit {
     @Column(name = "url")
     private String url;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @PrimaryKeyJoinColumn(referencedColumnName = "id")
-    private Tool tool;
-
-    public Link(String entryName, EntryType entryType, LinkType linkType, String url, Tool tool) {
+    public Link(String entryName, EntryType entryType, LinkType linkType, String url) {
         super.setEntryName(entryName);
         super.setEntryType(entryType);
         this.linkType = linkType;
         this.url = url;
-        this.tool = tool;
     }
 
     public Link() {
@@ -51,16 +45,11 @@ public class Link extends BasePortfolioEntryAudit {
         this.url = url;
     }
 
-    public Tool getTool() { return tool; }
-
-    public void setTool(Tool tool) { this.tool = tool; }
-
     @Override
     public String toString() {
         return  "{" +
                 ", link type='" + linkType + '\'' +
                 ", url ='" + url + '\'' +
-                ", tool ='" + tool + '\'' +
                 '}' +
                 super.toString();
     }
