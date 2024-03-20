@@ -4,6 +4,9 @@ import com.tdep.tadlab.entity.common.BasePortfolioEntryAudit;
 import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "projects")
 public class Project extends BasePortfolioEntryAudit {
@@ -19,11 +22,19 @@ public class Project extends BasePortfolioEntryAudit {
     )
     private ProjectDetail detail;
 
-    public Project(String entryName, EntryType entryType, String title, ProjectDetail detail) {
+    @OneToMany(
+            mappedBy = "project",
+            cascade = CascadeType.ALL,
+            orphanRemoval = false
+    )
+    private List<Link> links = new ArrayList<>();
+
+    public Project(String entryName, EntryType entryType, String title, ProjectDetail detail, List<Link> links) {
         super.setEntryName(entryName);
         super.setEntryType(entryType);
         this.title = title;
         this.detail = detail;
+        this.links = links;
     }
 
     public Project() {
@@ -38,6 +49,23 @@ public class Project extends BasePortfolioEntryAudit {
 
     public void setDetail(ProjectDetail detail) { this.detail = detail; }
 
+    public List<Link> getLinks() {
+        return this.links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
+    }
+
+    public void addLink(Link link) {
+        links.add(link);
+        link.setProject(this);
+    }
+
+    public void removeLink(Link link) {
+        links.remove(link);
+        link.setProject(null);
+    }
     @Override
     public String toString() {
         return  "{" +

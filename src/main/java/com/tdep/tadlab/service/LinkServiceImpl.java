@@ -50,7 +50,8 @@ public class LinkServiceImpl implements LinkService {
                             link.getEntryName(),
                             link.getEntryType(),
                             link.getLinkType(),
-                            link.getUrl()
+                            link.getUrl(),
+                            link.getProject()
                     ));
             System.out.println(link);
             return new ResponseEntity<>(_link, HttpStatus.CREATED);
@@ -70,6 +71,7 @@ public class LinkServiceImpl implements LinkService {
             _link.setEntryType(link.getEntryType());
             _link.setLinkType(link.getLinkType());
             _link.setUrl(link.getUrl());
+            _link.setProject(link.getProject());
             return new ResponseEntity<>(linkRepository.save(_link), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
