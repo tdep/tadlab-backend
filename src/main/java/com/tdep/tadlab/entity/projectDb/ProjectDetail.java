@@ -27,13 +27,13 @@ public class ProjectDetail extends BasePortfolioEntryAudit {
 
     }
 
-    private Project getProject() { return project; }
+    public Project getProject() { return project; }
 
-    private void setProject(Project project) { this.project = project; }
+    public void setProject(Project project) { this.project = project; }
 
-    private String getDescription() { return description; }
+    public String getDescription() { return description; }
 
-    private void setDescription(String description) {this.description = description; }
+    public void setDescription(String description) {this.description = description; }
 
     @Override
     public String toString() {
