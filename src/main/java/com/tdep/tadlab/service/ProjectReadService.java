@@ -10,21 +10,21 @@ import java.util.List;
 public interface ProjectReadService {
 
 //    Project
-    ResponseEntity<List<Project>> getAllProjects();
-    ResponseEntity<Project> getProjectById(int id);
+    ResponseEntity<List<Project>> findAllProjects();
+    ResponseEntity<Project> findProjectById(int id);
     ResponseEntity<Project> findProjectByName(String name);
     ResponseEntity<List<Project>> findProjectsByLinkType(String linkType);
     ResponseEntity<List<Project>> findProjectsByDate(String date);
 
 //    Project Details
-    ResponseEntity<List<ProjectDetail>> getAllDetails();
-    ResponseEntity<ProjectDetail> getDetailById(int id);
+    ResponseEntity<List<ProjectDetail>> findAllProjectDetails();
+    ResponseEntity<ProjectDetail> findDetailById(int id);
     ResponseEntity<ProjectDetail> findDetailByProjectName(String projectName);
     ResponseEntity<ProjectDetail> findDetailByProjectId(int projectId);
 
 //    Link
-    ResponseEntity<List<Link>> getAllLinks();
-    ResponseEntity<Link> getLinkById(int id);
+    ResponseEntity<List<Link>> findAllLinks();
+    ResponseEntity<Link> findLinkById(int id);
     ResponseEntity<Link> findLinkByType(String type);
     ResponseEntity<List<Link>> findLinksByProjectName(String projectName);
     ResponseEntity<List<Link>> findLinksByProjectId(int projectId);

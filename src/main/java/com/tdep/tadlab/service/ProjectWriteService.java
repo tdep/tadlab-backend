@@ -13,13 +13,13 @@ public interface ProjectWriteService {
 //    Project
     ResponseEntity<Project> createNewProject(Project project);
     ResponseEntity<Project> updateExistingProject(int id, Project project);
-    ResponseEntity<Project> addDetailToProject(int id, ProjectDetail detail);
-    ResponseEntity<Project> addLinkToProject(int id, Link link);
-    ResponseEntity<Project> addMultipleLinksToProject(int id, List<Link> links);
-    ResponseEntity<Project> removeDetailFromProject(int id, ProjectDetail detail);
-    ResponseEntity<Project> removeLinkFromProject(int id, Link link);
-    ResponseEntity<Project> removeAllLinksFromProject(int id);
-    ResponseEntity<HttpStatus> deleteProjectById(int id);
+    ResponseEntity<Project> addDetailToProject(int projectId, ProjectDetail detail);
+    ResponseEntity<Project> addLinkToProject(int projectId, Link link);
+    ResponseEntity<Project> addMultipleLinksToProject(int projectId, List<Link> links);
+    ResponseEntity<Project> removeDetailFromProject(int projectId, ProjectDetail detail);
+    ResponseEntity<Project> removeLinkFromProject(int projectId, Link link);
+    ResponseEntity<Project> removeAllLinksFromProject(int projectId);
+    ResponseEntity<HttpStatus> deleteProjectById(int projectId);
     ResponseEntity<HttpStatus> deleteAllProjects();
 
 //    Project Detail
