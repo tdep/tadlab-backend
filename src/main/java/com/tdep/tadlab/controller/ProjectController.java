@@ -5,9 +5,7 @@ package com.tdep.tadlab.controller;
 
 import com.tdep.tadlab.entity.projectDb.Project;
 import com.tdep.tadlab.entity.projectDb.ProjectDetail;
-import com.tdep.tadlab.service.LinkService;
-import com.tdep.tadlab.service.ProjectDetailService;
-import com.tdep.tadlab.service.ProjectService;
+import com.tdep.tadlab.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,43 +19,38 @@ import java.util.List;
 public class ProjectController {
 
     @Autowired
-    private ProjectService projectService;
-    private ProjectDetailService projectDetailService;
-    private LinkService linkService;
+    private ProjectWriteService projectWriteService;
+
+    @Autowired
+    private ProjectReadService projectReadService;
 
     @GetMapping("/projects")
     public ResponseEntity<List<Project>> getAllProjects() {
-        return projectService.getAllProjects();
+        return projectReadService.findAllProjects();
     }
 
     @GetMapping("/projects/{id}")
     public ResponseEntity<Project> getProjectById(@PathVariable("id") int id) {
-        return projectService.getProjectById(id);
+        return projectReadService.findProjectById(id);
     }
 
     @PostMapping("/projects")
     public ResponseEntity<Project> createProject(@RequestBody Project project) {
-        System.out.println(project);
-        return projectService.createProject(project);
+        return projectWriteService.createNewProject(project);
     }
 
     @PutMapping("/projects/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable("id") int id, @RequestBody Project project) {
-        return projectService.updateProject(id, project);
-    }
-
-    @PostMapping("/projects/details/{id}")
-    public ResponseEntity<HttpStatus> setProjectDetails(@PathVariable("id") int projectId, @RequestBody ProjectDetail detail) {
-        return projectService.setProjectDetails(projectId, detail);
+        return projectWriteService.updateExistingProject(id, project);
     }
 
     @DeleteMapping("/projects/{id}")
     public ResponseEntity<HttpStatus> deleteProject(@PathVariable("id") int id) {
-        return projectService.deleteProject(id);
+        return projectWriteService.deleteProjectById(id);
     }
 
     @DeleteMapping("projects")
     public ResponseEntity<HttpStatus> deleteAllProjects() {
-        return projectService.deleteAllProjects();
+        return projectWriteService.deleteAllProjects();
     }
 }

@@ -20,7 +20,7 @@ public class BasePortfolioEntry implements Serializable {
     private String entryName;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "entrytype", name = "entry_type", nullable = false, length = 50)
+    @Column(columnDefinition = "entrytype", name = "entry_type", length = 50)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private EntryType entryType;
 

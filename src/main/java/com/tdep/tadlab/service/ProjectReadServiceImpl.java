@@ -6,11 +6,14 @@ import com.tdep.tadlab.entity.projectDb.ProjectDetail;
 import com.tdep.tadlab.repository.LinkRepository;
 import com.tdep.tadlab.repository.ProjectDetailRepository;
 import com.tdep.tadlab.repository.ProjectRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,13 +24,31 @@ public class ProjectReadServiceImpl implements ProjectReadService {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
     private ProjectDetailRepository projectDetailRepository;
+
+    @Autowired
     private LinkRepository linkRepository;
+
+    Logger logger = LoggerFactory.getLogger(ProjectWriteServiceImpl.class);
 
 //    Project
 
     public ResponseEntity<List<Project>> findAllProjects() {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        try {
+            List<Project> projects = new ArrayList<>(
+                    projectRepository.findAll());
+            if (projects.isEmpty()) {
+                logger.info("No projects found.");
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(projects, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(String.format("Could not find projects because of exception: %s", e.getMessage()));
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<Project> findProjectById(int id) {

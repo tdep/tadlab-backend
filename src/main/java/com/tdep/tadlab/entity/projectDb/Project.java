@@ -33,6 +33,13 @@ public class Project extends BasePortfolioEntryAudit {
     @Column(name = "links", nullable = true)
     private List<Link> links = new ArrayList<>();
 
+    // Initializing Constructor
+    public Project(String entryName, EntryType entryType, String title) {
+        super.setEntryName(entryName);
+        super.setEntryType(entryType);
+        this.title = title;
+    }
+
     public Project(String entryName, EntryType entryType, String title, ProjectDetail detail, List<Link> links) {
         super.setEntryName(entryName);
         super.setEntryType(entryType);

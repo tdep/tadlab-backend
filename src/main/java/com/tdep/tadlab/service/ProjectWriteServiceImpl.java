@@ -7,6 +7,8 @@ import com.tdep.tadlab.entity.projectDb.ProjectDetail;
 import com.tdep.tadlab.repository.LinkRepository;
 import com.tdep.tadlab.repository.ProjectDetailRepository;
 import com.tdep.tadlab.repository.ProjectRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,19 +16,36 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// TODO: Create Logger to replace sysout
 @Service
 public class ProjectWriteServiceImpl implements ProjectWriteService {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
     private ProjectDetailRepository projectDetailRepository;
+
+    @Autowired
     private LinkRepository linkRepository;
+
+    Logger logger = LoggerFactory.getLogger(ProjectWriteServiceImpl.class);
 
 //    Project
 
     public ResponseEntity<Project> createNewProject(Project project) {
-        return new ResponseEntity<>(project, HttpStatus.I_AM_A_TEAPOT);
+        try {
+            Project _project = projectRepository
+                    .save(new Project(
+                            project.getEntryName(),
+                            project.getEntryType(),
+                            project.getTitle()
+                    ));
+            logger.info(String.format("Project: %s created successfully!", _project.getEntryId()));
+            return new ResponseEntity<>(_project, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error(String.format("Couldn't create Project with error: %s", e.getMessage()));
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<Project> updateExistingProject(int id, Project project) {
