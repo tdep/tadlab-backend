@@ -13,8 +13,8 @@ public interface ProjectReadService {
     ResponseEntity<List<Project>> getAllProjects();
     ResponseEntity<Project> getProjectById(int id);
     ResponseEntity<Project> findProjectByName(String name);
-    ResponseEntity<Project> findProjectByLink(String linkName);
-    ResponseEntity<Project> findProjectByDate(String date);
+    ResponseEntity<List<Project>> findProjectsByLinkType(String linkType);
+    ResponseEntity<List<Project>> findProjectsByDate(String date);
 
 //    Project Details
     ResponseEntity<List<ProjectDetail>> getAllDetails();
@@ -26,7 +26,7 @@ public interface ProjectReadService {
     ResponseEntity<List<Link>> getAllLinks();
     ResponseEntity<Link> getLinkById(int id);
     ResponseEntity<Link> findLinkByType(String type);
-    ResponseEntity<Link> findLinkByProjectName(String projectName);
-    ResponseEntity<Link> findLinkByProjectId(int projectId);
+    ResponseEntity<List<Link>> findLinksByProjectName(String projectName);
+    ResponseEntity<List<Link>> findLinksByProjectId(int projectId);
 
 }
