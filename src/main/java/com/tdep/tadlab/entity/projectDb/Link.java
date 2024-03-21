@@ -1,5 +1,6 @@
 package com.tdep.tadlab.entity.projectDb;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tdep.tadlab.entity.common.BasePortfolioEntryAudit;
 import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
@@ -21,6 +22,7 @@ public class Link extends BasePortfolioEntryAudit {
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project", nullable = true)
     private Project project;
 
     public Link(String entryName, EntryType entryType, LinkType linkType, String url, Project project) {
@@ -73,7 +75,7 @@ public class Link extends BasePortfolioEntryAudit {
         return  "{" +
                 ", link type='" + linkType + '\'' +
                 ", url ='" + url + '\'' +
-                ", project ='" + project.getTitle() + '\'' +
+                ", project ='" + project + '\'' +
                 '}' +
                 super.toString();
     }

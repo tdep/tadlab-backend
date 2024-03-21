@@ -11,6 +11,7 @@ public class ProjectDetail extends BasePortfolioEntryAudit {
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
+    @JoinColumn(name = "project", nullable = true)
     private Project project;
 
     @Column(name = "description")
@@ -38,7 +39,7 @@ public class ProjectDetail extends BasePortfolioEntryAudit {
     @Override
     public String toString() {
         return  "{" +
-                ", project='" + project.toString() + '\'' +
+                ", project='" + project + '\'' +
                 ", description='" + description + '\'' +
                 '}' +
                 super.toString();

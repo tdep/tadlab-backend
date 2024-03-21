@@ -3,6 +3,8 @@ package com.tdep.tadlab.service;
 // TODO: Create Logger to replace sysout
 
 import com.tdep.tadlab.entity.projectDb.Project;
+import com.tdep.tadlab.entity.projectDb.ProjectDetail;
+import com.tdep.tadlab.repository.ProjectDetailRepository;
 import com.tdep.tadlab.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private ProjectRepository projectRepository;
+    private ProjectDetailService projectDetailService;
+    private ProjectDetailRepository projectDetailRepository;
 
     public ResponseEntity<List<Project>> getAllProjects() {
         try {
@@ -79,6 +83,23 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
+    public ResponseEntity<HttpStatus> setProjectDetails(int projectId, ProjectDetail detail) {
+        Optional<Project> project = projectRepository.findById(projectId);
+
+        if (project.isPresent()) {
+            try {
+                projectDetailService.createDetail(detail);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            System.out.println("No project exists with that ID");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
     public ResponseEntity<HttpStatus> deleteProject(int id) {
         try {
             projectRepository.deleteById(id);
@@ -99,3 +120,11 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 }
+
+// TODO: Create Project with empty fields, then
+// TODO: when populating the fields, you can select a new link (CreateLink endpoint) or
+// TODO: select an existing link (findLinkById endpoint)
+// TODO: same goes for project details
+// TODO: createLink / createProjectDetail need new endpoints in ProjectService
+// TODO: findLink / findProjectDetail need new endpoints in ProjectService
+// TODO: update, delete, deleteAll, and findAll should also have endpoints in ProjectService

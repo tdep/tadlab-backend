@@ -4,6 +4,9 @@ package com.tdep.tadlab.controller;
 //TODO: Change cross origins
 
 import com.tdep.tadlab.entity.projectDb.Project;
+import com.tdep.tadlab.entity.projectDb.ProjectDetail;
+import com.tdep.tadlab.service.LinkService;
+import com.tdep.tadlab.service.ProjectDetailService;
 import com.tdep.tadlab.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +20,10 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class ProjectController {
 
-    @Autowired private ProjectService projectService;
+    @Autowired
+    private ProjectService projectService;
+    private ProjectDetailService projectDetailService;
+    private LinkService linkService;
 
     @GetMapping("/projects")
     public ResponseEntity<List<Project>> getAllProjects() {
@@ -38,6 +44,11 @@ public class ProjectController {
     @PutMapping("/projects/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable("id") int id, @RequestBody Project project) {
         return projectService.updateProject(id, project);
+    }
+
+    @PostMapping("/projects/details/{id}")
+    public ResponseEntity<HttpStatus> setProjectDetails(@PathVariable("id") int projectId, @RequestBody ProjectDetail detail) {
+        return projectService.setProjectDetails(projectId, detail);
     }
 
     @DeleteMapping("/projects/{id}")

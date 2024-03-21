@@ -1,6 +1,7 @@
 package com.tdep.tadlab.service;
 
 import com.tdep.tadlab.entity.projectDb.Project;
+import com.tdep.tadlab.entity.projectDb.ProjectDetail;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -15,6 +16,8 @@ public interface ProjectService {
     ResponseEntity<Project> createProject(Project project);
 
     ResponseEntity<Project> updateProject(int id, Project project);
+
+    ResponseEntity<HttpStatus> setProjectDetails(int projectId, ProjectDetail detail);
 
     ResponseEntity<HttpStatus> deleteProject(int id);
 

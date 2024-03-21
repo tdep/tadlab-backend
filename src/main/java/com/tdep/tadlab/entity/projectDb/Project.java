@@ -1,5 +1,6 @@
 package com.tdep.tadlab.entity.projectDb;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tdep.tadlab.entity.common.BasePortfolioEntryAudit;
 import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
@@ -20,6 +21,7 @@ public class Project extends BasePortfolioEntryAudit {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
+    @PrimaryKeyJoinColumn(name = "detail")
     private ProjectDetail detail;
 
     @OneToMany(
@@ -27,6 +29,8 @@ public class Project extends BasePortfolioEntryAudit {
             cascade = CascadeType.ALL,
             orphanRemoval = false
     )
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+    @Column(name = "links", nullable = true)
     private List<Link> links = new ArrayList<>();
 
     public Project(String entryName, EntryType entryType, String title, ProjectDetail detail, List<Link> links) {
@@ -70,7 +74,7 @@ public class Project extends BasePortfolioEntryAudit {
     public String toString() {
         return  "{" +
                 ", title='" + title + '\'' +
-                ", details ='" + detail.toString() + '\'' +
+                ", details ='" + detail + '\'' +
                 '}' +
                 super.toString();
     }
