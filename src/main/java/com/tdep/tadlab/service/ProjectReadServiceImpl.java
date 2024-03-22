@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
-// TODO: Create Logger to replace sysout
+import java.util.Optional;
 
 @Service
 public class ProjectReadServiceImpl implements ProjectReadService {
@@ -52,7 +50,13 @@ public class ProjectReadServiceImpl implements ProjectReadService {
     }
 
     public ResponseEntity<Project> findProjectById(int id) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        Optional<Project> projectData = projectRepository.findById(id);
+
+        return projectData.map(
+                project -> new ResponseEntity<>(
+                        project, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(
+                        HttpStatus.NOT_FOUND));
     }
 
     public ResponseEntity<Project> findProjectByName(String name) {
@@ -70,7 +74,19 @@ public class ProjectReadServiceImpl implements ProjectReadService {
 //    Project Detail
 
     public ResponseEntity<List<ProjectDetail>> findAllProjectDetails() {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        try {
+            List<ProjectDetail> details = new ArrayList<>(
+                    projectDetailRepository.findAll());
+            if (details.isEmpty()) {
+                logger.info("No project details found");
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(details, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(String.format("Could not find project details because of exception: %s", e.getMessage()));
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<ProjectDetail> findDetailById(int id) {

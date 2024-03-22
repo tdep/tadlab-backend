@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectWriteServiceImpl implements ProjectWriteService {
@@ -86,8 +87,36 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 
 //    Project Detail
 
-    public ResponseEntity<ProjectDetail> createNewProjectDetail(int projectId, ProjectDetail detail) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+    public ResponseEntity<Project> createNewProjectDetail(int projectId, ProjectDetail detail) {
+        Optional<Project> projectData = projectRepository.findById(projectId);
+        ProjectDetail _detail;
+        Project _projectData;
+
+        if (projectData.isPresent()) {
+            try {
+                _detail = projectDetailRepository
+                        .save(new ProjectDetail(
+                                detail.getEntryName(),
+                                detail.getEntryType(),
+                                detail.getProject(),
+                                detail.getDescription()
+                        ));
+            } catch (Exception e) {
+                logger.error(String.format("Couldn't create Project Detail with error: %s", e.getMessage()));
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+            _projectData = projectData.get();
+            _projectData.setEntryType(projectData.get().getEntryType());
+            _projectData.setEntryName(projectData.get().getEntryName());
+            _projectData.setTitle(projectData.get().getTitle());
+            _projectData.setProjectDetail(_detail);
+            logger.info(String.format("Project Detail for Project: %s created successfully!", projectId));
+        } else {
+            logger.error(String.format("Project with id: %s not found.", projectId));
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(projectRepository.save(_projectData), HttpStatus.OK);
     }
 
     public ResponseEntity<ProjectDetail> updateExistingProjectDetail(int projectId, ProjectDetail detail) {

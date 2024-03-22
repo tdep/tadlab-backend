@@ -9,9 +9,6 @@ import jakarta.persistence.*;
 @Table(name = "project_details")
 public class ProjectDetail extends BasePortfolioEntryAudit {
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "project", nullable = true)
     private Project project;
 
     @Column(name = "description")
@@ -28,9 +25,13 @@ public class ProjectDetail extends BasePortfolioEntryAudit {
 
     }
 
-    public Project getProject() { return project; }
+    @OneToOne(mappedBy = "projectDetail")
+    public Project getProject() {
+        return project; }
 
-    public void setProject(Project project) { this.project = project; }
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
     public String getDescription() { return description; }
 
@@ -39,7 +40,6 @@ public class ProjectDetail extends BasePortfolioEntryAudit {
     @Override
     public String toString() {
         return  "{" +
-                ", project='" + project + '\'' +
                 ", description='" + description + '\'' +
                 '}' +
                 super.toString();

@@ -24,6 +24,9 @@ public class ProjectController {
     @Autowired
     private ProjectReadService projectReadService;
 
+
+//    Project
+
     @GetMapping("/projects")
     public ResponseEntity<List<Project>> getAllProjects() {
         return projectReadService.findAllProjects();
@@ -37,6 +40,11 @@ public class ProjectController {
     @PostMapping("/projects")
     public ResponseEntity<Project> createProject(@RequestBody Project project) {
         return projectWriteService.createNewProject(project);
+    }
+
+    @PostMapping("/projects/details/{projectId}")
+    public ResponseEntity<Project> createProjectDetail(@PathVariable("projectId") int projectId, @RequestBody ProjectDetail projectDetail) {
+        return projectWriteService.createNewProjectDetail(projectId,projectDetail);
     }
 
     @PutMapping("/projects/{id}")
@@ -53,4 +61,6 @@ public class ProjectController {
     public ResponseEntity<HttpStatus> deleteAllProjects() {
         return projectWriteService.deleteAllProjects();
     }
+
+
 }

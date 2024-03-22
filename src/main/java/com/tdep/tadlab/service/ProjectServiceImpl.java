@@ -55,7 +55,6 @@ public class ProjectServiceImpl implements ProjectService {
                             project.getEntryName(),
                             project.getEntryType(),
                             project.getTitle(),
-                            project.getDetail(),
                             project.getLinks()
                     ));
             System.out.println(project);
@@ -75,7 +74,6 @@ public class ProjectServiceImpl implements ProjectService {
             _project.setEntryName(project.getEntryName());
             _project.setEntryType(project.getEntryType());
             _project.setTitle(project.getTitle());
-            _project.setDetail(project.getDetail());
             _project.setLinks(project.getLinks());
             return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
         } else {

@@ -15,14 +15,7 @@ public class Project extends BasePortfolioEntryAudit {
     @Column(name = "title")
     private String title;
 
-    @OneToOne(
-            mappedBy = "project",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    @PrimaryKeyJoinColumn(name = "detail")
-    private ProjectDetail detail;
+    private ProjectDetail projectDetail;
 
     @OneToMany(
             mappedBy = "project",
@@ -40,11 +33,10 @@ public class Project extends BasePortfolioEntryAudit {
         this.title = title;
     }
 
-    public Project(String entryName, EntryType entryType, String title, ProjectDetail detail, List<Link> links) {
+    public Project(String entryName, EntryType entryType, String title, List<Link> links) {
         super.setEntryName(entryName);
         super.setEntryType(entryType);
         this.title = title;
-        this.detail = detail;
         this.links = links;
     }
 
@@ -56,9 +48,14 @@ public class Project extends BasePortfolioEntryAudit {
 
     public void setTitle(String title) { this.title = title; }
 
-    public ProjectDetail getDetail() { return detail; }
+    @OneToOne
+    public ProjectDetail getProjectDetail() {
+        return projectDetail;
+    }
 
-    public void setDetail(ProjectDetail detail) { this.detail = detail; }
+    public void setProjectDetail(ProjectDetail projectDetail) {
+        this.projectDetail = projectDetail;
+    }
 
     public List<Link> getLinks() {
         return this.links;
@@ -81,7 +78,6 @@ public class Project extends BasePortfolioEntryAudit {
     public String toString() {
         return  "{" +
                 ", title='" + title + '\'' +
-                ", details ='" + detail + '\'' +
                 '}' +
                 super.toString();
     }

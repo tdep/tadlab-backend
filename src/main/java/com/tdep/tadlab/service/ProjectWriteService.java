@@ -23,7 +23,7 @@ public interface ProjectWriteService {
     ResponseEntity<HttpStatus> deleteAllProjects();
 
 //    Project Detail
-    ResponseEntity<ProjectDetail> createNewProjectDetail(int projectId, ProjectDetail detail);
+    ResponseEntity<Project> createNewProjectDetail(int projectId, ProjectDetail detail);
     ResponseEntity<ProjectDetail> updateExistingProjectDetail(int projectId,ProjectDetail detail);
     ResponseEntity<HttpStatus> deleteProjectDetailByProjectId(int projectId);
     ResponseEntity<HttpStatus> deleteProjectDetailByProjectName(String projectName);
