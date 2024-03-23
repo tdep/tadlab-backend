@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ProjectWriteServiceImpl implements ProjectWriteService {
@@ -50,7 +51,18 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
     }
 
     public ResponseEntity<Project> updateExistingProject(int id, Project project) {
-        return new ResponseEntity<>(project, HttpStatus.I_AM_A_TEAPOT);
+        Optional<Project> projectData = projectRepository.findById(id);
+
+        if (projectData.isPresent()) {
+            Project _project = projectData.get();
+            _project.setEntryName(project.getEntryName());
+            _project.setEntryType(project.getEntryType());
+            _project.setTitle(project.getTitle());
+            _project.setProjectDetail(project.getProjectDetail());
+            return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
     public ResponseEntity<Project> addDetailToProject(int projectId, ProjectDetail detail) {
@@ -78,53 +90,77 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
     }
 
     public ResponseEntity<HttpStatus> deleteProjectById(int projectId) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        try {
+            projectRepository.deleteById(projectId);
+            logger.info("Project deleted successfully!");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            logger.error(String.format("Unable to delete this project because: %s", e.getMessage()));
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<HttpStatus> deleteAllProjects() {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        try {
+            projectRepository.deleteAll();
+            logger.info("All Projects deleted successfully!");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            logger.error(String.format("Unable to delete all projects because: %s", e.getMessage()));
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 //    Project Detail
 
-    public ResponseEntity<Project> createNewProjectDetail(int projectId, ProjectDetail detail) {
-        Optional<Project> projectData = projectRepository.findById(projectId);
+    public ResponseEntity<ProjectDetail> createNewProjectDetail(int projectId, ProjectDetail detail) {
         ProjectDetail _detail;
-        Project _projectData;
 
-        if (projectData.isPresent()) {
-            try {
-                _detail = projectDetailRepository
-                        .save(new ProjectDetail(
-                                detail.getEntryName(),
-                                detail.getEntryType(),
-                                detail.getProject(),
-                                detail.getDescription()
-                        ));
-            } catch (Exception e) {
-                logger.error(String.format("Couldn't create Project Detail with error: %s", e.getMessage()));
-                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-            _projectData = projectData.get();
-            _projectData.setEntryType(projectData.get().getEntryType());
-            _projectData.setEntryName(projectData.get().getEntryName());
-            _projectData.setTitle(projectData.get().getTitle());
-            _projectData.setProjectDetail(_detail);
-            logger.info(String.format("Project Detail for Project: %s created successfully!", projectId));
-        } else {
-            logger.error(String.format("Project with id: %s not found.", projectId));
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            _detail = projectDetailRepository
+                    .save(new ProjectDetail(
+                            detail.getEntryName(),
+                            detail.getEntryType(),
+                            detail.getDescription()
+                    ));
+            return new ResponseEntity<>(_detail, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error(String.format("Couldn't create Project Detail with error: %s", e.getMessage()));
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(projectRepository.save(_projectData), HttpStatus.OK);
+
     }
 
     public ResponseEntity<ProjectDetail> updateExistingProjectDetail(int projectId, ProjectDetail detail) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        Optional<Project> projectData = projectRepository.findById(projectId);
+
+        if (projectData.isPresent()) {
+            ProjectDetail _detail = projectData.get().getProjectDetail();
+            _detail.setEntryName(detail.getEntryName());
+            _detail.setEntryType(detail.getEntryType());
+            _detail.setDescription(detail.getDescription());
+            logger.info("Project details updated!");
+            return new ResponseEntity<>(projectDetailRepository.save(_detail), HttpStatus.OK);
+        } else {
+            logger.error("Unable to find project.");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
     public ResponseEntity<HttpStatus> deleteProjectDetailByProjectId(int projectId) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        Optional<Project> project = projectRepository.findById(projectId);
+
+        if (project.isPresent()) {
+            int projectDetailId = project.get().getProjectDetail().getEntryId();
+            try {
+                projectDetailRepository.deleteById(projectDetailId);
+                logger.info("Deleted project data successfully!");
+            } catch (Exception e) {
+                logger.error(String.format("Unable to delete project details because: %s", e.getMessage()));
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     public ResponseEntity<HttpStatus> deleteProjectDetailByProjectName(String projectName) {

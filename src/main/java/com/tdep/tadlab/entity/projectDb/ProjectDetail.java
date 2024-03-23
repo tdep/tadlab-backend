@@ -9,28 +9,17 @@ import jakarta.persistence.*;
 @Table(name = "project_details")
 public class ProjectDetail extends BasePortfolioEntryAudit {
 
-    private Project project;
-
     @Column(name = "description")
     private String description;
 
-    public ProjectDetail(String entryName, EntryType entryType, Project project, String description) {
+    public ProjectDetail(String entryName, EntryType entryType, String description) {
         super.setEntryName(entryName);
         super.setEntryType(entryType);
-        this.project = project;
         this.description = description;
     }
 
     public ProjectDetail() {
 
-    }
-
-    @OneToOne(mappedBy = "projectDetail")
-    public Project getProject() {
-        return project; }
-
-    public void setProject(Project project) {
-        this.project = project;
     }
 
     public String getDescription() { return description; }

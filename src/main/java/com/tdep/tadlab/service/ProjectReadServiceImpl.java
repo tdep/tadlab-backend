@@ -90,7 +90,13 @@ public class ProjectReadServiceImpl implements ProjectReadService {
     }
 
     public ResponseEntity<ProjectDetail> findDetailById(int id) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        Optional<ProjectDetail> projectDetailData = projectDetailRepository.findById(id);
+
+        return projectDetailData.map(
+                detail -> new ResponseEntity<>(
+                        detail, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(
+                        HttpStatus.NOT_FOUND));
     }
 
     public ResponseEntity<ProjectDetail> findDetailByProjectName(String projectName) {
@@ -98,7 +104,20 @@ public class ProjectReadServiceImpl implements ProjectReadService {
     }
 
     public ResponseEntity<ProjectDetail> findDetailByProjectId(int projectId) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        Optional<Project> project = projectRepository.findById(projectId);
+
+        if (project.isPresent()) {
+            int projectDetailId = project.get().getProjectDetail().getEntryId();
+            Optional<ProjectDetail> projectDetailData = projectDetailRepository.findById(projectDetailId);
+
+            return projectDetailData.map(
+                    detail -> new ResponseEntity<>(
+                            detail, HttpStatus.OK))
+                    .orElseGet(() -> new ResponseEntity<>(
+                            HttpStatus.NOT_FOUND));
+        }
+        logger.error(String.format("There is no project with id: %s", projectId));
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
 //    Link

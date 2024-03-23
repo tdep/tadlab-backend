@@ -8,7 +8,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProjectDetailRepository extends JpaRepository<ProjectDetail, Integer> {
-
-    @Query("SELECT d FROM ProjectDetail d WHERE d.project = :projectId")
-    ProjectDetail findProjectDetailByProjectId(@Param("projectId") int projectId);
 }

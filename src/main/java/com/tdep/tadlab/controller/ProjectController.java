@@ -32,6 +32,9 @@ public class ProjectController {
         return projectReadService.findAllProjects();
     }
 
+    @GetMapping("/projects/details")
+    public ResponseEntity<List<ProjectDetail>> getAllProjectDetails() { return projectReadService.findAllProjectDetails(); }
+
     @GetMapping("/projects/{id}")
     public ResponseEntity<Project> getProjectById(@PathVariable("id") int id) {
         return projectReadService.findProjectById(id);
@@ -43,8 +46,9 @@ public class ProjectController {
     }
 
     @PostMapping("/projects/details/{projectId}")
-    public ResponseEntity<Project> createProjectDetail(@PathVariable("projectId") int projectId, @RequestBody ProjectDetail projectDetail) {
-        return projectWriteService.createNewProjectDetail(projectId,projectDetail);
+    public ResponseEntity<ProjectDetail> createProjectDetail(@PathVariable("projectId") int projectId, @RequestBody ProjectDetail projectDetail) {
+        projectReadService.findProjectById(projectId);
+        return projectWriteService.createNewProjectDetail(projectId, projectDetail);
     }
 
     @PutMapping("/projects/{id}")
