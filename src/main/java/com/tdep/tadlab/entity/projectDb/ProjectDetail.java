@@ -33,4 +33,5 @@ public class ProjectDetail extends BasePortfolioEntryAudit {
                 '}' +
                 super.toString();
     }
+
 }

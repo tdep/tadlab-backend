@@ -51,9 +51,9 @@ public class ProjectController {
         return projectWriteService.createNewProjectDetail(projectId, projectDetail);
     }
 
-    @GetMapping("projects/details/test")
-    public CompletableFuture<String> testCompletableFuture() {
-        return projectWriteService.completedFutureTest();
+    @PostMapping("projects/details/test")
+    public ResponseEntity<ProjectDetail> testCompletableFuture(@RequestBody ProjectDetail detail) throws InterruptedException {
+        return projectWriteService.completedFutureTest(detail);
     }
 
     @PutMapping("/projects/{id}")

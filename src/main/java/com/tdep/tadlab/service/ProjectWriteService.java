@@ -35,5 +35,5 @@ public interface ProjectWriteService {
     ResponseEntity<Link> updateExistingProjectLink(int projectId, Link link);
     ResponseEntity<HttpStatus> deleteLink(int id);
 
-    CompletableFuture<String> completedFutureTest();
+    ResponseEntity<ProjectDetail> completedFutureTest(ProjectDetail detail) throws InterruptedException;
 }
