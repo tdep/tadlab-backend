@@ -34,4 +34,6 @@ public interface ProjectWriteService {
     ResponseEntity<Link> updateExistingLink(int id, Link link);
     ResponseEntity<Link> updateExistingProjectLink(int projectId, Link link);
     ResponseEntity<HttpStatus> deleteLink(int id);
+
+    CompletableFuture<String> completedFutureTest();
 }

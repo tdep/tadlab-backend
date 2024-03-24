@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 @Service
 public class ProjectWriteServiceImpl implements ProjectWriteService {
@@ -141,6 +142,15 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
                 });
     }
 
+    public CompletableFuture<String> completedFutureTest() {
+        CompletableFuture<String> cf = CompletableFuture.completedFuture(
+                completionString().getNow("Nothing to get"))
+                .thenApply(s -> {
+                    return s.toUpperCase();
+                });
+        return cf;
+    }
+
 
     public ResponseEntity<ProjectDetail> updateExistingProjectDetail(int projectId, ProjectDetail detail) {
         Optional<Project> projectData = projectRepository.findById(projectId);
@@ -197,6 +207,13 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
     }
 
 //    Helper Methods
+
+    private CompletableFuture<String> completionString() {
+        CompletableFuture<String> testCompletableString =
+                CompletableFuture.completedFuture("This is a test");
+        assert testCompletableString.isDone();
+        return testCompletableString;
+    }
 
     private void projectDetailSaver(int projectId, ProjectDetail detail) {
         Optional<Project> project = projectRepository.findById(projectId);

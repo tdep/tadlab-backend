@@ -51,6 +51,11 @@ public class ProjectController {
         return projectWriteService.createNewProjectDetail(projectId, projectDetail);
     }
 
+    @GetMapping("projects/details/test")
+    public CompletableFuture<String> testCompletableFuture() {
+        return projectWriteService.completedFutureTest();
+    }
+
     @PutMapping("/projects/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable("id") int id, @RequestBody Project project) {
         return projectWriteService.updateExistingProject(id, project);
