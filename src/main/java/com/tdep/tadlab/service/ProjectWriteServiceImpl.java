@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ProjectWriteServiceImpl implements ProjectWriteService {
@@ -113,49 +112,24 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 
 //    Project Detail
 
-    public CompletableFuture<ResponseEntity<ProjectDetail>> createNewProjectDetail(int projectId, ProjectDetail detail) {
-        CompletableFuture<ResponseEntity<ProjectDetail>> suppliedDetail =
-                CompletableFuture.supplyAsync(() -> {
-                    try {
-                        ProjectDetail _detail = projectDetailRepository.save(
-                                new ProjectDetail(
-                                        detail.getEntryName(),
-                                        detail.getEntryType(),
-                                        detail.getDescription()));
-                        return new ResponseEntity<>(_detail, HttpStatus.OK);
-                    } catch (Exception e) {
-                        logger.error(String.format("Couldn't create Project Detail with error: %s", e.getMessage()));
-                        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-                    }
-                });
-        return suppliedDetail.thenCompose(
-                savedDetail -> {
-                    try {
-                        this.projectDetailSaver(projectId, savedDetail.getBody());
-                        return suppliedDetail;
-                    } catch (Exception e) {
-                        logger.error(String.format("Project details failed to save because: %s", e.getMessage()));
-                        return new CompletableFuture<>();
-                    }
+    public ResponseEntity<ProjectDetail> createNewProjectDetail(int projectId, ProjectDetail detail) {
+        Optional<Project> projectData = projectRepository.findById(projectId);
 
-                });
-    }
-
-    public ResponseEntity<ProjectDetail> completedFutureTest(ProjectDetail detail)  throws InterruptedException {
-        CompletableFuture<ProjectDetail> _detail =
-                CompletableFuture.completedFuture(
-                        new ProjectDetail(
-                                detail.getEntryName(),
-                                detail.getEntryType(),
-                                detail.getDescription()
-                        ));
-        if (_detail.isDone()) {
-            ProjectDetail newDetail = _detail.getNow(null);
-            saveProjectDetailToDbHelper(newDetail);
-            projectDetailSaver(1, newDetail);
+        try {
+            ResponseEntity<ProjectDetail> detailResponseEntity = projectDetailBuilder(projectData, detail);
+            ProjectDetail createdProjectDetail = detailResponseEntity.getBody();
+            if (projectData.isPresent()) {
+                Project _project = projectData.get();
+                _project.setProjectDetail(createdProjectDetail);
+                projectRepository.save(_project);
+                return new ResponseEntity<>(createdProjectDetail, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            logger.error(String.format("Unable to save project details to database because: %s", e.getMessage()));
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(_detail.getNow(null), HttpStatus.I_AM_A_TEAPOT);
-
     }
 
 
@@ -215,11 +189,18 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 
 //    Helper Methods
 
-    private void saveProjectDetailToDbHelper(ProjectDetail detail) {
-        try {
-            projectDetailRepository.save(detail);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+    private ResponseEntity<ProjectDetail> projectDetailBuilder(Optional<Project> project, ProjectDetail detail) {
+        if (project.isPresent()) {
+            ProjectDetail _detail = new ProjectDetail(
+                    detail.getEntryName(),
+                    detail.getEntryType(),
+                    detail.getDescription()
+            );
+            logger.info("Project detail created!");
+            return new ResponseEntity<>(_detail, HttpStatus.CREATED);
+        } else {
+            logger.error("Unable to create project detail.");
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

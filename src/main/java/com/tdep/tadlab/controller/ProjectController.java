@@ -47,13 +47,8 @@ public class ProjectController {
     }
 
     @PostMapping("/projects/details/{projectId}")
-    public CompletableFuture<ResponseEntity<ProjectDetail>> createProjectDetail(@PathVariable("projectId") int projectId, @RequestBody ProjectDetail projectDetail) {
+    public ResponseEntity<ProjectDetail> createProjectDetail(@PathVariable("projectId") int projectId, @RequestBody ProjectDetail projectDetail) {
         return projectWriteService.createNewProjectDetail(projectId, projectDetail);
-    }
-
-    @PostMapping("projects/details/test")
-    public ResponseEntity<ProjectDetail> testCompletableFuture(@RequestBody ProjectDetail detail) throws InterruptedException {
-        return projectWriteService.completedFutureTest(detail);
     }
 
     @PutMapping("/projects/{id}")

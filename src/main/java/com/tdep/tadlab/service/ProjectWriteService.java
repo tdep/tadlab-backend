@@ -24,7 +24,7 @@ public interface ProjectWriteService {
     ResponseEntity<HttpStatus> deleteAllProjects();
 
 //    Project Detail
-    CompletableFuture<ResponseEntity<ProjectDetail>> createNewProjectDetail(int projectId, ProjectDetail detail);
+    ResponseEntity<ProjectDetail> createNewProjectDetail(int projectId, ProjectDetail detail);
     ResponseEntity<ProjectDetail> updateExistingProjectDetail(int projectId,ProjectDetail detail);
     ResponseEntity<HttpStatus> deleteProjectDetailByProjectId(int projectId);
     ResponseEntity<HttpStatus> deleteProjectDetailByProjectName(String projectName);
@@ -35,5 +35,4 @@ public interface ProjectWriteService {
     ResponseEntity<Link> updateExistingProjectLink(int projectId, Link link);
     ResponseEntity<HttpStatus> deleteLink(int id);
 
-    ResponseEntity<ProjectDetail> completedFutureTest(ProjectDetail detail) throws InterruptedException;
 }
