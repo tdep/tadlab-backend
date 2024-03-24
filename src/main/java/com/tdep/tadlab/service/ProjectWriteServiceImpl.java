@@ -113,23 +113,34 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 
 //    Project Detail
 
-    public ResponseEntity<ProjectDetail> createNewProjectDetail(int projectId, ProjectDetail detail) {
-        ProjectDetail _detail;
+    public CompletableFuture<ResponseEntity<ProjectDetail>> createNewProjectDetail(int projectId, ProjectDetail detail) {
+        CompletableFuture<ResponseEntity<ProjectDetail>> suppliedDetail =
+                CompletableFuture.supplyAsync(() -> {
+                    try {
+                        ProjectDetail _detail = projectDetailRepository.save(
+                                new ProjectDetail(
+                                        detail.getEntryName(),
+                                        detail.getEntryType(),
+                                        detail.getDescription()));
+                        return new ResponseEntity<>(_detail, HttpStatus.OK);
+                    } catch (Exception e) {
+                        logger.error(String.format("Couldn't create Project Detail with error: %s", e.getMessage()));
+                        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+                });
+        return suppliedDetail.thenCompose(
+                savedDetail -> {
+                    try {
+                        this.projectDetailSaver(projectId, savedDetail.getBody());
+                        return suppliedDetail;
+                    } catch (Exception e) {
+                        logger.error(String.format("Project details failed to save because: %s", e.getMessage()));
+                        return new CompletableFuture<>();
+                    }
 
-        try {
-            _detail = projectDetailRepository
-                    .save(new ProjectDetail(
-                            detail.getEntryName(),
-                            detail.getEntryType(),
-                            detail.getDescription()
-                    ));
-            return new ResponseEntity<>(_detail, HttpStatus.CREATED);
-        } catch (Exception e) {
-            logger.error(String.format("Couldn't create Project Detail with error: %s", e.getMessage()));
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+                });
     }
+
 
     public ResponseEntity<ProjectDetail> updateExistingProjectDetail(int projectId, ProjectDetail detail) {
         Optional<Project> projectData = projectRepository.findById(projectId);
@@ -183,5 +194,23 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 
     public ResponseEntity<HttpStatus> deleteLink(int linkId) {
         return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+    }
+
+//    Helper Methods
+
+    private void projectDetailSaver(int projectId, ProjectDetail detail) {
+        Optional<Project> project = projectRepository.findById(projectId);
+
+        if (project.isPresent()) {
+            Project _project = project.get();
+            _project.setEntryName(project.get().getEntryName());
+            _project.setEntryType(project.get().getEntryType());
+            _project.setTitle(project.get().getTitle());
+            _project.setProjectDetail(detail);
+            _project.setEntryId(projectId);
+            new ResponseEntity<>(_project, HttpStatus.OK);
+        } else {
+            new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 }

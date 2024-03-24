@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @CrossOrigin(origins = "PostmanRuntime/7.37.0")
 @RestController
@@ -46,8 +47,7 @@ public class ProjectController {
     }
 
     @PostMapping("/projects/details/{projectId}")
-    public ResponseEntity<ProjectDetail> createProjectDetail(@PathVariable("projectId") int projectId, @RequestBody ProjectDetail projectDetail) {
-        projectReadService.findProjectById(projectId);
+    public CompletableFuture<ResponseEntity<ProjectDetail>> createProjectDetail(@PathVariable("projectId") int projectId, @RequestBody ProjectDetail projectDetail) {
         return projectWriteService.createNewProjectDetail(projectId, projectDetail);
     }
 
