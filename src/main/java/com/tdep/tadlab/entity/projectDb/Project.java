@@ -17,6 +17,9 @@ public class Project extends BasePortfolioEntryAudit {
     private String title;
 
     @Embedded
+    private Author author;
+
+    @Embedded
     private ProjectDetail projectDetail;
 
     @OneToMany(
@@ -29,12 +32,20 @@ public class Project extends BasePortfolioEntryAudit {
     private List<Link> links = new ArrayList<>();
 
     // Initializing Constructor
-    public Project(String entryName, EntryType entryType, String createdBy, Date createdAt, String title, ProjectDetail projectDetail) {
+    public Project(
+            String entryName,
+            EntryType entryType,
+            String createdBy,
+            Date createdAt,
+            String title,
+            Author author,
+            ProjectDetail projectDetail) {
         super.setEntryName(entryName);
         super.setEntryType(entryType);
         super.setCreatedBy(createdBy);
         super.setCreatedAt(createdAt);
         this.title = title;
+        this.author = author;
         this.projectDetail = projectDetail;
     }
 

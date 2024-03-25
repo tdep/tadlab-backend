@@ -22,9 +22,8 @@ public class ProjectDetail {
     @Override
     public String toString() {
         return  "{" +
-                ", description='" + description + '\'' +
-                '}' +
-                super.toString();
+                "description='" + description + '\'' +
+                '}';
     }
 
 }
