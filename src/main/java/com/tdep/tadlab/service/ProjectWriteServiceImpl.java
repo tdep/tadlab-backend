@@ -35,6 +35,8 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
                     .save(new Project(
                             project.getEntryName(),
                             project.getEntryType(),
+                            project.getCreatedBy(),
+                            project.getCreatedAt(),
                             project.getTitle(),
                             project.getProjectDetail()
                     ));
@@ -52,8 +54,8 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 
         if (projectData.isPresent()) {
             Project _project = projectData.get();
-            _project.setEntryName(project.getEntryName());
-            _project.setEntryType(project.getEntryType());
+            _project.setUpdatedBy(project.getUpdatedBy());
+            _project.setUpdatedAt(project.getUpdatedAt());
             _project.setTitle(project.getTitle());
             _project.setProjectDetail(project.getProjectDetail());
             logger.info("Project updated successfully!");

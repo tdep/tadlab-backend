@@ -6,6 +6,7 @@ import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -28,9 +29,19 @@ public class Project extends BasePortfolioEntryAudit {
     private List<Link> links = new ArrayList<>();
 
     // Initializing Constructor
-    public Project(String entryName, EntryType entryType, String title, ProjectDetail projectDetail) {
+    public Project(String entryName, EntryType entryType, String createdBy, Date createdAt, String title, ProjectDetail projectDetail) {
         super.setEntryName(entryName);
         super.setEntryType(entryType);
+        super.setCreatedBy(createdBy);
+        super.setCreatedAt(createdAt);
+        this.title = title;
+        this.projectDetail = projectDetail;
+    }
+
+//    Updating Constructor
+    public Project(String updatedBy, Date updatedAt, String title, ProjectDetail projectDetail) {
+        super.setCreatedBy(updatedBy);
+        super.setCreatedAt(updatedAt);
         this.title = title;
         this.projectDetail = projectDetail;
     }
