@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public interface ProjectWriteService {
 
@@ -21,10 +20,11 @@ public interface ProjectWriteService {
     ResponseEntity<HttpStatus> deleteProjectById(int projectId);
     ResponseEntity<HttpStatus> deleteAllProjects();
 
+    ResponseEntity<Project> test(Project project);
+
 //    Project Detail
     ResponseEntity<ProjectDetail> createNewProjectDetail(int projectId, ProjectDetail detail);
     ResponseEntity<ProjectDetail> updateExistingProjectDetail(int projectId,ProjectDetail detail);
-    ResponseEntity<HttpStatus> deleteProjectDetailByProjectId(int projectId);
 
 //    Link
     ResponseEntity<Link> createNewLink(Link link);

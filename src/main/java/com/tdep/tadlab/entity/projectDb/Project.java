@@ -17,6 +17,13 @@ public class Project extends BasePortfolioEntryAudit {
 
     private ProjectDetail projectDetail;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "firstName", column = @Column(name = "TEST_FN")),
+            @AttributeOverride(name = "lastName", column = @Column(name = "TEST_LN"))
+    })
+    private Test test;
+
     @OneToMany(
             mappedBy = "project",
             cascade = CascadeType.ALL,
@@ -33,12 +40,10 @@ public class Project extends BasePortfolioEntryAudit {
         this.title = title;
     }
 
-    public Project(String entryName, EntryType entryType, String title, List<Link> links) {
-        super.setEntryName(entryName);
-        super.setEntryType(entryType);
-        this.title = title;
-        this.links = links;
+    public Project(Test test) {
+        this.test = test;
     }
+
 
     public Project() {
 
@@ -55,6 +60,14 @@ public class Project extends BasePortfolioEntryAudit {
 
     public void setProjectDetail(ProjectDetail projectDetail) {
         this.projectDetail = projectDetail;
+    }
+
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
     }
 
     public List<Link> getLinks() {

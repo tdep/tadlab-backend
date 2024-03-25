@@ -107,7 +107,7 @@ public class ProjectReadServiceImpl implements ProjectReadService {
         Optional<Project> project = projectRepository.findById(projectId);
 
         if (project.isPresent()) {
-            int projectDetailId = project.get().getProjectDetail().getEntryId();
+            int projectDetailId = project.get().getProjectDetail().getId();
             Optional<ProjectDetail> projectDetailData = projectDetailRepository.findById(projectDetailId);
 
             return projectDetailData.map(

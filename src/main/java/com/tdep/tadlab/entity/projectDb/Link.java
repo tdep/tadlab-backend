@@ -1,13 +1,10 @@
 package com.tdep.tadlab.entity.projectDb;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tdep.tadlab.entity.common.BasePortfolioEntryAudit;
 import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
-
-import java.util.Objects;
 
 @Entity
 @Table(name = "links")
@@ -59,10 +56,10 @@ public class Link extends BasePortfolioEntryAudit {
 
     @Override
     public boolean equals(Object o) {
-        int id = super.getEntryId();
+        int id = super.getId();
         if (this == o) return true;
         if (!(o instanceof Link)) return false;
-        return (id != 0) && id == ((Link) o).getEntryId();
+        return (id != 0) && id == ((Link) o).getId();
     }
 
     @Override

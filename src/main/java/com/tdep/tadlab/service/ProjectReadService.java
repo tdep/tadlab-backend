@@ -20,7 +20,7 @@ public interface ProjectReadService {
     ResponseEntity<List<ProjectDetail>> findAllProjectDetails();
     ResponseEntity<ProjectDetail> findDetailById(int id);
     ResponseEntity<ProjectDetail> findDetailByProjectName(String projectName);
-    ResponseEntity<ProjectDetail> findDetailByProjectId(int projectId);
+//    ResponseEntity<ProjectDetail> findDetailByProjectId(int projectId);
 
 //    Link
     ResponseEntity<List<Link>> findAllLinks();

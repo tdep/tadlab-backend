@@ -5,6 +5,7 @@ package com.tdep.tadlab.controller;
 
 import com.tdep.tadlab.entity.projectDb.Project;
 import com.tdep.tadlab.entity.projectDb.ProjectDetail;
+import com.tdep.tadlab.entity.projectDb.Test;
 import com.tdep.tadlab.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,11 @@ public class ProjectController {
     @PostMapping("/projects")
     public ResponseEntity<Project> createProject(@RequestBody Project project) {
         return projectWriteService.createNewProject(project);
+    }
+
+    @PostMapping("/projects/test")
+    public ResponseEntity<Project> test(@RequestBody Project project) {
+        return projectWriteService.test(project);
     }
 
     @PostMapping("/projects/details/{project-id}")
