@@ -1,20 +1,13 @@
 package com.tdep.tadlab.entity.projectDb;
 
-import com.tdep.tadlab.entity.common.BasePortfolioEntryAudit;
-import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
 
+@Embeddable
+public class ProjectDetail {
 
-@Entity
-@Table(name = "project_details")
-public class ProjectDetail extends BasePortfolioEntryAudit {
-
-    @Column(name = "description")
     private String description;
 
-    public ProjectDetail(String entryName, EntryType entryType, String description) {
-        super.setEntryName(entryName);
-        super.setEntryType(entryType);
+    public ProjectDetail(String description) {
         this.description = description;
     }
 

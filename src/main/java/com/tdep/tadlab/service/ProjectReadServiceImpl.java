@@ -2,9 +2,7 @@ package com.tdep.tadlab.service;
 
 import com.tdep.tadlab.entity.projectDb.Link;
 import com.tdep.tadlab.entity.projectDb.Project;
-import com.tdep.tadlab.entity.projectDb.ProjectDetail;
 import com.tdep.tadlab.repository.LinkRepository;
-import com.tdep.tadlab.repository.ProjectDetailRepository;
 import com.tdep.tadlab.repository.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +20,6 @@ public class ProjectReadServiceImpl implements ProjectReadService {
 
     @Autowired
     private ProjectRepository projectRepository;
-
-    @Autowired
-    private ProjectDetailRepository projectDetailRepository;
 
     @Autowired
     private LinkRepository linkRepository;
@@ -69,55 +64,6 @@ public class ProjectReadServiceImpl implements ProjectReadService {
 
     public ResponseEntity<List<Project>> findProjectsByDate(String date) {
         return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-//    Project Detail
-
-    public ResponseEntity<List<ProjectDetail>> findAllProjectDetails() {
-        try {
-            List<ProjectDetail> details = new ArrayList<>(
-                    projectDetailRepository.findAll());
-            if (details.isEmpty()) {
-                logger.info("No project details found");
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(details, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(String.format("Could not find project details because of exception: %s", e.getMessage()));
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    public ResponseEntity<ProjectDetail> findDetailById(int id) {
-        Optional<ProjectDetail> projectDetailData = projectDetailRepository.findById(id);
-
-        return projectDetailData.map(
-                detail -> new ResponseEntity<>(
-                        detail, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(
-                        HttpStatus.NOT_FOUND));
-    }
-
-    public ResponseEntity<ProjectDetail> findDetailByProjectName(String projectName) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    public ResponseEntity<ProjectDetail> findDetailByProjectId(int projectId) {
-        Optional<Project> project = projectRepository.findById(projectId);
-
-        if (project.isPresent()) {
-            int projectDetailId = project.get().getProjectDetail().getId();
-            Optional<ProjectDetail> projectDetailData = projectDetailRepository.findById(projectDetailId);
-
-            return projectDetailData.map(
-                    detail -> new ResponseEntity<>(
-                            detail, HttpStatus.OK))
-                    .orElseGet(() -> new ResponseEntity<>(
-                            HttpStatus.NOT_FOUND));
-        }
-        logger.error(String.format("There is no project with id: %s", projectId));
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
 //    Link

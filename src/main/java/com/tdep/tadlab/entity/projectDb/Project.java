@@ -15,14 +15,8 @@ public class Project extends BasePortfolioEntryAudit {
     @Column(name = "title")
     private String title;
 
-    private ProjectDetail projectDetail;
-
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "firstName", column = @Column(name = "TEST_FN")),
-            @AttributeOverride(name = "lastName", column = @Column(name = "TEST_LN"))
-    })
-    private Test test;
+    private ProjectDetail projectDetail;
 
     @OneToMany(
             mappedBy = "project",
@@ -34,14 +28,11 @@ public class Project extends BasePortfolioEntryAudit {
     private List<Link> links = new ArrayList<>();
 
     // Initializing Constructor
-    public Project(String entryName, EntryType entryType, String title) {
+    public Project(String entryName, EntryType entryType, String title, ProjectDetail projectDetail) {
         super.setEntryName(entryName);
         super.setEntryType(entryType);
         this.title = title;
-    }
-
-    public Project(Test test) {
-        this.test = test;
+        this.projectDetail = projectDetail;
     }
 
 
@@ -53,21 +44,12 @@ public class Project extends BasePortfolioEntryAudit {
 
     public void setTitle(String title) { this.title = title; }
 
-    @OneToOne
     public ProjectDetail getProjectDetail() {
         return projectDetail;
     }
 
     public void setProjectDetail(ProjectDetail projectDetail) {
         this.projectDetail = projectDetail;
-    }
-
-    public Test getTest() {
-        return test;
-    }
-
-    public void setTest(Test test) {
-        this.test = test;
     }
 
     public List<Link> getLinks() {

@@ -2,7 +2,6 @@ package com.tdep.tadlab.service;
 
 import com.tdep.tadlab.entity.projectDb.Link;
 import com.tdep.tadlab.entity.projectDb.Project;
-import com.tdep.tadlab.entity.projectDb.ProjectDetail;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -19,12 +18,6 @@ public interface ProjectWriteService {
     ResponseEntity<Project> removeAllLinksFromProject(int projectId);
     ResponseEntity<HttpStatus> deleteProjectById(int projectId);
     ResponseEntity<HttpStatus> deleteAllProjects();
-
-    ResponseEntity<Project> test(Project project);
-
-//    Project Detail
-    ResponseEntity<ProjectDetail> createNewProjectDetail(int projectId, ProjectDetail detail);
-    ResponseEntity<ProjectDetail> updateExistingProjectDetail(int projectId,ProjectDetail detail);
 
 //    Link
     ResponseEntity<Link> createNewLink(Link link);
