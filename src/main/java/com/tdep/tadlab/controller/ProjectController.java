@@ -46,14 +46,19 @@ public class ProjectController {
         return projectWriteService.createNewProject(project);
     }
 
-    @PostMapping("/projects/details/{projectId}")
-    public ResponseEntity<ProjectDetail> createProjectDetail(@PathVariable("projectId") int projectId, @RequestBody ProjectDetail projectDetail) {
+    @PostMapping("/projects/details/{project-id}")
+    public ResponseEntity<ProjectDetail> createProjectDetail(@PathVariable("project-id") int projectId, @RequestBody ProjectDetail projectDetail) {
         return projectWriteService.createNewProjectDetail(projectId, projectDetail);
     }
 
     @PutMapping("/projects/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable("id") int id, @RequestBody Project project) {
         return projectWriteService.updateExistingProject(id, project);
+    }
+
+    @PutMapping("/projects/details/{project-id}")
+    public ResponseEntity<ProjectDetail> updateProjectDetail(@PathVariable("project-id") int projectId, @RequestBody ProjectDetail projectDetail) {
+        return projectWriteService.updateExistingProjectDetail(projectId, projectDetail);
     }
 
     @DeleteMapping("/projects/{id}")

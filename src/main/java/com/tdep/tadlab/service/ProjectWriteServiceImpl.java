@@ -58,14 +58,12 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             _project.setEntryType(project.getEntryType());
             _project.setTitle(project.getTitle());
             _project.setProjectDetail(project.getProjectDetail());
+            logger.info("Project updated successfully!");
             return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
         } else {
+            logger.error("Project does not exist.");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-    }
-
-    public ResponseEntity<Project> addDetailToProject(int projectId, ProjectDetail detail) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
     }
 
     public ResponseEntity<Project> addLinkToProject(int projectId, Link link) {
@@ -73,10 +71,6 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
     }
 
     public ResponseEntity<Project> addMultipleLinksToProject(int projectId, List<Link> links) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    public ResponseEntity<Project> removeDetailFromProject(int projectId, ProjectDetail detail) {
         return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
     }
 
@@ -124,6 +118,7 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
                 projectRepository.save(_project);
                 return new ResponseEntity<>(createdProjectDetail, HttpStatus.OK);
             } else {
+                logger.error("Project does not exist.");
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
@@ -132,20 +127,15 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
         }
     }
 
-
     public ResponseEntity<ProjectDetail> updateExistingProjectDetail(int projectId, ProjectDetail detail) {
         Optional<Project> projectData = projectRepository.findById(projectId);
 
-        if (projectData.isPresent()) {
-            ProjectDetail _detail = projectData.get().getProjectDetail();
-            _detail.setEntryName(detail.getEntryName());
-            _detail.setEntryType(detail.getEntryType());
-            _detail.setDescription(detail.getDescription());
-            logger.info("Project details updated!");
-            return new ResponseEntity<>(projectDetailRepository.save(_detail), HttpStatus.OK);
-        } else {
-            logger.error("Unable to find project.");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            ResponseEntity<ProjectDetail> detailResponseEntity = projectDetailUpdater(projectData, detail);
+            return new ResponseEntity<>(detailResponseEntity.getBody(), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(String.format("Unable to update project detail because: %s", e.getMessage()));
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -163,10 +153,6 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             }
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    public ResponseEntity<HttpStatus> deleteProjectDetailByProjectName(String projectName) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
     }
 
 //    Link
@@ -204,19 +190,17 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
         }
     }
 
-    private void projectDetailSaver(int projectId, ProjectDetail detail) {
-        Optional<Project> project = projectRepository.findById(projectId);
-
+    private ResponseEntity<ProjectDetail> projectDetailUpdater(Optional<Project> project, ProjectDetail detail) {
         if (project.isPresent()) {
-            Project _project = project.get();
-            _project.setEntryName(project.get().getEntryName());
-            _project.setEntryType(project.get().getEntryType());
-            _project.setTitle(project.get().getTitle());
-            _project.setProjectDetail(detail);
-            _project.setEntryId(projectId);
-            new ResponseEntity<>(_project, HttpStatus.OK);
+            ProjectDetail _detail = project.get().getProjectDetail();
+            _detail.setEntryName(detail.getEntryName());
+            _detail.setEntryType(detail.getEntryType());
+            _detail.setDescription(detail.getDescription());
+            logger.info("Project details updated!");
+            return new ResponseEntity<>(projectDetailRepository.save(_detail), HttpStatus.OK);
         } else {
-            new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            logger.error("Unable to find project.");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 }
