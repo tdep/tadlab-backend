@@ -62,12 +62,25 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
         } else {
             logger.error("Project does not exist.");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
 
     public ResponseEntity<Project> addLinkToProject(int projectId, Link link) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        Optional<Project> projectData = projectRepository.findById(projectId);
+
+        if (projectData.isPresent()) {
+            Link _link = new Link(
+                    link.getLinkType(),
+                    link.getUrl()
+            );
+            Project _project = projectData.get();
+            _project.addLink(_link);
+            return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
+        } else {
+            logger.error("Project does not exist, unable to add new link.");
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
     }
 
     public ResponseEntity<Project> addMultipleLinksToProject(int projectId, List<Link> links) {

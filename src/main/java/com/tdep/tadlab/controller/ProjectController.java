@@ -3,6 +3,7 @@ package com.tdep.tadlab.controller;
 
 //TODO: Change cross origins
 
+import com.tdep.tadlab.entity.projectDb.Link;
 import com.tdep.tadlab.entity.projectDb.Project;
 import com.tdep.tadlab.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,11 @@ public class ProjectController {
     @PutMapping("/projects/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable("id") int id, @RequestBody Project project) {
         return projectWriteService.updateExistingProject(id, project);
+    }
+
+    @PutMapping("/projects/add_link/{id}")
+    public ResponseEntity<Project> addLinkToProject(@PathVariable("id") int id, @RequestBody Link link) {
+        return projectWriteService.addLinkToProject(id, link);
     }
 
     @DeleteMapping("/projects/{id}")
