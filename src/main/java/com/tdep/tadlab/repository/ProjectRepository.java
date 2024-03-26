@@ -1,12 +1,13 @@
 package com.tdep.tadlab.repository;
 
 import com.tdep.tadlab.entity.projectDb.Link;
+import com.tdep.tadlab.entity.projectDb.Project;
+import org.hibernate.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
-public interface LinkRepository extends JpaRepository<Link, Integer> {
+public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
 }

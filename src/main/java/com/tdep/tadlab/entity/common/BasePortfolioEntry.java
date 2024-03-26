@@ -5,7 +5,6 @@ import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 
 @MappedSuperclass
@@ -13,14 +12,14 @@ public class BasePortfolioEntry implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition =" BINARY(16)", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private int id;
 
     @Column(name = "entry_name")
     private String entryName;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "entrytype", name = "entry_type", nullable = false, length = 50)
+    @Column(columnDefinition = "entrytype", name = "entry_type", length = 50)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private EntryType entryType;
 
@@ -41,11 +40,11 @@ public class BasePortfolioEntry implements Serializable {
         this.entryName = entryName;
     }
 
-    public int getEntryId() {
+    public int getId() {
         return id;
     }
 
-    public void setEntryId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -67,7 +66,7 @@ public class BasePortfolioEntry implements Serializable {
     @Override
     public String toString() {
         return  "{" +
-                "entry id='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", entry name='" + entryName + '\'' +
                 ", entry type='" + entryType + '\'' +
                 '}' +

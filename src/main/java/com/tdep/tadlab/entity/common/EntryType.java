@@ -1,5 +1,5 @@
 package com.tdep.tadlab.entity.common;
 
 public enum EntryType {
-        JOB, PROJECT, CONTACT, LINK, TOOL, URL;
+        JOB, PROJECT, DETAIL, CONTACT, LINK;
 }
