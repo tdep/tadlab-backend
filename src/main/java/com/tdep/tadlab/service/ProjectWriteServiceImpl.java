@@ -91,27 +91,24 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
         return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
     }
 
-    public ResponseEntity<Project> removeLinkFromProject(int projectId, String name) {
+    public ResponseEntity<Project> removeLinkFromProject(int projectId, Link link) {
         Optional<Project> projectData = projectRepository.findById(projectId);
 
         if (projectData.isPresent()) {
             Project _project = projectData.get();
-            Link _link = findLinkByName(_project, name);
-            try {
-                logger.info(String.format("LINK-> %s", _link.getName()));
-                logger.info(String.format("first-> %s", _project.getLinks()));
-                _project.removeLink(_link);
-                logger.info(String.format("second-> %s", _project.getLinks()));
-                logger.info("Link successfully removed from project.");
-                return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
-            } catch (Exception e) {
-                logger.error(String.format("Unable to remove link because: %s", e.getMessage()));
-                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+            Link linkData = findLinkByName(_project, link.getName());
+            Link _link = new Link(
+                    linkData.getName(),
+                    linkData.getLinkType(),
+                    linkData.getUrl()
+            );
+            _project.removeLink(_link);
+            return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
         } else {
             logger.error("Project does not exist, unable to remove link.");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+
     }
 
     public ResponseEntity<Project> removeAllLinksFromProject(int projectId) {
@@ -145,11 +142,16 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
     private Link findLinkByName(Project project, String name) {
 
             List<Link> links = project.getLinks();
+            Link _link = new Link();
 
-            return links.stream()
-                    .filter(link -> name.equals(link.getName()))
-                    .findAny()
-                    .orElse(null);
+            links.forEach(link -> {
+                if (link.getName().equals(name)) {
+                    _link.setName(link.getName());
+                    _link.setLinkType(link.getLinkType());
+                    _link.setUrl(link.getUrl());
+                }
+            });
+            return _link;
 
     }
 }

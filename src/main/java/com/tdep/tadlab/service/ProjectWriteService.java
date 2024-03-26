@@ -14,7 +14,7 @@ public interface ProjectWriteService {
     ResponseEntity<Project> updateExistingProject(int id, Project project);
     ResponseEntity<Project> addLinkToProject(int projectId, Link link);
     ResponseEntity<Project> addMultipleLinksToProject(int projectId, List<Link> links);
-    ResponseEntity<Project> removeLinkFromProject(int projectId, String name);
+    ResponseEntity<Project> removeLinkFromProject(int projectId, Link link);
     ResponseEntity<Project> removeAllLinksFromProject(int projectId);
     ResponseEntity<HttpStatus> deleteProjectById(int projectId);
     ResponseEntity<HttpStatus> deleteAllProjects();
