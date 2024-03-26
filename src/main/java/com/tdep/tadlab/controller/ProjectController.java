@@ -52,6 +52,11 @@ public class ProjectController {
         return projectWriteService.addLinkToProject(id, link);
     }
 
+    @PutMapping("/projects/remove_link/{id}")
+    public ResponseEntity<Project> removeLinkFromProject(@PathVariable("id") int id, @RequestBody String name) {
+        return projectWriteService.removeLinkFromProject(id, name);
+    }
+
     @DeleteMapping("/projects/{id}")
     public ResponseEntity<HttpStatus> deleteProject(@PathVariable("id") int id) {
         return projectWriteService.deleteProjectById(id);

@@ -1,5 +1,6 @@
 package com.tdep.tadlab.repository;
 
+import com.tdep.tadlab.entity.projectDb.Link;
 import com.tdep.tadlab.entity.projectDb.Project;
 import org.hibernate.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;

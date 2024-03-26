@@ -5,6 +5,7 @@ import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Entity

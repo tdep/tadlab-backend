@@ -7,13 +7,16 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 @Embeddable
 public class Link {
 
+    private String name;
+
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "linktype", name = "link_type", nullable = false, length = 50)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private LinkType linkType;
     private String url;
 
-    public Link(LinkType linkType, String url) {
+    public Link(String name, LinkType linkType, String url) {
+        this.name = name;
         this.linkType = linkType;
         this.url = url;
     }
@@ -21,6 +24,10 @@ public class Link {
     public Link() {
 
     }
+
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
 
     public LinkType getLinkType() {
         return linkType;
@@ -46,6 +53,7 @@ public class Link {
     @Override
     public String toString() {
         return  "{" +
+                ", link name='" + name + '\'' +
                 ", link type='" + linkType + '\'' +
                 ", url ='" + url + '\'' +
                 '}';
