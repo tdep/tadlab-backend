@@ -19,10 +19,4 @@ public interface ProjectWriteService {
     ResponseEntity<HttpStatus> deleteProjectById(int projectId);
     ResponseEntity<HttpStatus> deleteAllProjects();
 
-//    Link
-    ResponseEntity<Link> createNewLink(Link link);
-    ResponseEntity<Link> updateExistingLink(int id, Link link);
-    ResponseEntity<Link> updateExistingProjectLink(int projectId, Link link);
-    ResponseEntity<HttpStatus> deleteLink(int id);
-
 }

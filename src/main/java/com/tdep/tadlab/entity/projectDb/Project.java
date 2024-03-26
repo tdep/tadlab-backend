@@ -1,13 +1,11 @@
 package com.tdep.tadlab.entity.projectDb;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tdep.tadlab.entity.common.BasePortfolioEntryAudit;
 import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 @Entity
 @Table(name = "projects")
@@ -22,14 +20,14 @@ public class Project extends BasePortfolioEntryAudit {
     @Embedded
     private ProjectDetail projectDetail;
 
-    @OneToMany(
-            mappedBy = "project",
-            cascade = CascadeType.ALL,
-            orphanRemoval = false
-    )
-    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    @Column(name = "links", nullable = true)
-    private List<Link> links = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(
+            name = "project_links",
+            joinColumns = @JoinColumn(name = "id"),
+            foreignKey = @ForeignKey(name = "project_links_projects_fk"))
+    private List<Link> links;
+
+
 
     // Initializing Constructor
     public Project(
@@ -39,7 +37,8 @@ public class Project extends BasePortfolioEntryAudit {
             Date createdAt,
             String title,
             Author author,
-            ProjectDetail projectDetail) {
+            ProjectDetail projectDetail,
+            List<Link> links) {
         super.setEntryName(entryName);
         super.setEntryType(entryType);
         super.setCreatedBy(createdBy);
@@ -47,6 +46,7 @@ public class Project extends BasePortfolioEntryAudit {
         this.title = title;
         this.author = author;
         this.projectDetail = projectDetail;
+        this.links = links;
     }
 
     public Project() {
@@ -74,7 +74,7 @@ public class Project extends BasePortfolioEntryAudit {
     }
 
     public List<Link> getLinks() {
-        return this.links;
+        return links;
     }
 
     public void setLinks(List<Link> links) {
@@ -83,13 +83,13 @@ public class Project extends BasePortfolioEntryAudit {
 
     public void addLink(Link link) {
         links.add(link);
-        link.setProject(this);
     }
 
     public void removeLink(Link link) {
         links.remove(link);
-        link.setProject(null);
     }
+
+
     @Override
     public String toString() {
         return  "{" +

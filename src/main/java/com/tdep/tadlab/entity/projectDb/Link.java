@@ -1,33 +1,21 @@
 package com.tdep.tadlab.entity.projectDb;
 
-import com.tdep.tadlab.entity.common.BasePortfolioEntryAudit;
-import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
-@Entity
-@Table(name = "links")
-public class Link extends BasePortfolioEntryAudit {
+@Embeddable
+public class Link {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "linktype", name = "link_type", nullable = false, length = 50)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private LinkType linkType;
-
-    @Column(name = "url")
     private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project", nullable = true)
-    private Project project;
-
-    public Link(String entryName, EntryType entryType, LinkType linkType, String url, Project project) {
-        super.setEntryName(entryName);
-        super.setEntryType(entryType);
+    public Link(LinkType linkType, String url) {
         this.linkType = linkType;
         this.url = url;
-        this.project = project;
     }
 
     public Link() {
@@ -50,18 +38,6 @@ public class Link extends BasePortfolioEntryAudit {
         this.url = url;
     }
 
-    public Project getProject() { return project; }
-
-    public void setProject(Project project) { this.project = project; }
-
-    @Override
-    public boolean equals(Object o) {
-        int id = super.getId();
-        if (this == o) return true;
-        if (!(o instanceof Link)) return false;
-        return (id != 0) && id == ((Link) o).getId();
-    }
-
     @Override
     public int hashCode() {
         return getClass().hashCode();
@@ -72,9 +48,7 @@ public class Link extends BasePortfolioEntryAudit {
         return  "{" +
                 ", link type='" + linkType + '\'' +
                 ", url ='" + url + '\'' +
-                ", project ='" + project + '\'' +
-                '}' +
-                super.toString();
+                '}';
     }
 }
 

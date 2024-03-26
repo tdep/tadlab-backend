@@ -1,8 +1,6 @@
 package com.tdep.tadlab.service;
 
-import com.tdep.tadlab.entity.projectDb.Link;
 import com.tdep.tadlab.entity.projectDb.Project;
-import com.tdep.tadlab.repository.LinkRepository;
 import com.tdep.tadlab.repository.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +18,6 @@ public class ProjectReadServiceImpl implements ProjectReadService {
 
     @Autowired
     private ProjectRepository projectRepository;
-
-    @Autowired
-    private LinkRepository linkRepository;
 
     Logger logger = LoggerFactory.getLogger(ProjectWriteServiceImpl.class);
 
@@ -66,25 +61,4 @@ public class ProjectReadServiceImpl implements ProjectReadService {
         return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
     }
 
-//    Link
-
-    public ResponseEntity<List<Link>> findAllLinks() {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    public ResponseEntity<Link> findLinkById(int id) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    public ResponseEntity<Link> findLinkByType(String type) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    public ResponseEntity<List<Link>> findLinksByProjectName(String projectName) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    public ResponseEntity<List<Link>> findLinksByProjectId(int projectId) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
 }

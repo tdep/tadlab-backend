@@ -3,7 +3,6 @@ package com.tdep.tadlab.service;
 
 import com.tdep.tadlab.entity.projectDb.Link;
 import com.tdep.tadlab.entity.projectDb.Project;
-import com.tdep.tadlab.repository.LinkRepository;
 import com.tdep.tadlab.repository.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +20,6 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @Autowired
-    private LinkRepository linkRepository;
-
     Logger logger = LoggerFactory.getLogger(ProjectWriteServiceImpl.class);
 
 //    Project
@@ -39,7 +35,8 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
                             project.getCreatedAt(),
                             project.getTitle(),
                             project.getAuthor(),
-                            project.getProjectDetail()
+                            project.getProjectDetail(),
+                            project.getLinks()
                     ));
 
             logger.info(String.format("Project: %s created successfully!", _project.getId()));
@@ -60,6 +57,7 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             _project.setTitle(project.getTitle());
             _project.setAuthor(project.getAuthor());
             _project.setProjectDetail(project.getProjectDetail());
+            _project.setLinks(project.getLinks());
             logger.info("Project updated successfully!");
             return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
         } else {
@@ -104,24 +102,6 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             logger.error(String.format("Unable to delete all projects because: %s", e.getMessage()));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-//    Link
-
-    public ResponseEntity<Link> createNewLink(Link link) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    public ResponseEntity<Link> updateExistingLink(int linkId, Link link) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    public ResponseEntity<Link> updateExistingProjectLink(int projectId, Link link) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    public ResponseEntity<HttpStatus> deleteLink(int linkId) {
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
     }
 
 //    Helper Methods
