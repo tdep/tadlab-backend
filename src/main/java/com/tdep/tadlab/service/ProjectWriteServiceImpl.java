@@ -38,6 +38,7 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
                             project.getCreatedBy(),
                             project.getCreatedAt(),
                             project.getTitle(),
+                            project.getAuthor(),
                             project.getProjectDetail()
                     ));
 
@@ -57,6 +58,7 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             _project.setUpdatedBy(project.getUpdatedBy());
             _project.setUpdatedAt(project.getUpdatedAt());
             _project.setTitle(project.getTitle());
+            _project.setAuthor(project.getAuthor());
             _project.setProjectDetail(project.getProjectDetail());
             logger.info("Project updated successfully!");
             return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);

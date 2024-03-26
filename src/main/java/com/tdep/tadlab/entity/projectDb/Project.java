@@ -49,15 +49,6 @@ public class Project extends BasePortfolioEntryAudit {
         this.projectDetail = projectDetail;
     }
 
-//    Updating Constructor
-    public Project(String updatedBy, Date updatedAt, String title, ProjectDetail projectDetail) {
-        super.setCreatedBy(updatedBy);
-        super.setCreatedAt(updatedAt);
-        this.title = title;
-        this.projectDetail = projectDetail;
-    }
-
-
     public Project() {
 
     }
@@ -65,6 +56,14 @@ public class Project extends BasePortfolioEntryAudit {
     public String getTitle() { return title; }
 
     public void setTitle(String title) { this.title = title; }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 
     public ProjectDetail getProjectDetail() {
         return projectDetail;
