@@ -87,8 +87,10 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             projectRepository.save(_project);
             linkRepository.save(_link);
 
+            logger.info(String.format("Saved new link to project: %s", _project.getId()));
             return new ResponseEntity<>(_project, HttpStatus.OK);
         } else {
+            logger.error("Project does not exist.");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
@@ -108,9 +110,12 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             _project.removeLink(_link);
 
             projectRepository.save(_project);
+            linkRepository.deleteById(_link.getId());
 
+            logger.info(String.format("Removed and deleted link: %s", link.getId()));
             return new ResponseEntity<>(_project, HttpStatus.OK);
         } else {
+            logger.error("Either the project and/or link does not exist.");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
