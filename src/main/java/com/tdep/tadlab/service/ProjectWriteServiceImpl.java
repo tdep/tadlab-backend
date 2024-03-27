@@ -72,17 +72,21 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
         Optional<Project> projectData = projectRepository.findById(projectId);
 
         if (projectData.isPresent()) {
-            Link _link = new Link(
-                    link.getName(),
-                    link.getLinkType(),
-                    link.getUrl()
-            );
             Project _project = projectData.get();
-            _project.addLink(_link);
-            logger.info("Link successfully added to project!");
-            return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
+            try {
+                Link _link = new Link(
+                        link.getName(),
+                        link.getLinkType(),
+                        link.getUrl(),
+                        link.getProjects());
+                _project.addLink(_link);
+                logger.info("Link successfully added to project!");
+                return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
+            } catch (Exception e) {
+                logger.error(String.format("Unable to save new link because: %s", e.getMessage()));
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } else {
-            logger.error("Project does not exist, unable to add new link.");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
@@ -92,22 +96,7 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
     }
 
     public ResponseEntity<Project> removeLinkFromProject(int projectId, Link link) {
-        Optional<Project> projectData = projectRepository.findById(projectId);
-
-        if (projectData.isPresent()) {
-            Project _project = projectData.get();
-            Link linkData = findLinkByName(_project, link.getName());
-            Link _link = new Link(
-                    linkData.getName(),
-                    linkData.getLinkType(),
-                    linkData.getUrl()
-            );
-            _project.removeLink(_link);
-            return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
-        } else {
-            logger.error("Project does not exist, unable to remove link.");
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        return null;
 
     }
 
@@ -139,19 +128,4 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 
 //    Helper Methods
 
-    private Link findLinkByName(Project project, String name) {
-
-            List<Link> links = project.getLinks();
-            Link _link = new Link();
-
-            links.forEach(link -> {
-                if (link.getName().equals(name)) {
-                    _link.setName(link.getName());
-                    _link.setLinkType(link.getLinkType());
-                    _link.setUrl(link.getUrl());
-                }
-            });
-            return _link;
-
-    }
 }
