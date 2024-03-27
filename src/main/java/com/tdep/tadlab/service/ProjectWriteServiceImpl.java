@@ -3,6 +3,7 @@ package com.tdep.tadlab.service;
 
 import com.tdep.tadlab.entity.projectDb.Link;
 import com.tdep.tadlab.entity.projectDb.Project;
+import com.tdep.tadlab.repository.LinkRepository;
 import com.tdep.tadlab.repository.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,9 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private LinkRepository linkRepository;
 
     Logger logger = LoggerFactory.getLogger(ProjectWriteServiceImpl.class);
 
@@ -73,19 +77,17 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 
         if (projectData.isPresent()) {
             Project _project = projectData.get();
-            try {
-                Link _link = new Link(
-                        link.getName(),
-                        link.getLinkType(),
-                        link.getUrl(),
-                        link.getProjects());
-                _project.addLink(_link);
-                logger.info("Link successfully added to project!");
-                return new ResponseEntity<>(projectRepository.save(_project), HttpStatus.OK);
-            } catch (Exception e) {
-                logger.error(String.format("Unable to save new link because: %s", e.getMessage()));
-                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+            Link _link = new Link(
+                    link.getName(),
+                    link.getLinkType(),
+                    link.getUrl());
+
+            _project.addLink(link);
+
+            projectRepository.save(_project);
+            linkRepository.save(_link);
+
+            return new ResponseEntity<>(_project, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -96,7 +98,21 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
     }
 
     public ResponseEntity<Project> removeLinkFromProject(int projectId, Link link) {
-        return null;
+        Optional<Project> projectData = projectRepository.findById(projectId);
+        Optional<Link> linkData = linkRepository.findById(link.getId());
+
+        if (projectData.isPresent() && linkData.isPresent()) {
+            Project _project = projectData.get();
+            Link _link = linkData.get();
+
+            _project.removeLink(_link);
+
+            projectRepository.save(_project);
+
+            return new ResponseEntity<>(_project, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
 
     }
 

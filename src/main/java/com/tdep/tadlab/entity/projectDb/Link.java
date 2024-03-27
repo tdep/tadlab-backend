@@ -1,11 +1,12 @@
 package com.tdep.tadlab.entity.projectDb;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,15 +28,10 @@ public class Link {
     @Column(name = "link_url")
     private String url;
 
-    @ManyToMany(mappedBy = "links")
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
-    private Set<Project> projects = new HashSet<Project>();
-
-    public Link(String name, LinkType linkType, String url, Set<Project> projects) {
+    public Link(String name, LinkType linkType, String url) {
         this.name = name;
         this.linkType = linkType;
         this.url = url;
-        this.projects = projects;
     }
 
     public Link() {
@@ -66,24 +62,6 @@ public class Link {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Set<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(Set<Project> projects) {
-        this.projects = projects;
-    }
-
-    public void addProject(Project project) {
-        this.projects.add(project);
-        project.getLinks().add(this);
-    }
-
-    public void removeProject(Project project) {
-        this.projects.remove(project);
-        project.getLinks().remove(this);
     }
 
     @Override

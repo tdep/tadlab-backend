@@ -3,7 +3,6 @@ package com.tdep.tadlab.entity.projectDb;
 import com.tdep.tadlab.entity.common.BasePortfolioEntryAudit;
 import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
 
 import java.util.*;
 
@@ -21,11 +20,7 @@ public class Project extends BasePortfolioEntryAudit {
     @Embedded
     private ProjectDetail projectDetail;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE,
-            CascadeType.DETACH,
-            CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "project_links",
             joinColumns = { @JoinColumn(name = "fk_project")},
             inverseJoinColumns = @JoinColumn(name = "fk_link"))
@@ -87,12 +82,10 @@ public class Project extends BasePortfolioEntryAudit {
 
     public void addLink(Link link) {
         this.links.add(link);
-        link.getProjects().add(this);
     }
 
     public void removeLink(Link link) {
         this.links.remove(link);
-        link.getProjects().remove(this);
     }
 
 
