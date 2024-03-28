@@ -33,13 +33,13 @@ public class ProjectReadServiceImpl implements ProjectReadService {
             List<Project> projects = new ArrayList<>(
                     projectRepository.findAll());
             if (projects.isEmpty()) {
-                logger.info("No projects found.");
+                logger.info("No Projects found.");
                 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
             }
 
             return new ResponseEntity<>(projects, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error(String.format("Could not find projects because of exception: %s", e.getMessage()));
+            logger.error(String.format("Could not find Projects because of exception: %s", e.getMessage()));
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -73,13 +73,13 @@ public class ProjectReadServiceImpl implements ProjectReadService {
             List<Link> links = new ArrayList<>(
                     linkRepository.findAll());
             if (links.isEmpty()) {
-                logger.info("No links found.");
+                logger.info("No Links found.");
                 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
             }
 
             return new ResponseEntity<>(links, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error(String.format("Could not find links because of exception: %s", e.getMessage()));
+            logger.error(String.format("Could not find Links because of exception: %s", e.getMessage()));
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

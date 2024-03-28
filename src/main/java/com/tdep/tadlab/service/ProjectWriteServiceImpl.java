@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+// TODO: create helper methods/constructors
 @Service
 public class ProjectWriteServiceImpl implements ProjectWriteService {
 
@@ -58,6 +59,9 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 
         if (projectData.isPresent()) {
             Project _project = projectData.get();
+            _project.setEntryName(project.getEntryName());
+            _project.setEntryType(project.getEntryType());
+            _project.setCreatedBy(project.getCreatedBy());
             _project.setUpdatedBy(project.getUpdatedBy());
             _project.setUpdatedAt(project.getUpdatedAt());
             _project.setTitle(project.getTitle());
@@ -87,7 +91,7 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             projectRepository.save(_project);
             linkRepository.save(_link);
 
-            logger.info(String.format("Saved new link to project: %s", _project.getId()));
+            logger.info(String.format("Saved new Link to Project: %s", _project.getId()));
             return new ResponseEntity<>(_project, HttpStatus.OK);
         } else {
             logger.error("Project does not exist.");
@@ -112,10 +116,10 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             projectRepository.save(_project);
             linkRepository.deleteById(_link.getId());
 
-            logger.info(String.format("Removed and deleted link: %s", link.getId()));
+            logger.info(String.format("Removed and deleted Link: %s", link.getId()));
             return new ResponseEntity<>(_project, HttpStatus.OK);
         } else {
-            logger.error("Either the project and/or link does not exist.");
+            logger.error("Either the Project and/or Link does not exist.");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
@@ -131,7 +135,7 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             logger.info("Project deleted successfully!");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            logger.error(String.format("Unable to delete this project because: %s", e.getMessage()));
+            logger.error(String.format("Unable to delete this Project because: %s", e.getMessage()));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -142,7 +146,7 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             logger.info("All Projects deleted successfully!");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            logger.error(String.format("Unable to delete all projects because: %s", e.getMessage()));
+            logger.error(String.format("Unable to delete all Projects because: %s", e.getMessage()));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

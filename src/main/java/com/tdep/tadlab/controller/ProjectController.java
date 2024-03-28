@@ -62,7 +62,7 @@ public class ProjectController {
         return projectWriteService.deleteProjectById(id);
     }
 
-    @DeleteMapping("projects")
+    @DeleteMapping("/projects")
     public ResponseEntity<HttpStatus> deleteAllProjects() {
         return projectWriteService.deleteAllProjects();
     }
