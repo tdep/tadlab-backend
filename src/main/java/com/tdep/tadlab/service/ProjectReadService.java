@@ -1,5 +1,6 @@
 package com.tdep.tadlab.service;
 
+import com.tdep.tadlab.entity.projectDb.Link;
 import com.tdep.tadlab.entity.projectDb.Project;
 import org.springframework.http.ResponseEntity;
 
@@ -13,5 +14,9 @@ public interface ProjectReadService {
     ResponseEntity<Project> findProjectByName(String name);
     ResponseEntity<List<Project>> findProjectsByLinkType(String linkType);
     ResponseEntity<List<Project>> findProjectsByDate(String date);
+
+    ResponseEntity<List<Link>> findAllLinks();
+
+    ResponseEntity<Link> findLinkById(int id);
 
 }

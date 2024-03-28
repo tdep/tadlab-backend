@@ -68,4 +68,14 @@ public class ProjectController {
     }
 
 
+//    Links
+
+    @GetMapping("/links")
+    public ResponseEntity<List<Link>> getAllLinks() { return projectReadService.findAllLinks(); }
+
+    @GetMapping("/links/{id}")
+    public ResponseEntity<Link> getLinkById(@PathVariable("id") int id) {
+        return projectReadService.findLinkById(id);
+    }
+
 }
