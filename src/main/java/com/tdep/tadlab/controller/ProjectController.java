@@ -70,12 +70,12 @@ public class ProjectController {
 
 //    Links
 
-    @GetMapping("/links")
+    @GetMapping("/projects/links")
     public ResponseEntity<List<Link>> getAllLinks() { return projectReadService.findAllLinks(); }
 
-    @GetMapping("/links/{id}")
-    public ResponseEntity<Link> getLinkById(@PathVariable("id") int id) {
-        return projectReadService.findLinkById(id);
+    @GetMapping("/projects/links/{link_id}")
+    public ResponseEntity<Link> getLinkById(@PathVariable("link_id") int linkId) {
+        return projectReadService.findLinkById(linkId);
     }
 
 }
