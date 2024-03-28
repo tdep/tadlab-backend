@@ -3,9 +3,8 @@ package com.tdep.tadlab.entity.projectDb;
 import com.tdep.tadlab.entity.common.BasePortfolioEntryAudit;
 import com.tdep.tadlab.entity.common.EntryType;
 import jakarta.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 
 @Entity
@@ -21,12 +20,11 @@ public class Project extends BasePortfolioEntryAudit {
     @Embedded
     private ProjectDetail projectDetail;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "project_links",
-            joinColumns = @JoinColumn(name = "id"),
-            foreignKey = @ForeignKey(name = "project_links_projects_fk"))
-    private List<Link> links;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(name = "project_links",
+            joinColumns = { @JoinColumn(name = "fk_project")},
+            inverseJoinColumns = @JoinColumn(name = "fk_link"))
+    private Set<Link> links = new HashSet<Link>();
 
 
 
@@ -39,7 +37,7 @@ public class Project extends BasePortfolioEntryAudit {
             String title,
             Author author,
             ProjectDetail projectDetail,
-            List<Link> links) {
+            Set<Link> links) {
         super.setEntryName(entryName);
         super.setEntryType(entryType);
         super.setCreatedBy(createdBy);
@@ -74,27 +72,27 @@ public class Project extends BasePortfolioEntryAudit {
         this.projectDetail = projectDetail;
     }
 
-    public List<Link> getLinks() {
+    public Set<Link> getLinks() {
         return links;
     }
 
-    public void setLinks(List<Link> links) {
+    public void setLinks(Set<Link> links) {
         this.links = links;
     }
 
     public void addLink(Link link) {
-        links.add(link);
+        this.links.add(link);
     }
 
     public void removeLink(Link link) {
-        links.remove(link);
+        this.links.remove(link);
     }
 
 
     @Override
     public String toString() {
         return  "{" +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 '}' +
                 super.toString();
     }
