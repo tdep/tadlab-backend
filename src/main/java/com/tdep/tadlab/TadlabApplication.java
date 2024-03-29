@@ -14,7 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     SecurityAutoConfiguration.class,
     UserDetailsServiceAutoConfiguration.class
 })
-@EnableWebMvc
 public class TadlabApplication {
   public static void main(String[] args) {
     SpringApplication.run(TadlabApplication.class, args);
