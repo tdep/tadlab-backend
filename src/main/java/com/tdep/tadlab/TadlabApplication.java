@@ -11,8 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication(exclude = {
     SecurityAutoConfiguration.class,
-    UserDetailsServiceAutoConfiguration.class,
-        DataSourceAutoConfiguration.class
+    UserDetailsServiceAutoConfiguration.class
 })
 public class TadlabApplication {
   public static void main(String[] args) {
