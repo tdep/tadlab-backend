@@ -107,10 +107,15 @@
 
 <!--      Security -->
 
-    <dependency>
-      <groupId>org.thymeleaf.extras</groupId>
-      <artifactId>thymeleaf-extras-springsecurity6</artifactId>
-    </dependency>
+      <dependency>
+          <groupId>org.thymeleaf.extras</groupId>
+          <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-webmvc</artifactId>
+          <version>6.1.5</version>
+      </dependency>
 
 <!--      Testing   -->
 
