@@ -6,21 +6,27 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 @SpringBootApplication(exclude = {
     SecurityAutoConfiguration.class,
     UserDetailsServiceAutoConfiguration.class
 })
+@EnableWebMvc
 public class TadlabApplication {
   public static void main(String[] args) {
     SpringApplication.run(TadlabApplication.class, args);
   }
 
 // TODO: Change allowedOrigins
+
+
   @Bean
   public WebMvcConfigurer corsConfigurer() {
     return new WebMvcConfigurer() {
+
       @Override
       public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/v1")
