@@ -153,84 +153,55 @@
       </dependency>
   </dependencies>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>testcontainers-bom</artifactId>
-        <version>${testcontainers.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <build>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-    <pluginManagement>
       <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-dependency-plugin</artifactId>
+              <executions>
+                  <execution>
+                      <id>copy-dependencies</id>
+                      <phase>package</phase>
+                      <goals><goal>copy</goal></goals>
+                      <configuration>
+                          <artifactItems>
+                              <artifactItem>
+                                  <groupId>org.yaml</groupId>
+                                  <artifactId>snakeyaml</artifactId>
+                                  <version>1.13</version>
+                                  <outputDirectory>${project.build.directory}/dependency/lib</outputDirectory>
+                              </artifactItem>
+                              <artifactItem>
+                                  <groupId>org.postgresql</groupId>
+                                  <artifactId>postgresql</artifactId>
+                                  <version>9.4-1204-jdbc41</version>
+                                  <destFileName>postgres.jar</destFileName>
+                              </artifactItem>
+                          </artifactItems>
+                      </configuration>
+                  </execution>
+              </executions>
+          </plugin>
 
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <configuration>
-            <mainClass>com.tdep.tadlab.TadlabApplication</mainClass>
-            <layout>JAR</layout>
-          </configuration>
-          <executions>
-            <execution>
-              <goals>
-                <goal>repackage</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.11.0</version>
-          <configuration>
-            <source>${java.version}</source>
-            <target>${java.version}</target>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>copy-dependencies</id>
-              <phase>package</phase>
-              <goals><goal>copy</goal></goals>
+          <plugin>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-maven-plugin</artifactId>
               <configuration>
-                <artifactItems>
-                  <artifactItem>
-                    <groupId>org.yaml</groupId>
-                    <artifactId>snakeyaml</artifactId>
-                    <version>1.13</version>
-                    <outputDirectory>${project.build.directory}/dependency/lib</outputDirectory>
-                  </artifactItem>
-                  <artifactItem>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>9.4-1204-jdbc41</version>
-                    <destFileName>postgres.jar</destFileName>
-                  </artifactItem>
-                </artifactItems>
+                  <mainClass>com.tdep.tadlab.TadlabApplication</mainClass>
+                  <layout>JAR</layout>
               </configuration>
-            </execution>
-          </executions>
-        </plugin>
+          </plugin>
 
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.11.0</version>
+              <configuration>
+                  <source>${java.version}</source>
+                  <target>${java.version}</target>
+              </configuration>
+          </plugin>
       </plugins>
-    </pluginManagement>
   </build>
-
 </project>
