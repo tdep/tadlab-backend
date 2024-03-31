@@ -83,7 +83,6 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
             Project _project = projectData.get();
             Link _link = new Link(
                     link.getName(),
-                    link.getLinkType(),
                     link.getUrl());
 
             _project.addLink(link);
