@@ -21,7 +21,7 @@ public class Link {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "linktype", name = "link_type", nullable = false, length = 50)
+    @Column(columnDefinition = "linkType", name = "link_type", nullable = false, length = 50)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private LinkType linkType;
 
