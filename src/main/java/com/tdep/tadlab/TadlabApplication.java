@@ -28,7 +28,7 @@ public class TadlabApplication {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/v1")
-            .allowedOrigins("http://localhost:3000");
+            .allowedOrigins("http://localhost:3000", "PostmanRuntime/7.37.0");
       }
     };
   }
