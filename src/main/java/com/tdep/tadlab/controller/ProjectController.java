@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:3000", "PostmanRuntime/7.37.0", "https://tdep-tadlab-client-3831fae30b93.herokuapp.com/portfolio"})
+@CrossOrigin(origins = {"http://localhost:3000", "PostmanRuntime/7.37.0", "https://tdep-tadlab-client-3831fae30b93.herokuapp.com"})
 @RestController
 @RequestMapping("/api/v1")
 public class ProjectController {
