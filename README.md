@@ -19,6 +19,7 @@ Since the majority of my experience at Spotify was in Java, I wanted to make a p
 ### Future plans?
 As I mentioned, I wanted this project to serve as the basis for a larger service, so I tried to set it up in a way that I could expand in the future. With that in mind, some of the things I'd like to do include but are not limited to:
 - [ ]  Creating a `User Service` and authentication to allow for the creation of user and admin accounts.
+- [ ]  Build a `Blog Service` so I can write blurbs and host them on my own website.
 - [ ]  Build a dashboard to serve as the method in which I can easily edit the data on the site without using the terminal or Postman (this is mostly frontend, but will integrate in the creation of an admin).
 - [ ]  Expand into different modules and try building applications of interest (like software synthesizers!).
 - [ ]  Streamline the data handling as I continue to learn about stuff (super specific, I know).
