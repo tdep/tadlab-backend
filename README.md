@@ -1,7 +1,9 @@
-# TadLab Backend API
+# Portfolio Website v3 Backend API
 ---
+## I recently have decommissioned this API and the frontend client in favor of a simpler design that I can expand upon.
 A Java based API that integrates with a PostgreSQL database serving as the basis for the [frontend TadLab client](https://github.com/tdep/tdep-tadlab-client).
-To see the frontend client in action, [visit my portfolio here](https://www.trevordepew.com/portfolio).
+[Check out the repo for my new site here](https://github.com/tdep/trevordepew.com) 
+[Or, visit my portfolio here](https://www.trevordepew.com/portfolio).
 
 ### Tools used:
 - Java
